@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Weave Net
-echo "net.bridge.bridge-nf-call-iptables=1" | sudo tee -a /etc/sysctl.d/10-kubernetes.conf
-sudo sysctl -p --system
+# Firewall
+sudo ufw allow in on ${EXT_IF} to any port 10250 proto tcp # Kubelet
+sudo ufw allow in on ${EXT_IF} to any port 8472  proto udp # Canal
 
 # Cluster worker join
 sudo kubeadm join cluster-endpoint:6443 --token ilcokw.423bkb8y4yll10c2 \

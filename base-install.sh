@@ -17,21 +17,11 @@ sudo apt update
 sudo apt dist-upgrade -y
 
 # Add required hosts
-echo "10.0.0.2   cluster-endpoint" | sudo tee -a /etc/hosts
+echo "10.0.0.2 cluster-endpoint simba\n10.0.0.3 timon\n10.0.0.4 pumbaa" | sudo tee -a /etc/hosts
 
 # Setup firewall
 sudo ufw allow OpenSSH
 sudo ufw enable
-
-# Kubernetes ports
-# https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#check-required-ports
-sudo ufw allow in on ${EXT_IF} to any port 10250 proto tcp
-# https://help.replicated.com/community/t/managing-firewalls-with-ufw-on-kubernetes/230
-sudo ufw allow out on weave to 10.32.0.0/12
-sudo ufw allow in on weave from 10.32.0.0/12
-sudo ufw allow 6783/udp
-sudo ufw allow 6784/udp
-sudo ufw allow 6783/tcp
 
 # Setup Docker
 sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
