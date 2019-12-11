@@ -76,3 +76,8 @@ kubectl -n kube-system patch daemonset canal --type json -p '[{"op":"add","path"
 
 # Deploy Hetzner CSI driver
 kubectl apply -f https://raw.githubusercontent.com/hetznercloud/csi-driver/v1.2.2/deploy/kubernetes/hcloud-csi.yml
+
+# Get latest version of Helm
+HELM_PLATFORM=linux-amd64
+HELM_VERSION=$(curl -Ls -o /dev/null -w %{url_effective} "https://github.com/helm/helm/releases/latest" | grep -oE "[^/]+$" )
+curl "https://get.helm.sh/helm-${HELM_VERSION}-${HELM_PLATFORM}.tar.gz" | sudo tar -xz --overwrite --strip-components 1 -C /usr/local/bin/ linux-amd64/helm
