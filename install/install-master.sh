@@ -5,13 +5,31 @@ INT_IF=ens10
 
 # Kubernetes ports
 # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#check-required-ports
-sudo ufw allow in on ${INT_IF} to any port 8472  proto udp # Canal
+sudo ufw allow in on ${INT_IF} to any port 6443 proto tcp # Kube-api
+sudo ufw allow in on ${INT_IF} to any port 8472 proto udp # Canal
+
+# Create Kubernetes config
+cat <<EOF > kubeadm-conf.yml
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: InitConfiguration
+nodeRegistration:
+  kubeletExtraArgs:
+    cloud-provider: "external"
+  ignorePreflightErrors:
+    - NumCPU
+localAPIEndpoint:
+  advertiseAddress: "10.0.0.2"
+  bindPort: 6443
+---
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: ClusterConfiguration
+controlPlaneEndpoint: "cluster-endpoint:6443"
+networking:
+  podSubnet: 10.244.0.0/16
+EOF
 
 # Create Kubernete cluster
-sudo kubeadm init --apiserver-advertise-address=10.0.0.2 \
-                  --control-plane-endpoint=cluster-endpoint \
-                  --ignore-preflight-errors=NumCPU \
-                  --pod-network-cidr=10.244.0.0/16
+sudo kubeadm init --config kubeadm-conf.yml
 
 # Copy kubectl config (with regular user)
 mkdir -p $HOME/.kube
