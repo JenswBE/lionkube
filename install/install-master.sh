@@ -1,8 +1,11 @@
 #!/bin/bash
 
+# Config
+INT_IF=ens10
+
 # Kubernetes ports
 # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#check-required-ports
-sudo ufw allow in on ${EXT_IF} to any port 8472  proto udp # Canal
+sudo ufw allow in on ${INT_IF} to any port 8472  proto udp # Canal
 
 # Create Kubernete cluster
 sudo kubeadm init --apiserver-advertise-address=10.0.0.2 \

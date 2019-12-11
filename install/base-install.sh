@@ -1,9 +1,7 @@
 #!/bin/bash
 
-# Settings
+# Config
 USER=<REPLACE_ME>
-INT_IF=eth0
-EXT_IF=ens10
 
 # Setup user
 adduser ${USER}
@@ -17,7 +15,9 @@ sudo apt update
 sudo apt dist-upgrade -y
 
 # Add required hosts
-echo "10.0.0.2 cluster-endpoint simba\n10.0.0.3 timon\n10.0.0.4 pumbaa" | sudo tee -a /etc/hosts
+echo "10.0.0.2 cluster-endpoint simba
+10.0.0.3 timon
+10.0.0.4 pumbaa" | sudo tee -a /etc/hosts
 
 # Setup firewall
 sudo ufw allow OpenSSH
