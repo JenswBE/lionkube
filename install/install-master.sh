@@ -4,6 +4,7 @@
 INT_IF=ens10
 HETZNER_API_TOKEN=REPLACE_ME
 HETZNER_NETWORK_NAME=REPLACE_ME
+HETZNER_FLOATING_IP=REPLACE_ME
 
 # Kubernetes ports
 # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#check-required-ports
@@ -76,6 +77,49 @@ kubectl -n kube-system patch daemonset canal --type json -p '[{"op":"add","path"
 
 # Deploy Hetzner CSI driver
 kubectl apply -f https://raw.githubusercontent.com/hetznercloud/csi-driver/v1.2.2/deploy/kubernetes/hcloud-csi.yml
+
+# Deploy Metal LB
+kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.8.3/manifests/metallb.yaml
+cat <<EOF |kubectl apply -f-
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: metallb
+  name: metallb-config
+data:
+  config: |
+    address-pools:
+    - name: default
+      protocol: layer2
+      addresses:
+      - ${HETZNER_FLOATING_IP}/32
+EOF
+
+# Deploy Hetzner Cloud floating IP controller
+kubectl create namespace fip-controller
+kubectl apply -f https://raw.githubusercontent.com/cbeneke/hcloud-fip-controller/master/deploy/rbac.yaml
+kubectl apply -f https://raw.githubusercontent.com/cbeneke/hcloud-fip-controller/master/deploy/deployment.yaml
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fip-controller-config
+  namespace: fip-controller
+data:
+  config.json: |
+    {
+      "hcloud_floating_ips": [ "${HETZNER_FLOATING_IP}" ],
+      "node_address_type": "external"
+    }
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: fip-controller-secrets
+  namespace: fip-controller
+stringData:
+  HCLOUD_API_TOKEN: ${HETZNER_API_TOKEN}
+EOF
 
 # Get latest version of Helm
 HELM_PLATFORM=linux-amd64
