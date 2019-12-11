@@ -2,6 +2,8 @@
 
 # Config
 INT_IF=ens10
+HETZNER_API_TOKEN=REPLACE_ME
+HETZNER_NETWORK_NAME=REPLACE_ME
 
 # Kubernetes ports
 # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#check-required-ports
@@ -40,7 +42,37 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl > /dev/null
 source <(kubectl completion bash)
 
-# Canal
+# Setup Hetzner secrets
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: Secret
+metadata:
+  name: hcloud
+  namespace: kube-system
+stringData:
+  token: "${HETZNER_API_TOKEN}"
+  network: "${HETZNER_NETWORK_NAME}"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: hcloud-csi
+  namespace: kube-system
+stringData:
+  token: "${HETZNER_API_TOKEN}"
+EOF
+
+# Deploy Hetzner Cloud Controller Manager
+kubectl apply -f https://raw.githubusercontent.com/hetznercloud/hcloud-cloud-controller-manager/master/deploy/v1.5.0-networks.yaml
+
+# Canal (Pod Networking)
 kubectl apply -f https://docs.projectcalico.org/v3.8/manifests/canal.yaml
 kubectl edit configmaps --namespace=kube-system canal-config
 # ==> Set under "data" canal_iface: ens10
+
+# Make CoreDNS and Canal tolerate uninitialized nodes
+kubectl -n kube-system patch deployment coredns --type json -p '[{"op":"add","path":"/spec/template/spec/tolerations/-","value":{"key":"node.cloudprovider.kubernetes.io/uninitialized","value":"true","effect":"NoSchedule"}}]'
+kubectl -n kube-system patch daemonset canal --type json -p '[{"op":"add","path":"/spec/template/spec/tolerations/-","value":{"key":"node.cloudprovider.kubernetes.io/uninitialized","value":"true","effect":"NoSchedule"}}]'
+
+# Deploy Hetzner CSI driver
+kubectl apply -f https://raw.githubusercontent.com/hetznercloud/csi-driver/v1.2.2/deploy/kubernetes/hcloud-csi.yml
