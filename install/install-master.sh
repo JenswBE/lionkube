@@ -140,6 +140,8 @@ data:
         api:
           rule: Host(\`${TRAEFIK_DASHBOARD_DOMAIN:?}\`)
           service: api@internal
+          tls:
+            certResolver: default
           middlewares:
             - auth
       middlewares:
