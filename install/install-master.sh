@@ -5,6 +5,7 @@ INT_IF=ens10
 HETZNER_API_TOKEN=REPLACE_ME
 HETZNER_NETWORK_NAME=REPLACE_ME
 HETZNER_FLOATING_IP=REPLACE_ME
+TRAEFIK_ADMIN_MAIL=REPLACE_ME
 
 # Kubernetes ports
 # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#check-required-ports
@@ -120,6 +121,9 @@ metadata:
 stringData:
   HCLOUD_API_TOKEN: ${HETZNER_API_TOKEN}
 EOF
+
+# Deploy Traefik
+kubectl create secret generic traefik-config --from-literal=acme_email=${TRAEFIK_ADMIN_MAIL}
 
 # Deploy Longhorn (Storage provider)
 kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/master/deploy/longhorn.yaml
