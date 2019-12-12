@@ -6,11 +6,14 @@ HETZNER_API_TOKEN=REPLACE_ME
 HETZNER_NETWORK_NAME=REPLACE_ME
 HETZNER_FLOATING_IP=REPLACE_ME
 TRAEFIK_ADMIN_MAIL=REPLACE_ME
+TRAEFIK_DASHBOARD_DOMAIN=REPLACE_ME
+TRAEFIK_DASHBOARD_USER=REPLACE_ME
+TRAEFIK_DASHBOARD_PASSWORD=REPLACE_ME
 
 # Kubernetes ports
 # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#check-required-ports
-sudo ufw allow in on ${INT_IF} to any port 6443 proto tcp # Kube-api
-sudo ufw allow in on ${INT_IF} to any port 8472 proto udp # Canal
+sudo ufw allow in on ${INT_IF:?} to any port 6443 proto tcp # Kube-api
+sudo ufw allow in on ${INT_IF:?} to any port 8472 proto udp # Canal
 
 # Create Kubernetes config
 cat <<EOF > kubeadm-conf.yml
@@ -52,8 +55,8 @@ metadata:
   name: hcloud
   namespace: kube-system
 stringData:
-  token: "${HETZNER_API_TOKEN}"
-  network: "${HETZNER_NETWORK_NAME}"
+  token: "${HETZNER_API_TOKEN:?}"
+  network: "${HETZNER_NETWORK_NAME:?}"
 ---
 apiVersion: v1
 kind: Secret
@@ -61,7 +64,7 @@ metadata:
   name: hcloud-csi
   namespace: kube-system
 stringData:
-  token: "${HETZNER_API_TOKEN}"
+  token: "${HETZNER_API_TOKEN:?}"
 EOF
 
 # Deploy Hetzner Cloud Controller Manager
@@ -93,7 +96,7 @@ data:
     - name: default
       protocol: layer2
       addresses:
-      - ${HETZNER_FLOATING_IP}
+      - ${HETZNER_FLOATING_IP:?}
 EOF
 
 # Deploy Hetzner Cloud floating IP controller
@@ -109,7 +112,7 @@ metadata:
 data:
   config.json: |
     {
-      "hcloud_floating_ips": [ "${HETZNER_FLOATING_IP}" ],
+      "hcloud_floating_ips": [ "${HETZNER_FLOATING_IP:?}" ],
       "node_address_type": "external"
     }
 ---
@@ -119,11 +122,32 @@ metadata:
   name: fip-controller-secrets
   namespace: fip-controller
 stringData:
-  HCLOUD_API_TOKEN: ${HETZNER_API_TOKEN}
+  HCLOUD_API_TOKEN: ${HETZNER_API_TOKEN:?}
 EOF
 
 # Deploy Traefik
-kubectl create secret generic traefik-config --from-literal=acme_email=${TRAEFIK_ADMIN_MAIL}
+sudo apt install -y apache2-utils
+kubectl create secret generic traefik-config --from-literal=acme_email=${TRAEFIK_ADMIN_MAIL:?}
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traefik-config
+data:
+  config: |
+    http:
+      routers:
+        api:
+          rule: Host(`${TRAEFIK_DASHBOARD_DOMAIN:?}`)
+          service: api@internal
+          middlewares:
+            - auth
+      middlewares:
+        auth:
+          basicAuth:
+            usersFile: "/traefik/users/dashboard/users"
+EOF
+kubectl create secret generic traefik-users-dashboard --from-literal=users=$(htpasswd -bnBC 10 "${TRAEFIK_DASHBOARD_USER:?}" ${TRAEFIK_DASHBOARD_PASSWORD:?})
 
 # Deploy Longhorn (Storage provider)
 kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/master/deploy/longhorn.yaml

@@ -32,6 +32,7 @@ spec:
             - --accesslog
             - --entrypoints.web.Address=:80
             - --entrypoints.websecure.Address=:443
+            - --providers.file.directory=/traefik/conf
             - --providers.kubernetescrd
             - --certificatesresolvers.default.acme.tlschallenge
             - --certificatesresolvers.default.acme.storage=acme.json
@@ -41,6 +42,11 @@ spec:
                 secretKeyRef:
                   name: traefik-config
                   key: acme_email
+          volumeMounts:
+            - name: config-volume
+              mountPath: /traefik/config
+            - name: users-dashboard
+              mountPath: /traefik/users/dashboard
           ports:
             - name: web
               containerPort: 80
@@ -48,3 +54,13 @@ spec:
               containerPort: 443
             - name: admin
               containerPort: 8080
+      volumes:
+        - name: config-volume
+          configMap:
+            name: traefik-config
+            items:
+              - key: config
+                path: config.yml
+        - name: users-dashboard
+          secret:
+            secretName: traefik-users-dashboard
