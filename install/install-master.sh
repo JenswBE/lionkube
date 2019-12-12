@@ -84,15 +84,15 @@ cat <<EOF |kubectl apply -f-
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  namespace: metallb
-  name: metallb-config
+  namespace: metallb-system
+  name: config
 data:
   config: |
     address-pools:
     - name: default
       protocol: layer2
       addresses:
-      - ${HETZNER_FLOATING_IP}/32
+      - ${HETZNER_FLOATING_IP}
 EOF
 
 # Deploy Hetzner Cloud floating IP controller
