@@ -121,6 +121,9 @@ stringData:
   HCLOUD_API_TOKEN: ${HETZNER_API_TOKEN}
 EOF
 
+# Deploy Longhorn (Storage provider)
+kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/master/deploy/longhorn.yaml
+
 # Get latest version of Helm
 HELM_PLATFORM=linux-amd64
 HELM_VERSION=$(curl -Ls -o /dev/null -w %{url_effective} "https://github.com/helm/helm/releases/latest" | grep -oE "[^/]+$" )
