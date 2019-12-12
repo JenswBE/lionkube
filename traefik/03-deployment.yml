@@ -32,7 +32,7 @@ spec:
             - --accesslog
             - --entrypoints.web.Address=:80
             - --entrypoints.websecure.Address=:443
-            - --providers.file.directory=/traefik/conf
+            - --providers.file.filename=/traefik/config/config.yml
             - --providers.kubernetescrd
             - --certificatesresolvers.default.acme.tlschallenge
             - --certificatesresolvers.default.acme.storage=acme.json

@@ -138,7 +138,7 @@ data:
     http:
       routers:
         api:
-          rule: Host(`${TRAEFIK_DASHBOARD_DOMAIN:?}`)
+          rule: Host(\`${TRAEFIK_DASHBOARD_DOMAIN:?}\`)
           service: api@internal
           middlewares:
             - auth
