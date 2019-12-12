@@ -143,9 +143,9 @@ data:
           tls:
             certResolver: default
           middlewares:
-            - auth
+            - dashboard-auth
       middlewares:
-        auth:
+        dashboard-auth:
           basicAuth:
             usersFile: "/traefik/users/dashboard/users"
 EOF
