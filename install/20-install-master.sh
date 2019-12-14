@@ -55,6 +55,11 @@ kubectl create secret generic traefik-users-dashboard --from-literal=users=$(htp
 kubectl apply -f ../components/Traefik/02-services.yml
 kubectl apply -f ../components/Traefik/03-deployment.yml
 
+# Deploy Cert-manager
+kubectl create namespace cert-manager
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.12.0/cert-manager.yaml
+
+
 # Deploy Longhorn (Storage provider)
 kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/master/deploy/longhorn.yaml
 kubectl delete --namespace=longhorn-system svc longhorn-frontend

@@ -14,6 +14,21 @@ spec:
 
 ---
 
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  namespace: traefik
+  name: longhorn-frontend
+spec:
+  secretName: tls-longhorn-frontend
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-staging
+  dnsNames:
+  - ${LONGHORN_DOMAIN}
+
+---
+
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
@@ -29,4 +44,4 @@ spec:
     - name: longhorn-frontend
       port: 80
   tls:
-    certResolver: default
+    secretName: tls-longhorn-frontend

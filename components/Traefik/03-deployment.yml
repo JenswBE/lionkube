@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  namespace: default
+  namespace: traefik
   name: traefik-ingress-controller
 
 ---
@@ -9,7 +9,7 @@ metadata:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  namespace: default
+  namespace: traefik
   name: traefik
   labels:
     app: traefik
@@ -30,17 +30,9 @@ spec:
           image: traefik:v2.1
           args:
             - --configFile=/traefik/config/config.yml
-          env:
-            - name: TRAEFIK_CERTIFICATESRESOLVERS_DEFAULT_ACME_EMAIL
-              valueFrom:
-                secretKeyRef:
-                  name: traefik-config
-                  key: acme_email
           volumeMounts:
             - name: config
               mountPath: /traefik/config
-            - name: routers
-              mountPath: /traefik/routers
             - name: users
               mountPath: /traefik/users
           ports:
@@ -48,6 +40,8 @@ spec:
               containerPort: 80
             - name: websecure
               containerPort: 443
+            - name: api
+              containerPort: 8080
       volumes:
         - name: config
           configMap:
@@ -55,14 +49,6 @@ spec:
             items:
               - key: config
                 path: config.yml
-        - name: routers
-          projected:
-            sources:
-              - configMap:
-                  name: traefik-routers-dashboard
-                  items:
-                    - key: routers
-                      path: dashboard.yml
         - name: users
           projected:
             sources:

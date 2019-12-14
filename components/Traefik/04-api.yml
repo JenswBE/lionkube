@@ -1,0 +1,44 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  namespace: traefik
+  name: traefik-api
+spec:
+  secretName: tls-traefik-api
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-staging
+  dnsNames:
+  - ${TRAEFIK_API_DOMAIN}
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  namespace: traefik
+  name: dashboard-auth
+spec:
+  basicAuth:
+    usersFile: "/traefik/users/dashboard"
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  namespace: traefik
+  name: traefik-api
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`${TRAEFIK_DASHBOARD_DOMAIN}`)
+    kind: Rule
+    services:
+    - name: traefik-api
+      port: 80
+  middlewares:
+    - name: dashboard-auth
+  tls:
+    secretName: tls-traefik-api

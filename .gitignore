@@ -14,6 +14,7 @@
 !/install/30-install-worker.sh
 
 !/components
+!/components/Cert-manager.yml
 !/components/Hetzner.yml
 !/components/Longhorn.yml
 !/components/MetalLB.yml
@@ -23,4 +24,5 @@
 !/components/Traefik/01-config.yml
 !/components/Traefik/02-services.yml
 !/components/Traefik/03-deployment.yml
-!/components/Traefik/04-whoami_example.yml
+!/components/Traefik/04-api.yml
+!/components/Traefik/05-whoami_example.yml
