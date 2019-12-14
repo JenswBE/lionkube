@@ -64,6 +64,8 @@ envsubst < ../components/Traefik/04-api.yml | kubectl apply -f -
 # Deploy Longhorn (Storage provider)
 kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/master/deploy/longhorn.yaml
 kubectl delete --namespace=longhorn-system svc longhorn-frontend
+kubectl create secret generic --namespace=longhorn-system traefik-users-longhorn \
+    --from-literal=users="$(htpasswd -bnBC 10 "${LONGHORN_USER:?}" ${LONGHORN_PASSWORD:?} | tr -d '\n')"
 envsubst < ../components/Longhorn.yml | kubectl apply -f -
 
 # Get latest version of Helm

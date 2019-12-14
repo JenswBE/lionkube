@@ -30,6 +30,17 @@ spec:
 ---
 
 apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  namespace: longhorn-system
+  name: longhorn-auth
+spec:
+  basicAuth:
+    secret: traefik-users-longhorn
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   namespace: longhorn-system
