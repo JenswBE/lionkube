@@ -31,6 +31,7 @@ metadata:
   name: traefik-api
 spec:
   entryPoints:
+    - web
     - websecure
   routes:
     - match: "Host(`${TRAEFIK_API_DOMAIN}`)"
