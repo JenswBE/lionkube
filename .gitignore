@@ -2,18 +2,24 @@
 /**
 
 # Whitelist allowed
+!/config.template.sh
 !/README.md
 !/.gitignore
 
 !/install/
-!/install/00-configuration.template.sh
-!/install/01-base-install.sh
-!/install/02-install-master.sh
-!/install/03-install-worker.sh
+!/install/10-base-install.sh
+!/install/20-install-master.sh
+!/install/21-kubeadm-conf.yml
+!/install/30-install-worker.sh
 
-!/traefik
-!/traefik/00-definitions.yml
-!/traefik/01-configuration.yml
-!/traefik/02-services.yml
-!/traefik/03-deployment.yml
-!/traefik/04-whoami_example.yml
+!/components
+!/components/Hetzner.yml
+!/components/Longhorn.yml
+!/components/MetalLB.yml
+
+!/components/Traefik
+!/components/Traefik/00-definitions.yml
+!/components/Traefik/01-config.yml
+!/components/Traefik/02-services.yml
+!/components/Traefik/03-deployment.yml
+!/components/Traefik/04-whoami_example.yml

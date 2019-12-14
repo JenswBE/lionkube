@@ -69,4 +69,4 @@ spec:
     - name: whoami
       port: 80
   tls:
-    certResolver: default
+    certResolver: staging

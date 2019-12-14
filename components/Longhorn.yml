@@ -1,0 +1,30 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: longhorn-ui
+  name: longhorn-frontend
+  namespace: longhorn-system
+spec:
+  selector:
+    app: longhorn-ui
+  ports:
+  - port: 80
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: longhorn-frontend
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`${LONGHORN_DOMAIN}`)
+    kind: Rule
+    services:
+    - name: whoami
+      port: 80
+  tls:
+    certResolver: default

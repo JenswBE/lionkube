@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Load config
-source ./00-configuration.sh
+source ../config.sh
 
 # Setup user
 adduser ${USER:?}
@@ -48,9 +48,7 @@ sudo adduser ${USER:?} docker
 
 # Setup Kubernetes
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-sudo tee /etc/apt/sources.list.d/kubernetes.list <<EOF
-deb https://apt.kubernetes.io/ kubernetes-xenial main
-EOF
+echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 sudo apt update
 sudo apt install -y kubelet kubeadm kubectl

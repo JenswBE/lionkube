@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Load config
-source ./00-configuration.sh
+source ../config.sh
 
 # Firewall
 sudo ufw allow in on ${INT_IF:?} to any port 10250 proto tcp # Kubelet
@@ -13,8 +13,7 @@ KUBELET_EXTRA_ARGS=--cloud-provider=external
 EOF
 
 # Cluster worker join
-sudo kubeadm join cluster-endpoint:6443 --token ilcokw.423bkb8y4yll10c2 \
-    --discovery-token-ca-cert-hash sha256:8dc950495ea73ed02bc79e1de53fefb8fcb035c6727577d679184df191632d3d
+sudo kubeadm join cluster-endpoint:6443 --token REPLACE_ME --discovery-token-ca-cert-hash REPLACE_ME
 
 # Floating IP
 echo -e "auto ${EXT_IF:?}:1

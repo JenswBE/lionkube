@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traefik-config
+data:
+  config: |
+    entryPoints:
+      web:
+        address: ":80"
+      websecure:
+        address: ":443"
+
+    providers:
+      file:
+        directory: "/traefik/routers/"
+        watch: true
+      kubernetesIngress: {}
+      kubernetesCRD: {}
+
+    api:
+      insecure: false
+      dashboard: true
+
+    certificatesResolvers:
+      default:
+        acme:
+          email: ${TRAEFIK_ADMIN_MAIL}
+          tlschallenge: {}
+          storage: acme.json
+      staging:
+        acme:
+          email: ${TRAEFIK_ADMIN_MAIL}
+          tlschallenge: {}
+          storage: acme-staging.json
+          caServer: https://acme-staging-v02.api.letsencrypt.org/directory
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traefik-routers-dashboard
+data:
+  routers: |
+    http:
+      routers:
+        api:
+          rule: Host(`${TRAEFIK_DASHBOARD_DOMAIN}`)
+          service: api@internal
+          tls:
+            certResolver: default
+          middlewares:
+            - dashboard-auth
+      middlewares:
+        dashboard-auth:
+          basicAuth:
+            usersFile: "/traefik/users/dashboard"
