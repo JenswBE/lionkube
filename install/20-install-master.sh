@@ -53,7 +53,7 @@ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.1
 
 # Deploy Traefik
 sudo apt install -y apache2-utils
-kubectl apply -f ../components/Traefik/00-definitions.yml
+kubectl apply -f ../components/Traefik/00-crd.yml
 envsubst < ../components/Traefik/01-config.yml | kubectl apply -f -
 kubectl create secret generic --namespace=traefik traefik-users-api \
     --from-literal=users="$(htpasswd -bnBC 10 "${TRAEFIK_API_USER:?}" ${TRAEFIK_API_PASSWORD:?} | base64)"
