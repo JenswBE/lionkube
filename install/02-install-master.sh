@@ -135,12 +135,13 @@ data:
 
     providers:
       file:
-        directory: "/traefik/routes/"
+        directory: "/traefik/routers/"
         watch: true
-      kubernetesIngress:
-      kubernetesCRD:
+      kubernetesIngress: {}
+      kubernetesCRD: {}
 
     api:
+      insecure: false
       dashboard: true
 
     certificatesResolvers:
