@@ -1,5 +1,3 @@
-# Copy me to 00-configuration.sh and fill required values
-
 # General
 export USER=REPLACE_ME
 export INT_IF=ens10
