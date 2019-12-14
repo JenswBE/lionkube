@@ -47,18 +47,18 @@ kubectl create namespace fip-controller
 kubectl apply -f https://raw.githubusercontent.com/cbeneke/hcloud-fip-controller/master/deploy/rbac.yaml
 kubectl apply -f https://raw.githubusercontent.com/cbeneke/hcloud-fip-controller/master/deploy/deployment.yaml
 
-# Deploy Traefik
-sudo apt install -y apache2-utils
-kubectl apply -f ../components/Traefik/00-definitions.yml
-envsubst < ../components/Traefik/01-config.yml | kubectl apply -f -
-kubectl create secret generic traefik-users-dashboard --from-literal=users=$(htpasswd -bnBC 10 "${TRAEFIK_DASHBOARD_USER:?}" ${TRAEFIK_DASHBOARD_PASSWORD:?})
-kubectl apply -f ../components/Traefik/02-services.yml
-kubectl apply -f ../components/Traefik/03-deployment.yml
-
 # Deploy Cert-manager
 kubectl create namespace cert-manager
 kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.12.0/cert-manager.yaml
 
+# Deploy Traefik
+sudo apt install -y apache2-utils
+kubectl apply -f ../components/Traefik/00-definitions.yml
+envsubst < ../components/Traefik/01-config.yml | kubectl apply -f -
+kubectl create secret generic --namespace=traefik traefik-users-dashboard --from-literal=users=$(htpasswd -bnBC 10 "${TRAEFIK_DASHBOARD_USER:?}" ${TRAEFIK_DASHBOARD_PASSWORD:?})
+kubectl apply -f ../components/Traefik/02-services.yml
+kubectl apply -f ../components/Traefik/03-deployment.yml
+envsubst < ../components/Traefik/04-api.yml | kubectl apply -f -
 
 # Deploy Longhorn (Storage provider)
 kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/master/deploy/longhorn.yaml

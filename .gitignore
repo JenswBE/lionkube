@@ -20,7 +20,7 @@
 !/components/MetalLB.yml
 
 !/components/Traefik
-!/components/Traefik/00-definitions.yml
+!/components/Traefik/00-crd.yml
 !/components/Traefik/01-config.yml
 !/components/Traefik/02-services.yml
 !/components/Traefik/03-deployment.yml
