@@ -41,7 +41,8 @@ spec:
     - match: Host(`${LONGHORN_DOMAIN}`)
       kind: Rule
       services:
-        - name: blackhole
+        - namespace: traefik
+          name: blackhole
           port: 80
       middlewares:
         - namespace: traefik
