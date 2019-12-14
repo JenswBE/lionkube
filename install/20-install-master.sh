@@ -56,7 +56,7 @@ sudo apt install -y apache2-utils
 kubectl apply -f ../components/Traefik/00-crd.yml
 envsubst < ../components/Traefik/01-config.yml | kubectl apply -f -
 kubectl create secret generic --namespace=traefik traefik-users-api \
-    --from-literal=users="$(htpasswd -bnBC 10 "${TRAEFIK_API_USER:?}" ${TRAEFIK_API_PASSWORD:?} | base64)"
+    --from-literal=users="$(htpasswd -bnBC 10 "${TRAEFIK_API_USER:?}" ${TRAEFIK_API_PASSWORD:?} | tr -d '\n')"
 kubectl apply -f ../components/Traefik/02-services.yml
 kubectl apply -f ../components/Traefik/03-deployment.yml
 envsubst < ../components/Traefik/04-api.yml | kubectl apply -f -
