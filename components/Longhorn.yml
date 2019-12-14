@@ -17,7 +17,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: longhorn-frontend
-  namespace: default
+  namespace: longhorn-system
 spec:
   entryPoints:
     - websecure
