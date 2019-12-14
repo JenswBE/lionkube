@@ -60,7 +60,7 @@ spec:
               - configMap:
                   name: traefik-routers-dashboard
                   items:
-                    - key: config
+                    - key: routers
                       path: dashboard.yml
         - name: users
           projected:
