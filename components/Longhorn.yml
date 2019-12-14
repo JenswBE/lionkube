@@ -23,7 +23,7 @@ spec:
   secretName: tls-longhorn-frontend
   issuerRef:
     kind: ClusterIssuer
-    name: letsencrypt-staging
+    name: letsencrypt
   dnsNames:
   - ${LONGHORN_DOMAIN}
 
