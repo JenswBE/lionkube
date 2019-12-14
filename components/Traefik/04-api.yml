@@ -33,10 +33,10 @@ spec:
   entryPoints:
     - websecure
   routes:
-  - match: Host(`${TRAEFIK_API_DOMAIN}`)
+  - match: "Host(`${TRAEFIK_API_DOMAIN}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
     kind: Rule
     services:
-    - name: traefik-api
+    - name: traefik
       port: 80
   middlewares:
     - name: api-auth

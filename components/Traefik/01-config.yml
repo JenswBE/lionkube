@@ -25,6 +25,17 @@ data:
       kubernetesCRD: {}
 
     api:
-      # API will only be exposed through secure IngressRoute
-      insecure: true
+      insecure: false
       dashboard: true
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  namespace: traefik
+  name: https-only
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
