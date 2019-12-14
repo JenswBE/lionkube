@@ -12,6 +12,7 @@ spec:
     app: whoami
 
 ---
+
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -38,6 +39,7 @@ spec:
               containerPort: 80
 
 ---
+
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
@@ -47,13 +49,14 @@ spec:
   entryPoints:
     - web
   routes:
-  - match: Host(`your.domain.com`) && PathPrefix(`/notls`)
+  - match: Host(`whoami.${CLUSTER_DOMAIN}`) && PathPrefix(`/notls`)
     kind: Rule
     services:
     - name: whoami
       port: 80
 
 ---
+
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
@@ -63,7 +66,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-  - match: Host(`your.domain.com`) && PathPrefix(`/tls`)
+  - match: Host(`whoami.${CLUSTER_DOMAIN}`) && PathPrefix(`/tls`)
     kind: Rule
     services:
     - name: whoami

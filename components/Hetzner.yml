@@ -6,7 +6,9 @@ metadata:
 stringData:
   token: "${HETZNER_API_TOKEN}"
   network: "${HETZNER_NETWORK_NAME}"
+
 ---
+
 apiVersion: v1
 kind: Secret
 metadata:
@@ -14,7 +16,9 @@ metadata:
   namespace: kube-system
 stringData:
   token: "${HETZNER_API_TOKEN}"
+
 ---
+
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -26,7 +30,9 @@ data:
       "hcloud_floating_ips": [ "${HETZNER_FLOATING_IP}" ],
       "node_address_type": "external"
     }
+
 ---
+
 apiVersion: v1
 kind: Secret
 metadata:

@@ -5,6 +5,7 @@ metadata:
   name: traefik-ingress-controller
 
 ---
+
 kind: Deployment
 apiVersion: apps/v1
 metadata:
