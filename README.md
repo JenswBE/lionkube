@@ -1,7 +1,8 @@
 # LionKube
 Reference to install and configure a Kubernetes cluster
 
-Copy `config.template.sh` to `config.sh` and update accordingly to your needs.
+1. Copy `config.template.sh` to `config.sh` and update accordingly to your needs.
+2. Set strict permissions with `chmod 700 config.sh`.
 
 ## Components
 - [Hetzner Cloud Controller Manager (Hetzner Cloud API integration)](https://github.com/hetznercloud/hcloud-cloud-controller-manager)
