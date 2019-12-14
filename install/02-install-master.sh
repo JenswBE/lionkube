@@ -147,7 +147,7 @@ data:
       default:
         acme:
           email: ${TRAEFIK_ADMIN_MAIL:?}
-          tlschallenge:
+          tlschallenge: {}
           storage: acme.json
 EOF
 
