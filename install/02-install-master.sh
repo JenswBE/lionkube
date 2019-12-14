@@ -1,14 +1,7 @@
 #!/bin/bash
 
-# Config
-INT_IF=ens10
-HETZNER_API_TOKEN=REPLACE_ME
-HETZNER_NETWORK_NAME=REPLACE_ME
-HETZNER_FLOATING_IP=REPLACE_ME
-TRAEFIK_ADMIN_MAIL=REPLACE_ME
-TRAEFIK_DASHBOARD_DOMAIN=REPLACE_ME
-TRAEFIK_DASHBOARD_USER=REPLACE_ME
-TRAEFIK_DASHBOARD_PASSWORD=REPLACE_ME
+# Load config
+source ./00-configuration.sh
 
 # Kubernetes ports
 # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#check-required-ports
@@ -153,6 +146,39 @@ kubectl create secret generic traefik-users-dashboard --from-literal=users=$(htp
 
 # Deploy Longhorn (Storage provider)
 kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/master/deploy/longhorn.yaml
+kubectl delete --namespace=longhorn-system svc longhorn-frontend
+cat <<EOF | kubectl apply -f -
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: longhorn-ui
+  name: longhorn-frontend
+  namespace: longhorn-system
+spec:
+  selector:
+    app: longhorn-ui
+  ports:
+  - port: 80
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ingressroutetls
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`your.domain.com`) && PathPrefix(`/tls`)
+    kind: Rule
+    services:
+    - name: whoami
+      port: 80
+  tls:
+    certResolver: default
+EOF
 
 # Get latest version of Helm
 HELM_PLATFORM=linux-amd64

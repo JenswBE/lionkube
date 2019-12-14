@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Config
-USER=<REPLACE_ME>
+# Load config
+source ./00-configuration.sh
 
 # Setup user
-adduser ${USER}
-adduser ${USER} sudo
+adduser ${USER:?}
+adduser ${USER:?} sudo
 
 # Switch to new user
 passwd -ld root
@@ -44,7 +44,7 @@ EOF
 sudo mkdir -p /etc/systemd/system/docker.service.d
 sudo systemctl daemon-reload
 sudo systemctl restart docker
-sudo adduser ${USER} docker
+sudo adduser ${USER:?} docker
 
 # Setup Kubernetes
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
