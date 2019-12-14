@@ -1,10 +1,10 @@
 kind: Service
 apiVersion: v1
 metadata:
+  namespace: longhorn-system
+  name: longhorn-frontend
   labels:
     app: longhorn-ui
-  name: longhorn-frontend
-  namespace: longhorn-system
 spec:
   selector:
     app: longhorn-ui
@@ -17,7 +17,7 @@ spec:
 apiVersion: cert-manager.io/v1alpha2
 kind: Certificate
 metadata:
-  namespace: traefik
+  namespace: longhorn-system
   name: longhorn-frontend
 spec:
   secretName: tls-longhorn-frontend
@@ -32,8 +32,8 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: longhorn-frontend
   namespace: longhorn-system
+  name: longhorn-frontend
 spec:
   entryPoints:
     - websecure
