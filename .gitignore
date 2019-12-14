@@ -3,6 +3,7 @@
 
 # Whitelist allowed
 !/config.template.sh
+!/kube-apply-env
 !/README.md
 !/.gitignore
 

@@ -1,0 +1,4 @@
+#!/bin/bash
+# Helper to substitute env variables and apply file
+
+envsubst < "$(pwd)/${1}" | kubectl apply -f -
