@@ -38,8 +38,6 @@ spec:
               containerPort: 80
             - name: websecure
               containerPort: 443
-            - name: api
-              containerPort: 8080
       volumes:
         - name: config
           configMap:

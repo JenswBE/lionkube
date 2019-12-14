@@ -17,8 +17,6 @@ data:
         address: ":80"
       websecure:
         address: ":443"
-      traefik:
-        address: ":8080"
 
     providers:
       kubernetesIngress: {}
