@@ -25,7 +25,7 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - name: dashboard
+    - name: api
       protocol: TCP
       port: 80
       targetPort: 8080

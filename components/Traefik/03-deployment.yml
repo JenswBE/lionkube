@@ -33,8 +33,6 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /traefik/config
-            - name: users
-              mountPath: /traefik/users
           ports:
             - name: web
               containerPort: 80
@@ -49,11 +47,3 @@ spec:
             items:
               - key: config
                 path: config.yml
-        - name: users
-          projected:
-            sources:
-              - secret:
-                  name: traefik-users-dashboard
-                  items:
-                    - key: users
-                      path: dashboard

@@ -55,7 +55,8 @@ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.1
 sudo apt install -y apache2-utils
 kubectl apply -f ../components/Traefik/00-definitions.yml
 envsubst < ../components/Traefik/01-config.yml | kubectl apply -f -
-kubectl create secret generic --namespace=traefik traefik-users-dashboard --from-literal=users=$(htpasswd -bnBC 10 "${TRAEFIK_DASHBOARD_USER:?}" ${TRAEFIK_DASHBOARD_PASSWORD:?})
+kubectl create secret generic --namespace=traefik traefik-users-api \
+    --from-literal=users="$(htpasswd -bnBC 10 "${TRAEFIK_API_USER:?}" ${TRAEFIK_API_PASSWORD:?} | base64)"
 kubectl apply -f ../components/Traefik/02-services.yml
 kubectl apply -f ../components/Traefik/03-deployment.yml
 envsubst < ../components/Traefik/04-api.yml | kubectl apply -f -

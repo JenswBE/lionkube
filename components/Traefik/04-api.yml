@@ -17,10 +17,10 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   namespace: traefik
-  name: dashboard-auth
+  name: api-auth
 spec:
   basicAuth:
-    usersFile: "/traefik/users/dashboard"
+    secret: traefik-users-api
 
 ---
 
@@ -33,12 +33,12 @@ spec:
   entryPoints:
     - websecure
   routes:
-  - match: Host(`${TRAEFIK_DASHBOARD_DOMAIN}`)
+  - match: Host(`${TRAEFIK_API_DOMAIN}`)
     kind: Rule
     services:
     - name: traefik-api
       port: 80
   middlewares:
-    - name: dashboard-auth
+    - name: api-auth
   tls:
     secretName: tls-traefik-api
