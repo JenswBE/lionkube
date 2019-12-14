@@ -1,3 +1,5 @@
+# Copy me to 00-configuration.sh and fill required values
+
 # General
 USER=REPLACE_ME
 INT_IF=ens10

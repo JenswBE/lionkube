@@ -1,0 +1,18 @@
+# Blacklist all
+/**
+
+# Whitelist allowed
+!/README.md
+!/.gitignore
+
+!/install/
+!/install/00-configuration.template.sh
+!/install/01-base-install.sh
+!/install/02-install-master.sh
+!/install/03-install-worker.sh
+
+!/traefik
+!/traefik/01-definitions.yml
+!/traefik/02-services.yml
+!/traefik/03-deployment.yml
+!/traefik/04-whoami_example.yml
