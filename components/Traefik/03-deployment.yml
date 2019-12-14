@@ -45,3 +45,30 @@ spec:
             items:
               - key: config
                 path: config.yml
+
+---
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  namespace: traefik
+  name: blackhole
+  labels:
+    app: blackhole
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blackhole
+  template:
+    metadata:
+      labels:
+        app: blackhole
+    spec:
+      containers:
+        - name: blackhole
+          image: k8s.gcr.io/pause
+          ports:
+            - name: web
+              containerPort: 80

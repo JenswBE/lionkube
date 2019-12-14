@@ -14,3 +14,19 @@ spec:
       port: 443
   selector:
     app: traefik
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: traefik
+  name: blackhole
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+  selector:
+    app: blackhole

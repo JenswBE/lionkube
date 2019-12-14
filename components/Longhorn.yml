@@ -36,6 +36,26 @@ metadata:
   name: longhorn-frontend
 spec:
   entryPoints:
+    - web
+  routes:
+  - match: Host(`${LONGHORN_DOMAIN}`)
+      kind: Rule
+      services:
+        - name: blackhole
+          port: 80
+      middlewares:
+        - namespace: traefik
+          name: https-redirect
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  namespace: longhorn-system
+  name: longhorn-frontend-secure
+spec:
+  entryPoints:
     - websecure
   routes:
   - match: Host(`${LONGHORN_DOMAIN}`)

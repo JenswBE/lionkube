@@ -32,6 +32,24 @@ metadata:
 spec:
   entryPoints:
     - web
+  routes:
+    - match: "Host(`${TRAEFIK_API_DOMAIN}`)"
+      kind: Rule
+      services:
+        - name: blackhole
+          port: 80
+      middlewares:
+        - name: https-redirect
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  namespace: traefik
+  name: traefik-api-secure
+spec:
+  entryPoints:
     - websecure
   routes:
     - match: "Host(`${TRAEFIK_API_DOMAIN}`)"
@@ -40,7 +58,6 @@ spec:
         - kind: TraefikService
           name: api@internal
       middlewares:
-        - name: https-only
         - name: api-auth
   tls:
     secretName: tls-traefik-api
