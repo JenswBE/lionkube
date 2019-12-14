@@ -28,14 +28,7 @@ spec:
         - name: traefik
           image: traefik:v2.1
           args:
-            - --api.dashboard=true
-            - --accesslog
-            - --entrypoints.web.Address=:80
-            - --entrypoints.websecure.Address=:443
-            - --providers.file.filename=/traefik/config/config.yml
-            - --providers.kubernetescrd
-            - --certificatesresolvers.default.acme.tlschallenge
-            - --certificatesresolvers.default.acme.storage=acme.json
+            - --configFile=/traefik/config/config.yml
           env:
             - name: TRAEFIK_CERTIFICATESRESOLVERS_DEFAULT_ACME_EMAIL
               valueFrom:
@@ -43,22 +36,37 @@ spec:
                   name: traefik-config
                   key: acme_email
           volumeMounts:
-            - name: config-volume
+            - name: config
               mountPath: /traefik/config
-            - name: users-dashboard
-              mountPath: /traefik/users/dashboard
+            - name: routers
+              mountPath: /traefik/routers
+            - name: users
+              mountPath: /traefik/users
           ports:
             - name: web
               containerPort: 80
             - name: websecure
               containerPort: 443
       volumes:
-        - name: config-volume
+        - name: config
           configMap:
             name: traefik-config
             items:
               - key: config
                 path: config.yml
-        - name: users-dashboard
-          secret:
-            secretName: traefik-users-dashboard
+        - name: routers
+          projected:
+            sources:
+              - configMap:
+                  name: traefik-routers-dashboard
+                  items:
+                    - key: config
+                      path: dashboard.yml
+        - name: users
+          projected:
+            sources:
+              - secret:
+                  name: traefik-users-dashboard
+                  items:
+                    - key: users
+                      path: dashboard

@@ -12,7 +12,8 @@
 !/install/03-install-worker.sh
 
 !/traefik
-!/traefik/01-definitions.yml
+!/traefik/00-definitions.yml
+!/traefik/01-configuration.yml
 !/traefik/02-services.yml
 !/traefik/03-deployment.yml
 !/traefik/04-whoami_example.yml

@@ -120,7 +120,6 @@ EOF
 
 # Deploy Traefik
 sudo apt install -y apache2-utils
-kubectl create secret generic traefik-config --from-literal=acme_email=${TRAEFIK_ADMIN_MAIL:?}
 cat <<EOF | kubectl apply -f -
 apiVersion: v1
 kind: ConfigMap
@@ -128,6 +127,37 @@ metadata:
   name: traefik-config
 data:
   config: |
+    entryPoints:
+      web:
+        address: ":80"
+      websecure:
+        address: ":443"
+
+    providers:
+      file:
+        directory: "/traefik/routes/"
+        watch: true
+      kubernetesIngress:
+      kubernetesCRD:
+
+    api:
+      dashboard: true
+
+    certificatesResolvers:
+      default:
+        acme:
+          email: ${TRAEFIK_ADMIN_MAIL:?}
+          tlschallenge:
+          storage: acme.json
+EOF
+
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traefik-routers-dashboard
+data:
+  routers: |
     http:
       routers:
         api:
@@ -140,9 +170,11 @@ data:
       middlewares:
         dashboard-auth:
           basicAuth:
-            usersFile: "/traefik/users/dashboard/users"
+            usersFile: "/traefik/users/dashboard"
 EOF
+
 kubectl create secret generic traefik-users-dashboard --from-literal=users=$(htpasswd -bnBC 10 "${TRAEFIK_DASHBOARD_USER:?}" ${TRAEFIK_DASHBOARD_PASSWORD:?})
+kubectl apply -f ../traefik/
 
 # Deploy Longhorn (Storage provider)
 kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/master/deploy/longhorn.yaml
