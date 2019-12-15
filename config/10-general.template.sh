@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# Load me with "source" command of Bash
 
 # General
 export USER=REPLACE_ME

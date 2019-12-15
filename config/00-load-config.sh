@@ -1,7 +1,19 @@
-#!/usr/bin/env bash
+# Load me with "source" command of Bash
 
-cd "${BASH_SOURCE%/*}/" || exit 1 # BASH_SOURCE not set
+# Get config dir
+CONFIG_DIR="${BASH_SOURCE%/*}"
 
-source ./10-general.sh
-source ./20-components.sh
-source ./30-services.sh
+# Load general config
+CONF_GEN=${CONFIG_DIR}/10-general.sh
+echo "Loading config from ${CONF_GEN} ..."
+source "${CONF_GEN}"
+
+# Load components config
+CONF_COMP=${CONFIG_DIR}/20-components.sh
+echo "Loading config from ${CONF_COMP} ..."
+source "${CONF_COMP}"
+
+# Load services config
+CONF_SVC=${CONFIG_DIR}/30-services.sh
+echo "Loading config from ${CONF_SVC} ..."
+source "${CONF_SVC}"

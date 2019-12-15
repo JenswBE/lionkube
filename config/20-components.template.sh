@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# Load me with "source" command of Bash
 
 # Hetzner
 export HETZNER_API_TOKEN=REPLACE_ME
