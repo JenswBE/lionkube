@@ -15,7 +15,7 @@ ARG_OVPN_ECC="-e EASYRSA_ALGO=ec -e EASYRSA_CURVE=secp384r1 ${ARG_OVPN}"
 # Generate configs
 # -n: DNS entries for DNS.Watch and CloudFlare
 docker run ${ARG_OVPN} ovpn_genconfig \
-    -u udp://${OPENVPN_DOMAIN} \
+    -u udp://${OPENVPN_DOMAIN}:${OPENVPN_PORT} \
     -C 'AES-256-GCM' -a 'SHA384' -T 'TLS-ECDHE-ECDSA-WITH-AES-256-GCM-SHA384' \
     -n 84.200.69.80 -n 84.200.70.40 -n 1.1.1.1 -n 1.0.0.1
 
