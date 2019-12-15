@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Load config
-source ../config.sh
+source ../../config/00-load-config.sh
 
 # Setup user
 adduser ${USER:?}

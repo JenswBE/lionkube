@@ -2,27 +2,39 @@
 /**
 
 # Whitelist allowed
-!/config.template.sh
 !/kube-apply-env
 !/README.md
 !/.gitignore
 
+!/config/
+!/config/00-load-config.sh
+!/config/10-general.template.sh
+!/config/20-components.template.sh
+!/config/30-services.template.sh
+
 !/install/
-!/install/10-base-install.sh
-!/install/20-install-master.sh
-!/install/21-kubeadm-conf.yml
-!/install/30-install-worker.sh
+!/install/components
+!/install/components/Cert-manager.yml
+!/install/components/Hetzner.yml
+!/install/components/Longhorn.yml
+!/install/components/MetalLB.yml
 
-!/components
-!/components/Cert-manager.yml
-!/components/Hetzner.yml
-!/components/Longhorn.yml
-!/components/MetalLB.yml
+!/install/components/Traefik/
+!/install/components/Traefik/00-crd.yml
+!/install/components/Traefik/01-config.yml
+!/install/components/Traefik/02-services.yml
+!/install/components/Traefik/03-deployment.yml
+!/install/components/Traefik/04-api.yml
+!/install/components/Traefik/05-whoami_example.yml
 
-!/components/Traefik
-!/components/Traefik/00-crd.yml
-!/components/Traefik/01-config.yml
-!/components/Traefik/02-services.yml
-!/components/Traefik/03-deployment.yml
-!/components/Traefik/04-api.yml
-!/components/Traefik/05-whoami_example.yml
+!/install/scripts/
+!/install/scripts/10-base-install.sh
+!/install/scripts/20-install-master.sh
+!/install/scripts/21-kubeadm-conf.yml
+!/install/scripts/30-install-worker.sh
+
+!/services/
+!/services/OpenVPN/
+!/services/OpenVPN/00-init.yml
+!/services/OpenVPN/10-setup.sh
+!/services/OpenVPN/20-deploy.yml

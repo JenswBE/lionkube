@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Load config
-source ../config.sh
+source ../../config/00-load-config.sh
 
 # Firewall
 sudo ufw allow in on ${INT_IF:?} to any port 10250 proto tcp # Kubelet

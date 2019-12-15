@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Load config
-source ../config.sh
+source ../../config/00-load-config.sh
 
 # Kubernetes ports
 # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#check-required-ports
