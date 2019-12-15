@@ -70,6 +70,10 @@ kubectl create secret generic --namespace=longhorn-system traefik-users-longhorn
     --from-literal=users="$(htpasswd -bnBC 10 "${LONGHORN_USER:?}" ${LONGHORN_PASSWORD:?} | tr -d '\n')"
 ../kube-apply-env ../components/Longhorn.yml
 
+# Set Longhorn as default storage class
+kubectl patch storageclass hcloud-volumes -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
+kubectl patch storageclass longhorn -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+
 # Get latest version of Helm
 HELM_PLATFORM=linux-amd64
 HELM_VERSION=$(curl -Ls -o /dev/null -w %{url_effective} "https://github.com/helm/helm/releases/latest" | grep -oE "[^/]+$" )
