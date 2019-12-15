@@ -26,49 +26,52 @@ metadata:
   labels:
     app: openvpn
 spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openvpn
   template:
     metadata:
       labels:
-        name: openvpn
         app: openvpn
     spec:
       containers:
-      - image: kylemanna/openvpn
-        name: openvpn
-        ports:
-        - containerPort: 1194
+        - image: kylemanna/openvpn
           name: openvpn
-          protocol: UDP
-        securityContext:
-          capabilities:
-            add:
-            - NET_ADMIN
-        volumeMounts:
-        - name: openvpn-key
-          mountPath: /etc/openvpn/pki/private
-        - name: openvpn-cert
-          mountPath: /etc/openvpn/pki/issued
-        - name: openvpn-pki
-          mountPath: /etc/openvpn/pki
-        - name: openvpn-conf
-          mountPath: /etc/openvpn
-        - name: openvpn-ccd
-          mountPath: /etc/openvpn/ccd
-      volumes:
-      - name: openvpn-key
-        secret:
-          secretName: openvpn-key
-          defaultMode: 0600
-      - name: openvpn-cert
-        secret:
-          secretName: openvpn-cert
-      - name: openvpn-pki
-        secret:
-          secretName: openvpn-pki
-          defaultMode: 0600
-      - name: openvpn-conf
-        configMap:
-          name: openvpn-conf
-      - name: openvpn-ccd
-        configMap:
-          name: openvpn-ccd
+          ports:
+            - containerPort: 1194
+              name: openvpn
+              protocol: UDP
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+          volumeMounts:
+            - name: openvpn-key
+              mountPath: /etc/openvpn/pki/private
+            - name: openvpn-cert
+              mountPath: /etc/openvpn/pki/issued
+            - name: openvpn-pki
+              mountPath: /etc/openvpn/pki
+            - name: openvpn-conf
+              mountPath: /etc/openvpn
+            - name: openvpn-ccd
+              mountPath: /etc/openvpn/ccd
+        volumes:
+          - name: openvpn-key
+            secret:
+              secretName: openvpn-key
+              defaultMode: 0600
+          - name: openvpn-cert
+            secret:
+              secretName: openvpn-cert
+          - name: openvpn-pki
+            secret:
+              secretName: openvpn-pki
+              defaultMode: 0600
+          - name: openvpn-conf
+            configMap:
+              name: openvpn-conf
+          - name: openvpn-ccd
+            configMap:
+              name: openvpn-ccd
