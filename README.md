@@ -12,7 +12,6 @@ Reference to install and configure a Kubernetes cluster
 - [Metal LB (Bare metal load-balancer)](https://github.com/danderson/metallb)
 - [Traefik (Ingress Controller)](https://docs.traefik.io/)
 - [Longhorn (Storage provider)](https://github.com/longhorn/longhorn)
-- [Weave Scope (Cluster overview)](https://www.weave.works/oss/scope/)
 
 ## Big thanks to
 - https://community.hetzner.com/tutorials/install-kubernetes-cluster

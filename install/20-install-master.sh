@@ -70,12 +70,6 @@ kubectl create secret generic --namespace=longhorn-system traefik-users-longhorn
     --from-literal=users="$(htpasswd -bnBC 10 "${LONGHORN_USER:?}" ${LONGHORN_PASSWORD:?} | tr -d '\n')"
 ../kube-apply-env ../components/Longhorn.yml
 
-# Deploy Weave Scope
-echo "Please, make sure domain \"${WEAVE_SCOPE_DOMAIN:?}\" is configured in DNS"
-kubectl apply -f "https://cloud.weave.works/k8s/scope.yaml?k8s-version=$(kubectl version | base64 | tr -d '\n')"
-kubectl create secret generic --namespace=weave traefik-users-weave-scope \
-    --from-literal=users="$(htpasswd -bnBC 10 "${WEAVE_SCOPE_USER:?}" ${WEAVE_SCOPE_PASSWORD:?} | tr -d '\n')"
-
 # Get latest version of Helm
 HELM_PLATFORM=linux-amd64
 HELM_VERSION=$(curl -Ls -o /dev/null -w %{url_effective} "https://github.com/helm/helm/releases/latest" | grep -oE "[^/]+$" )
