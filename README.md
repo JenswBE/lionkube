@@ -1,8 +1,9 @@
 # LionKube
 Reference to install and configure a Kubernetes cluster
 
-1. Copy `xx-<CONFIG>.template.sh` to `xx-<CONFIG>.sh` and update accordingly to your needs.
-2. Set strict permissions with `chmod 700 -R config/`.
+1. Clone this repo to your intended master node machine
+2. Copy `xx-<CONFIG>.template.sh` to `xx-<CONFIG>.sh` and update accordingly to your needs.
+3. Set strict permissions with `chmod 700 -R config/`.
 
 ## Components
 Below components are basic building blocks to provide a fully functional cluster.
