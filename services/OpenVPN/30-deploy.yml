@@ -57,21 +57,21 @@ spec:
               mountPath: /etc/openvpn
             - name: openvpn-ccd
               mountPath: /etc/openvpn/ccd
-        volumes:
-          - name: openvpn-key
-            secret:
-              secretName: openvpn-key
-              defaultMode: 0600
-          - name: openvpn-cert
-            secret:
-              secretName: openvpn-cert
-          - name: openvpn-pki
-            secret:
-              secretName: openvpn-pki
-              defaultMode: 0600
-          - name: openvpn-conf
-            configMap:
-              name: openvpn-conf
-          - name: openvpn-ccd
-            configMap:
-              name: openvpn-ccd
+      volumes:
+        - name: openvpn-key
+          secret:
+            secretName: openvpn-key
+            defaultMode: 0600
+        - name: openvpn-cert
+          secret:
+            secretName: openvpn-cert
+        - name: openvpn-pki
+          secret:
+            secretName: openvpn-pki
+            defaultMode: 0600
+        - name: openvpn-conf
+          configMap:
+            name: openvpn-conf
+        - name: openvpn-ccd
+          configMap:
+            name: openvpn-ccd
