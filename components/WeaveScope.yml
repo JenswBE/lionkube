@@ -49,7 +49,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   namespace: weave
-  name:weave-scope-secure
+  name: weave-scope-secure
 spec:
   entryPoints:
     - websecure
