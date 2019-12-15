@@ -21,7 +21,7 @@ kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl > /dev/null
 source <(kubectl completion bash)
 
 # Setup Hetzner secrets
-envsubst < ../components/Hetzner.yml | kubectl apply -f -
+../kube-apply-env ../components/Hetzner.yml
 
 # Deploy Hetzner Cloud Controller Manager
 kubectl apply -f https://raw.githubusercontent.com/hetznercloud/hcloud-cloud-controller-manager/master/deploy/v1.5.0-networks.yaml
@@ -40,7 +40,7 @@ kubectl apply -f https://raw.githubusercontent.com/hetznercloud/csi-driver/v1.2.
 
 # Deploy Metal LB
 kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.8.3/manifests/metallb.yaml
-envsubst < ../components/MetalLB.yml | kubectl apply -f -
+../kube-apply-env ../components/MetalLB.yml
 
 # Deploy Hetzner Cloud floating IP controller
 kubectl create namespace fip-controller
@@ -54,19 +54,19 @@ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.1
 # Deploy Traefik
 sudo apt install -y apache2-utils
 kubectl apply -f ../components/Traefik/00-crd.yml
-envsubst < ../components/Traefik/01-config.yml | kubectl apply -f -
+../kube-apply-env ../components/Traefik/01-config.yml
 kubectl create secret generic --namespace=traefik traefik-users-api \
     --from-literal=users="$(htpasswd -bnBC 10 "${TRAEFIK_API_USER:?}" ${TRAEFIK_API_PASSWORD:?} | tr -d '\n')"
 kubectl apply -f ../components/Traefik/02-services.yml
 kubectl apply -f ../components/Traefik/03-deployment.yml
-envsubst < ../components/Traefik/04-api.yml | kubectl apply -f -
+../kube-apply-env ../components/Traefik/04-api.yml
 
 # Deploy Longhorn (Storage provider)
 kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/master/deploy/longhorn.yaml
 kubectl delete --namespace=longhorn-system svc longhorn-frontend
 kubectl create secret generic --namespace=longhorn-system traefik-users-longhorn \
     --from-literal=users="$(htpasswd -bnBC 10 "${LONGHORN_USER:?}" ${LONGHORN_PASSWORD:?} | tr -d '\n')"
-envsubst < ../components/Longhorn.yml | kubectl apply -f -
+../kube-apply-env ../components/Longhorn.yml
 
 # Get latest version of Helm
 HELM_PLATFORM=linux-amd64
