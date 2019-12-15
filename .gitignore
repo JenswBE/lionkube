@@ -18,6 +18,7 @@
 !/components/Hetzner.yml
 !/components/Longhorn.yml
 !/components/MetalLB.yml
+!/components/WeaveScope.yml
 
 !/components/Traefik
 !/components/Traefik/00-crd.yml

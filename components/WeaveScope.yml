@@ -1,0 +1,65 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  namespace: weave
+  name: weave-scope
+spec:
+  secretName: tls-weave-scope
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt
+  dnsNames:
+    - ${WEAVE_SCOPE_DOMAIN}
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  namespace: weave
+  name: weave-scope-auth
+spec:
+  basicAuth:
+    secret: traefik-users-weave-scope
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  namespace: weave
+  name: weave-scope
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`${WEAVE_SCOPE_DOMAIN}`)
+      kind: Rule
+      services:
+        - namespace: traefik
+          name: blackhole
+          port: 80
+      middlewares:
+        - namespace: traefik
+          name: https-redirect
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  namespace: weave
+  name:weave-scope-secure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${WEAVE_SCOPE_DOMAIN}`)
+      kind: Rule
+      services:
+        - name: weave-scope-app
+          port: 80
+      middlewares:
+        - name: weave-scope-auth
+  tls:
+    secretName: tls-weave-scope
