@@ -52,6 +52,7 @@ kubectl create namespace cert-manager
 kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.12.0/cert-manager.yaml
 
 # Deploy Traefik
+echo "Please, make sure domain \"${TRAEFIK_API_DOMAIN:?}\" is configured in DNS"
 sudo apt install -y apache2-utils
 kubectl apply -f ../components/Traefik/00-crd.yml
 ../kube-apply-env ../components/Traefik/01-config.yml
@@ -62,6 +63,7 @@ kubectl apply -f ../components/Traefik/03-deployment.yml
 ../kube-apply-env ../components/Traefik/04-api.yml
 
 # Deploy Longhorn (Storage provider)
+echo "Please, make sure domain \"${LONGHORN_DOMAIN:?}\" is configured in DNS"
 kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/master/deploy/longhorn.yaml
 kubectl delete --namespace=longhorn-system svc longhorn-frontend
 kubectl create secret generic --namespace=longhorn-system traefik-users-longhorn \
@@ -69,6 +71,7 @@ kubectl create secret generic --namespace=longhorn-system traefik-users-longhorn
 ../kube-apply-env ../components/Longhorn.yml
 
 # Deploy Weave Scope
+echo "Please, make sure domain \"${WEAVE_SCOPE_DOMAIN:?}\" is configured in DNS"
 kubectl apply -f "https://cloud.weave.works/k8s/scope.yaml?k8s-version=$(kubectl version | base64 | tr -d '\n')"
 kubectl create secret generic --namespace=weave traefik-users-weave-scope \
     --from-literal=users="$(htpasswd -bnBC 10 "${WEAVE_SCOPE_USER:?}" ${WEAVE_SCOPE_PASSWORD:?} | tr -d '\n')"
