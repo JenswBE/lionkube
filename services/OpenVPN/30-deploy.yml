@@ -18,7 +18,7 @@ spec:
 
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: openvpn
@@ -52,7 +52,7 @@ spec:
           mountPath: /etc/openvpn/pki
         - name: openvpn-conf
           mountPath: /etc/openvpn
-        - name: ccd0
+        - name: openvpn-ccd
           mountPath: /etc/openvpn/ccd
       volumes:
       - name: openvpn-key
