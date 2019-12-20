@@ -31,7 +31,7 @@ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubun
 sudo apt install docker-ce=5:19.03.5~3-0~ubuntu-bionic docker-ce-cli=5:19.03.5~3-0~ubuntu-bionic containerd.io
 
 # Pin docker version
-sudo tee /etc/apt/preferences.d/docker.conf <<EOF
+sudo tee /etc/apt/preferences.d/docker <<EOF
 Package: docker-ce
 Pin: version 5:19.03.*
 Pin-Priority: 1001
