@@ -27,8 +27,19 @@ sudo ufw enable
 sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-sudo apt install -y docker-ce=18.06.2~ce~3-0~ubuntu
-sudo apt-mark hold docker-ce
+# Check latest docker version with `apt-cache madison docker-ce`
+sudo apt install docker-ce=5:19.03.5~3-0~ubuntu-bionic docker-ce-cli=5:19.03.5~3-0~ubuntu-bionic containerd.io
+
+# Pin docker version
+sudo tee /etc/apt/preferences.d/docker.conf <<EOF
+Package: docker-ce
+Pin: version 5:19.03.*
+Pin-Priority: 1001
+
+Package: docker-ce-cli
+Pin: version 5:19.03.*
+Pin-Priority: 1001
+EOF
 
 sudo tee /etc/docker/daemon.json <<EOF
 {
