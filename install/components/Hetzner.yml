@@ -20,6 +20,13 @@ stringData:
 ---
 
 apiVersion: v1
+kind: Namespace
+metadata:
+  name: fip-controller
+
+---
+
+apiVersion: v1
 kind: ConfigMap
 metadata:
   name: fip-controller-config
