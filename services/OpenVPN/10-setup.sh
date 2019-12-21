@@ -1,6 +1,18 @@
 #!/usr/bin/env bash
 # Based on https://github.com/chepurko/k8s-ovpn
 
+# =============================
+# = EXECUTE ON WORKER NODE(S) =
+# =============================
+
+# Firewall
+sudo ufw allow 1194/udp
+sudo ufw route allow in on tun0 out on ${EXT_IF:?}
+
+# =============================
+# = EXECUTE ON MASTER NODE(S) =
+# =============================
+
 # Load config
 source ../../config/00-load-config.sh
 
