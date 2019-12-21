@@ -1,4 +1,5 @@
 # Load me with "source" command of Bash
+export CONFIG_COMPONENTS_LOADED=1
 
 # Hetzner
 export HETZNER_API_TOKEN=REPLACE_ME

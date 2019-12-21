@@ -1,4 +1,17 @@
 #!/bin/bash
 # Helper to substitute env variables and apply file
 
+# Enable "strict" mode
+# http://redsymbol.net/articles/unofficial-bash-strict-mode/
+set -euo pipefail
+IFS=$'\n\t'
+
+# Check if configs are loaded
+# Helper will exit if config not loaded, due to strict mode
+echo ${CONFIG_GENERAL_LOADED} \
+     ${CONFIG_COMPONENTS_LOADED} \
+     ${CONFIG_SERVICES_LOADED} \
+     > /dev/null
+
+# Replace place holders and apply
 envsubst < "$(pwd)/${1}" | kubectl apply -f -

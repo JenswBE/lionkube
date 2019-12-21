@@ -1,4 +1,5 @@
 # Load me with "source" command of Bash
+export CONFIG_GENERAL_LOADED=1
 
 # General
 export USER=REPLACE_ME
