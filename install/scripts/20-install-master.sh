@@ -20,6 +20,11 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl > /dev/null
 source <(kubectl completion bash)
 
+# =============================
+# =     SETUP WORKER NODES    =
+# = See 30-install-workers.sh =
+# =============================
+
 # Setup Hetzner secrets and namespaces
 ../../kube-apply-env ../components/Hetzner.yml
 
@@ -50,12 +55,12 @@ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.1
 echo "Please, make sure domain \"${TRAEFIK_API_DOMAIN:?}\" is configured in DNS"
 sudo apt install -y apache2-utils
 kubectl apply -f ../components/Traefik/00-crd.yml
-../kube-apply-env ../components/Traefik/01-config.yml
+kubectl apply -f ../components/Traefik/01-config.yml
 kubectl create secret generic --namespace=traefik traefik-users-api \
     --from-literal=users="$(htpasswd -bnBC 10 "${TRAEFIK_API_USER:?}" ${TRAEFIK_API_PASSWORD:?} | tr -d '\n')"
 kubectl apply -f ../components/Traefik/02-services.yml
 kubectl apply -f ../components/Traefik/03-deployment.yml
-../kube-apply-env ../components/Traefik/04-api.yml
+../../kube-apply-env ../components/Traefik/04-api.yml
 
 # Deploy Longhorn (Storage provider)
 echo "Please, make sure domain \"${LONGHORN_DOMAIN:?}\" is configured in DNS"
