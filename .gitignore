@@ -32,7 +32,7 @@
 !/install/scripts/10-base-install.sh
 !/install/scripts/20-install-master.sh
 !/install/scripts/21-kubeadm-conf.yml
-!/install/scripts/30-install-worker.sh
+!/install/scripts/22-install-worker.sh
 
 !/services/
 !/services/OpenVPN/
