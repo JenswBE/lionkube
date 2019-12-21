@@ -1,12 +1,11 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: DaemonSet
 metadata:
   name: openvpn
   namespace: openvpn
   labels:
     app: openvpn
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: openvpn
