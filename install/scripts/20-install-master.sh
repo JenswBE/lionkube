@@ -20,8 +20,8 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl > /dev/null
 source <(kubectl completion bash)
 
-# Setup Hetzner secrets
-../kube-apply-env ../components/Hetzner.yml
+# Setup Hetzner secrets and namespaces
+../../kube-apply-env ../components/Hetzner.yml
 
 # Deploy Hetzner Cloud Controller Manager
 kubectl apply -f https://raw.githubusercontent.com/hetznercloud/hcloud-cloud-controller-manager/master/deploy/v1.5.0-networks.yaml
@@ -31,21 +31,16 @@ kubectl apply -f https://docs.projectcalico.org/v3.8/manifests/canal.yaml
 kubectl edit configmaps --namespace=kube-system canal-config
 # ==> Set under "data" canal_iface: ens10
 
-# Make CoreDNS and Canal tolerate uninitialized nodes
-kubectl -n kube-system patch deployment coredns --type json -p '[{"op":"add","path":"/spec/template/spec/tolerations/-","value":{"key":"node.cloudprovider.kubernetes.io/uninitialized","value":"true","effect":"NoSchedule"}}]'
-kubectl -n kube-system patch daemonset canal --type json -p '[{"op":"add","path":"/spec/template/spec/tolerations/-","value":{"key":"node.cloudprovider.kubernetes.io/uninitialized","value":"true","effect":"NoSchedule"}}]'
-
 # Deploy Hetzner CSI driver
 kubectl apply -f https://raw.githubusercontent.com/hetznercloud/csi-driver/v1.2.2/deploy/kubernetes/hcloud-csi.yml
 
-# Deploy Metal LB
-kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.8.3/manifests/metallb.yaml
-../kube-apply-env ../components/MetalLB.yml
-
 # Deploy Hetzner Cloud floating IP controller
-kubectl create namespace fip-controller
 kubectl apply -f https://raw.githubusercontent.com/cbeneke/hcloud-fip-controller/master/deploy/rbac.yaml
 kubectl apply -f https://raw.githubusercontent.com/cbeneke/hcloud-fip-controller/master/deploy/deployment.yaml
+
+# Deploy Metal LB
+kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.8.3/manifests/metallb.yaml
+../../kube-apply-env ../components/MetalLB.yml
 
 # Deploy Cert-manager
 kubectl create namespace cert-manager
