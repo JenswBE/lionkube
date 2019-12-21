@@ -25,7 +25,8 @@
 !/install/components/Traefik/02-services.yml
 !/install/components/Traefik/03-deployment.yml
 !/install/components/Traefik/04-api.yml
-!/install/components/Traefik/05-whoami_example.yml
+!/install/components/Traefik/05-ping.yml
+!/install/components/Traefik/06-whoami_example.yml
 
 !/install/scripts/
 !/install/scripts/10-base-install.sh

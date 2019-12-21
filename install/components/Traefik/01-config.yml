@@ -26,6 +26,9 @@ data:
       insecure: false
       dashboard: true
 
+    ping:
+      manualRouting: true
+
 ---
 
 apiVersion: traefik.containo.us/v1alpha1
