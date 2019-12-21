@@ -12,6 +12,9 @@ cat <<EOF | sudo tee /etc/default/kubelet
 KUBELET_EXTRA_ARGS=--cloud-provider=external
 EOF
 
+# Restart kubelet
+sudo systemctl restart kubelet
+
 # Floating IP
 echo -e "auto ${EXT_IF:?}:1
 iface ${EXT_IF:?}:1 inet static
