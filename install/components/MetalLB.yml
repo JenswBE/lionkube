@@ -9,4 +9,4 @@ data:
     - name: default
       protocol: layer2
       addresses:
-      - ${HETZNER_FLOATING_IP}
+      - ${HETZNER_FLOATING_IP}/32
