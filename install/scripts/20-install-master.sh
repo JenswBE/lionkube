@@ -50,6 +50,7 @@ kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.8.3/manifes
 # Deploy Cert-manager
 kubectl create namespace cert-manager
 kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.12.0/cert-manager.yaml
+../../kube-apply-env ../components/Cert-manager.yml
 
 # Deploy Traefik
 echo "Please, make sure domain \"${TRAEFIK_API_DOMAIN:?}\" is configured in DNS"
