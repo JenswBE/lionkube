@@ -22,7 +22,7 @@ source <(kubectl completion bash)
 
 # =============================
 # =     SETUP WORKER NODES    =
-# = See 30-install-workers.sh =
+# = See 22-install-workers.sh =
 # =============================
 
 # Setup Hetzner secrets and namespaces
