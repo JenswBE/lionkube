@@ -41,7 +41,7 @@ kubectl apply -f https://raw.githubusercontent.com/hetznercloud/csi-driver/v1.2.
 
 # Deploy Hetzner Cloud floating IP controller
 kubectl apply -f https://raw.githubusercontent.com/cbeneke/hcloud-fip-controller/master/deploy/rbac.yaml
-kubectl apply -f https://raw.githubusercontent.com/cbeneke/hcloud-fip-controller/master/deploy/deployment.yaml
+kubectl apply -f https://raw.githubusercontent.com/cbeneke/hcloud-fip-controller/master/deploy/daemonset.yaml
 
 # Deploy Metal LB
 kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.8.3/manifests/metallb.yaml
@@ -62,6 +62,7 @@ kubectl create secret generic --namespace=traefik traefik-users-api \
 kubectl apply -f ../components/Traefik/02-services.yml
 kubectl apply -f ../components/Traefik/03-deployment.yml
 ../../kube-apply-env ../components/Traefik/04-api.yml
+../../kube-apply-env ../components/Traefik/05-ping.yml
 
 # Deploy Longhorn (Storage provider)
 echo "Please, make sure domain \"${LONGHORN_DOMAIN:?}\" is configured in DNS"
@@ -69,7 +70,7 @@ kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/master/depl
 kubectl delete --namespace=longhorn-system svc longhorn-frontend
 kubectl create secret generic --namespace=longhorn-system traefik-users-longhorn \
     --from-literal=users="$(htpasswd -bnBC 10 "${LONGHORN_USER:?}" ${LONGHORN_PASSWORD:?} | tr -d '\n')"
-../kube-apply-env ../components/Longhorn.yml
+../../kube-apply-env ../components/Longhorn.yml
 
 # Set Longhorn as default storage class
 kubectl patch storageclass hcloud-volumes -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
