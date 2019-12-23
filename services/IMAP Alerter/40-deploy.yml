@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: imap-alerter
   namespace: imap-alerter
+  name: imap-alerter
   labels:
     app: imap-alerter
 spec:

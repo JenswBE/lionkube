@@ -16,7 +16,7 @@ kubectl apply -f ./30-storage.yml
 kubectl create secret generic \
   -n imap-alerter \
   imap-alerter-config \
-  --from-file=config.yaml=~/imap-alerter.yml
+  --from-file=config.yaml=${HOME:?}/imap-alerter.yml
 
 # Deploy IMAP Alerter
 ../../kube-apply-env ./40-deploy.yml
