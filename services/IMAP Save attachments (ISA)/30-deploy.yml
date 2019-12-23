@@ -44,7 +44,7 @@ spec:
             - name: SYNC_DESTINATION_SUBPATH
               value: "${ISA_SYNC_SUBPATH}"
             - name: SYNC_COMMAND
-              value: "rclone move /data/ $$SYNC_DESTINATION:/$$SYNC_DESTINATION_SUBPATH --delete-empty-src-dirs"
+              value: "rclone move /data/ ${DOLLAR}SYNC_DESTINATION:/${DOLLAR}SYNC_DESTINATION_SUBPATH --delete-empty-src-dirs"
           volumeMounts:
             - name: rclone
               mountPath: /config

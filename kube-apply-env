@@ -14,4 +14,4 @@ echo ${CONFIG_GENERAL_LOADED} \
      > /dev/null
 
 # Replace place holders and apply
-envsubst < "$(pwd)/${1}" | kubectl apply -f -
+DOLLAR='$' envsubst < "$(pwd)/${1}" | kubectl apply -f -
