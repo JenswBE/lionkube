@@ -12,6 +12,7 @@ kubectl apply -f ./20-namespace.yml
 
 # Create config
 # https://github.com/jenswbe/docker-save-attachments
+# NOTE: To keep mails from the IMAP account after download, replace `no keep` with `keep`
 kubectl create secret generic \
   -n isa \
   isa-fetchmailrc \
