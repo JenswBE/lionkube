@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: imap-alerter
+  namespace: imap-alerter
+  labels:
+    app: imap-alerter
+spec:
+  selector:
+    matchLabels:
+      app: imap-alerter
+  template:
+    metadata:
+      labels:
+        app: imap-alerter
+    spec:
+      containers:
+        - image: jenswbe/imap-alerter
+          name: imap-alerter
+          env:
+            - name: TZ
+              value: ${TIMEZONE}
+          volumeMounts:
+            - name: config
+              mountPath: /app/config
+            - name: data
+              mountPath: /app/data
+      volumes:
+        - name: config
+          secret:
+            secretName: imap-alerter-config
+            defaultMode: 0600
+        - name: data
+          persistentVolumeClaim:
+            claimName: imap-alerter-data

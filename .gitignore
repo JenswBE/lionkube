@@ -35,6 +35,12 @@
 !/install/scripts/22-install-worker.sh
 
 !/services/
+!/services/IMAP Alerter/
+!/services/IMAP Alerter/10-setup.sh
+!/services/IMAP Alerter/20-namespace.yml
+!/services/IMAP Alerter/30-storage.yml
+!/services/IMAP Alerter/40-deploy.yml
+
 !/services/OpenVPN/
 !/services/OpenVPN/10-setup.sh
 !/services/OpenVPN/20-init.yml
