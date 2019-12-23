@@ -16,7 +16,7 @@ kubectl apply -f ./20-namespace.yml
 kubectl create secret generic \
   -n isa \
   isa-fetchmailrc \
-  --from-literal=.fetchmailrc=$(base64 --wrap=0 <<EOF
+  --from-literal=.fetchmailrc="$(cat <<EOF
 poll ${ISA_MAIL_HOST:?} protocol IMAP
         user "${ISA_MAIL_USER:?}" password "${ISA_MAIL_PASS:?}" is root here
 no keep
@@ -25,12 +25,12 @@ ssl
 sslcertck
 sslproto TLS1
 EOF
-)
+)"
 
 kubectl create secret generic \
   -n isa \
   isa-rclone \
-  --from-literal=.rclone.conf=$(base64 --wrap=0 <<EOF
+  --from-literal=.rclone.conf="$(cat <<EOF
 [nextcloud]
 type = webdav
 url = https://${ISA_NEXTCLOUD_HOST:?}/remote.php/webdav
@@ -38,7 +38,7 @@ vendor = nextcloud
 user = ${ISA_NEXTCLOUD_USER:?}
 pass = ${ISA_NEXTCLOUD_PASS:?}
 EOF
-)
+)"
 
 # Deploy IMAP Save attachments
 ../../kube-apply-env ./30-deploy.yml
