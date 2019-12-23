@@ -15,9 +15,9 @@ kubectl apply -f ./20-namespace.yml
 kubectl create secret generic \
   -n isa \
   isa-fetchmailrc \
-  --from-literal=.fetchmailrc=$(base64 <<EOF
-poll ${ISA_MAIL_HOSTNAME:?} protocol IMAP
-        user "${ISA_MAIL_USERNAME:?}" password "${ISA_MAIL_PASSWORD:?}" is root here
+  --from-literal=.fetchmailrc=$(base64 --wrap=0 <<EOF
+poll ${ISA_MAIL_HOST:?} protocol IMAP
+        user "${ISA_MAIL_USER:?}" password "${ISA_MAIL_PASS:?}" is root here
 no keep
 mimedecode
 ssl
@@ -29,13 +29,13 @@ EOF
 kubectl create secret generic \
   -n isa \
   isa-rclone \
-  --from-literal=.rclone.conf=$(base64 <<EOF
+  --from-literal=.rclone.conf=$(base64 --wrap=0 <<EOF
 [nextcloud]
 type = webdav
-url = https://${ISA_NEXTCLOUD_HOSTNAME:?}/remote.php/webdav
+url = https://${ISA_NEXTCLOUD_HOST:?}/remote.php/webdav
 vendor = nextcloud
 user = ${ISA_NEXTCLOUD_USER:?}
-pass = ${ISA_NEXTCLOUD_PASSWORD:?}
+pass = ${ISA_NEXTCLOUD_PASS:?}
 EOF
 )
 
