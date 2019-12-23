@@ -19,7 +19,11 @@ Below components are basic building blocks to provide a fully functional cluster
 ## Services
 Following services are the actual services I want to host on the cluster.
 
-- OpenVPN
+- IMAP Alerter: Sends a notification to my main account, in case there is a mail
+  on a secondary account
+- IMAP Save attachments (ISA): Save all attachments which are sent to a mailbox
+  to Nextcloud (or any other Rsync supported storage)
+- OpenVPN: Protects internet traffic on unsecure networks
 
 ## Big thanks to
 - https://community.hetzner.com/tutorials/install-kubernetes-cluster

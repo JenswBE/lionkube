@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: isa
+  name: isa
+  labels:
+    app: isa
+spec:
+  selector:
+    matchLabels:
+      app: isa
+  template:
+    metadata:
+      labels:
+        app: isa
+    spec:
+      containers:
+        - name: save-attachments
+          image: jenswbe/imap-save-attachments
+          env:
+            - name: TZ
+              value: ${TIMEZONE}
+            - name: CRON_SCHEDULE
+              value: "*/15 * * * *"
+          volumeMounts:
+            - name: fetchmailrc
+              mountPath: /config
+            - name: attachments
+              mountPath: /output
+
+        - name: rsync
+          image: tynor88/rclone
+          env:
+            - name: TZ
+              value: ${TIMEZONE}
+            - name: PUID
+              value: "0"
+            - name: PGID
+              value: "0"
+            - name: CRON_SCHEDULE
+              value: "5-59/15 * * * *"
+            - name: SYNC_DESTINATION
+              value: nextcloud
+            - name: SYNC_DESTINATION_SUBPATH
+              value: "${ISA_SYNC_SUBPATH}"
+            - name: SYNC_COMMAND
+              value: "rclone move /data/ $$SYNC_DESTINATION:/$$SYNC_DESTINATION_SUBPATH --delete-empty-src-dirs"
+          volumeMounts:
+            - name: rclone
+              mountPath: /config
+            - name: attachments
+              mountPath: /data
+
+      volumes:
+        - name: fetchmailrc
+          secret:
+            secretName: isa-fetchmailrc
+            defaultMode: 0600
+        - name: attachments
+          emptyDir: {}
+        - name: rclone
+          secret:
+            secretName: isa-rclone
+            defaultMode: 0600

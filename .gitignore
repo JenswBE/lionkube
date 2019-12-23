@@ -41,6 +41,11 @@
 !/services/IMAP Alerter/30-storage.yml
 !/services/IMAP Alerter/40-deploy.yml
 
+!/services/IMAP Save attachments (ISA)/
+!/services/IMAP Save attachments (ISA)/10-setup.sh
+!/services/IMAP Save attachments (ISA)/20-namespace.yml
+!/services/IMAP Save attachments (ISA)/30-deploy.yml
+
 !/services/OpenVPN/
 !/services/OpenVPN/10-setup.sh
 !/services/OpenVPN/20-init.yml
