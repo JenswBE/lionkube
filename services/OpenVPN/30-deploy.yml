@@ -19,7 +19,7 @@ spec:
         - image: kylemanna/openvpn
           name: openvpn
           ports:
-            - containerPort: 1194
+            - containerPort: ${OPENVPN_PORT}
               name: openvpn
               protocol: UDP
           securityContext:
