@@ -24,6 +24,8 @@ mimedecode
 ssl
 sslcertck
 sslproto TLS1
+
+mda "/usr/bin/maildrop"
 EOF
 )"
 
