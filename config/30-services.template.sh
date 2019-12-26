@@ -1,6 +1,9 @@
 # Load me with "source" command of Bash
 export CONFIG_SERVICES_LOADED=1
 
+# Guacamole
+export GUACAMOLE_DB_PASS=
+
 # IMAP Save attachments (ISA)
 export ISA_MAIL_HOST=   # IMAP host to watch
 export ISA_MAIL_USER=

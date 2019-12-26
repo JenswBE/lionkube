@@ -35,6 +35,12 @@
 !/install/scripts/22-install-worker.sh
 
 !/services/
+!/services/Guacamole/
+!/services/Guacamole/10-setup.sh
+!/services/Guacamole/20-namespace.yml
+!/services/Guacamole/30-storage.yml
+!/services/Guacamole/40-database.yml
+
 !/services/IMAP Alerter/
 !/services/IMAP Alerter/10-setup.sh
 !/services/IMAP Alerter/20-namespace.yml

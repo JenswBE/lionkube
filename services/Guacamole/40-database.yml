@@ -1,0 +1,63 @@
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: guacamole
+  name: guacamole-db
+  labels:
+    app: guacamole-db
+spec:
+  selector:
+    app: guacamole-db
+  ports:
+    - port: 5432
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: guacamole
+  name: guacamole-db
+  labels:
+    app: guacamole-db
+spec:
+  selector:
+    matchLabels:
+      app: guacamole-db
+  template:
+    metadata:
+      labels:
+        app: guacamole-db
+    spec:
+      initContainers:
+        - name: db-init
+          image: guacamole/guacamole:latest
+          command:
+            - "/bin/sh"
+            - "-c"
+            - "test -e /init/initdb.sql && echo 'init file already exists' || /opt/guacamole/bin/initdb.sh --postgres > /init/initdb.sql"
+          env:
+            - name: TZ
+              value: ${TIMEZONE}
+          volumeMounts:
+            - name: db-init
+              mountPath: /init
+
+      containers:
+        - name: postgres
+          image: postgres:latest
+          env:
+            - name: TZ
+              value: ${TIMEZONE}
+          volumeMounts:
+            - name: db-init
+              mountPath: /docker-entrypoint-initdb.d
+            - name: data
+              mountPath: /var/lib/postgresql/data
+
+      volumes:
+        - name: db-init
+          emptyDir: {}
+        - name: data
+          persistentVolumeClaim:
+            claimName: guacamole-db-data
