@@ -14,6 +14,32 @@ spec:
 
 ---
 
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  namespace: guacamole
+  name: allow-guacamole-to-traefik
+spec:
+  podSelector:
+    matchLabels:
+      app: guacamole
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: traefik
+      podSelector:
+        matchLabels:
+          app: traefik
+
+    ports:
+    - protocol: TCP
+      port: 8080
+
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
