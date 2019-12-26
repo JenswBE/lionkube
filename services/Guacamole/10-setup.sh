@@ -21,3 +21,6 @@ kubectl create secret generic \
 
 # Deploy Guacamole
 ../../kube-apply-env ./40-database.yml
+../../kube-apply-env ./50-backend.yml
+../../kube-apply-env ./60-frontend.yml
+../../kube-apply-env ./70-ingress.yml
