@@ -49,6 +49,11 @@ spec:
           env:
             - name: TZ
               value: ${TIMEZONE}
+            - name: PGDATA
+              value: "/var/lib/postgresql/data/pgdata"
+          envFrom:
+            - secretRef:
+                name: guacamole-db-user
           volumeMounts:
             - name: db-init
               mountPath: /docker-entrypoint-initdb.d
