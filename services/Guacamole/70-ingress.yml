@@ -59,9 +59,9 @@ spec:
       services:
         - name: guacamole
           port: 80
-  middlewares:
-    - namespace: traefik
-      name: secure-https
-    - name: guacamole-add-prefix
+      middlewares:
+        - namespace: traefik
+          name: secure-https
+        - name: guacamole-add-prefix
   tls:
     secretName: tls-guacamole
