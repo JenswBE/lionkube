@@ -36,5 +36,5 @@ spec:
             - name: TZ
               value: ${TIMEZONE}
           ports:
-            - name: db
-              containerPort: 5432
+            - name: guacd
+              containerPort: 4822

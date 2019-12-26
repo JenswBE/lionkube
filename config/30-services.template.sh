@@ -1,9 +1,14 @@
 # Load me with "source" command of Bash
 export CONFIG_SERVICES_LOADED=1
 
-# Guacamole
+# Guacamole: LionKube
 export GUACAMOLE_DOMAIN=guacamole.${DEFAULT_DOMAIN:?}
 export GUACAMOLE_DB_PASS=
+
+# Guacamole: Remote guacd
+export GUACAMOLE_GUACD_FLASH_HOST=flash.${DEFAULT_DOMAIN}
+export GUACAMOLE_GUACD_FLASH_PORT=
+export GUACAMOLE_GUACD_FLASH_USER=
 
 # IMAP Save attachments (ISA)
 export ISA_MAIL_HOST=   # IMAP host to watch

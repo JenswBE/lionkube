@@ -43,6 +43,7 @@
 !/services/Guacamole/50-backend.yml
 !/services/Guacamole/60-frontend.yml
 !/services/Guacamole/70-ingress.yml
+!/services/Guacamole/80-ssh-tunnel.yml
 
 !/services/IMAP Alerter/
 !/services/IMAP Alerter/10-setup.sh

@@ -24,3 +24,8 @@ kubectl create secret generic \
 ../../kube-apply-env ./50-backend.yml
 ../../kube-apply-env ./60-frontend.yml
 ../../kube-apply-env ./70-ingress.yml
+
+# Setup remote guacd through a SSH tunnel
+ssh-keygen -N "" -f ${HOME}/guacd-flash
+kubectl create secret generic -n guacaomle guacd-flash-ssh-key --from-file=id_rsa=${HOME}/guacd-flash
+../../kube-apply-env ./80-ssh-tunnel.yml

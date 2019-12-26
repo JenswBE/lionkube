@@ -1,0 +1,60 @@
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: guacamole
+  name: guacd-flash
+  labels:
+    app: guacd-flash
+spec:
+  selector:
+    app: guacd-flash
+  ports:
+    - port: 4822
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: guacamole
+  name: guacd-flash
+  labels:
+    app: guacd-flash
+spec:
+  selector:
+    matchLabels:
+      app: guacd-flash
+  template:
+    metadata:
+      labels:
+        app: guacd-flash
+    spec:
+      containers:
+        - name: ssh-tunnel
+          image: jujhars13/docker-ssh-tunnel
+          env:
+            - name: TZ
+              value: ${TIMEZONE}
+            - name: SSH_BASTION_HOST
+              value: ${GUACAMOLE_GUACD_FLASH_HOST}
+            - name: SSH_PORT
+              value: ${GUACAMOLE_GUACD_FLASH_PORT}
+            - name: SSH_USER
+              value: ${GUACAMOLE_GUACD_FLASH_USER}
+            - name: LOCAL_PORT
+              value: "4822"
+            - name: REMOTE_SERVER_IP
+              value: gc-guacd
+            - name: REMOTE_PORT
+              value: "4822"
+          ports:
+            - name: guacd
+              containerPort: 4822
+          volumeMounts:
+            - name: ssh-key
+              mountPath: /ssh_key
+
+      volumes:
+        - name: ssh-key
+          secret:
+            secretName: guacd-flash-ssh-key
