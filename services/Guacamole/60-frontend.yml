@@ -1,0 +1,50 @@
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: guacamole
+  name: guacamole
+  labels:
+    app: guacamole
+spec:
+  selector:
+    app: guacamole
+  ports:
+    - port: 80
+      targetPort: 8080
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: guacamole
+  name: guacamole
+  labels:
+    app: guacamole
+spec:
+  selector:
+    matchLabels:
+      app: guacamole
+  template:
+    metadata:
+      labels:
+        app: guacamole
+    spec:
+      containers:
+        - name: guacamole
+          image: guacamole/guacamole:latest
+          env:
+            - name: TZ
+              value: ${TIMEZONE}
+            - name: GUACD_HOSTNAME
+              value: guacd
+            - name: POSTGRES_HOSTNAME
+              value: guacamole-db
+            - name: POSTGRES_DATABASE
+              value: guacdb
+          envFrom:
+            - secretRef:
+                name: guacamole-db-user
+          ports:
+            - name: guacamole
+              containerPort: 8080

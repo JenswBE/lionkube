@@ -45,7 +45,7 @@ spec:
 
       containers:
         - name: postgres
-          image: postgres:latest
+          image: postgres:12-alpine
           env:
             - name: TZ
               value: ${TIMEZONE}
@@ -54,6 +54,9 @@ spec:
               mountPath: /docker-entrypoint-initdb.d
             - name: data
               mountPath: /var/lib/postgresql/data
+          ports:
+            - name: db
+              containerPort: 5432
 
       volumes:
         - name: db-init

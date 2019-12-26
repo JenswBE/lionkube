@@ -2,6 +2,7 @@
 export CONFIG_SERVICES_LOADED=1
 
 # Guacamole
+export GUACAMOLE_DOMAIN=guacamole.${DEFAULT_DOMAIN:?}
 export GUACAMOLE_DB_PASS=
 
 # IMAP Save attachments (ISA)

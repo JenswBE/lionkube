@@ -1,0 +1,67 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  namespace: guacamole
+  name: guacamole
+spec:
+  secretName: tls-guacamole
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt
+  dnsNames:
+    - ${GUACAMOLE_DOMAIN}
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  namespace: guacamole
+  name: guacamole-add-prefix
+spec:
+  addPrefix:
+    prefix: /guacamole
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  namespace: guacamole
+  name: guacamole
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`${GUACAMOLE_DOMAIN}`)
+      kind: Rule
+      services:
+        - namespace: traefik
+          name: blackhole
+          port: 80
+      middlewares:
+        - namespace: traefik
+          name: https-redirect
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  namespace: guacamole
+  name: guacamole-secure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${GUACAMOLE_DOMAIN}`)
+      kind: Rule
+      services:
+        - name: guacamole
+          port: 80
+  middlewares:
+    - namespace: traefik
+      name: secure-https
+    - name: guacamole-add-prefix
+  tls:
+    secretName: tls-guacamole

@@ -1,0 +1,40 @@
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: guacamole
+  name: guacd
+  labels:
+    app: guacd
+spec:
+  selector:
+    app: guacd
+  ports:
+    - port: 4822
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: guacamole
+  name: guacd
+  labels:
+    app: guacd
+spec:
+  selector:
+    matchLabels:
+      app: guacd
+  template:
+    metadata:
+      labels:
+        app: guacd
+    spec:
+      containers:
+        - name: guacd
+          image: guacamole/guacd:latest
+          env:
+            - name: TZ
+              value: ${TIMEZONE}
+          ports:
+            - name: db
+              containerPort: 5432
