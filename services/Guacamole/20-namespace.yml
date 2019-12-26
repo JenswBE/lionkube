@@ -2,3 +2,16 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: guacamole
+
+---
+
+# Deny ingress for all pods by default
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  namespace: guacamole
+  name: ingress-default-deny
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
