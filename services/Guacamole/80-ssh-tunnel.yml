@@ -36,11 +36,11 @@ spec:
             - name: TZ
               value: ${TIMEZONE}
             - name: SSH_BASTION_HOST
-              value: ${GUACAMOLE_GUACD_FLASH_HOST}
+              value: "${GUACAMOLE_GUACD_FLASH_HOST}"
             - name: SSH_PORT
-              value: ${GUACAMOLE_GUACD_FLASH_PORT}
+              value: "${GUACAMOLE_GUACD_FLASH_PORT}"
             - name: SSH_USER
-              value: ${GUACAMOLE_GUACD_FLASH_USER}
+              value: "${GUACAMOLE_GUACD_FLASH_USER}"
             - name: LOCAL_PORT
               value: "4822"
             - name: REMOTE_SERVER_IP
@@ -58,3 +58,4 @@ spec:
         - name: ssh-key
           secret:
             secretName: guacd-flash-ssh-key
+            defaultMode: 0600
