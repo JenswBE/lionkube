@@ -19,11 +19,12 @@ Below components are basic building blocks to provide a fully functional cluster
 ## Services
 Following services are the actual services I want to host on the cluster.
 
+- [Guacamole](https://guacamole.apache.org/): Remote desktop gateway for SSH hosts
 - [IMAP Alerter](https://github.com/JenswBE/imap-alerter): Sends a notification to my main account, in case there is a mail
   on a secondary account
 - [IMAP Save attachments (ISA)](https://github.com/JenswBE/docker-save-attachments): Save all attachments which are sent to a mailbox
   to Nextcloud (or any other Rsync supported storage)
-- OpenVPN: Protects internet traffic on unsecure networks
+- [OpenVPN](https://openvpn.net/): Protects internet traffic on insecure networks
 
 ## Big thanks to
 - https://community.hetzner.com/tutorials/install-kubernetes-cluster
