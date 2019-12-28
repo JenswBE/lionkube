@@ -26,7 +26,7 @@ Description=Mount unit for Nextcloud data
 What=${NEXTCLOUD_STORAGE_BOX_USER:?}@${STORAGE_BOX_HOST:?}:./data
 Where=/media/nextcloud/data
 Type=fuse.sshfs
-Options=Port=23,IdentityFile=/root/ssh_keys/nextcloud
+Options=Port=23,IdentityFile=/root/ssh_keys/nextcloud,allow_other,default_permissions,uid=33,gid=33
 
 [Install]
 WantedBy=multi-user.target
@@ -56,7 +56,6 @@ kubectl create secret generic \
   --from-literal=MYSQL_PASSWORD=${NEXTCLOUD_MARIADB_USER_PASS:?}
 
 # Deploy Guacamole
-../../kube-apply-env ./40-database.yml
-../../kube-apply-env ./50-backend.yml
-../../kube-apply-env ./60-frontend.yml
-../../kube-apply-env ./70-ingress.yml
+../../kube-apply-env ./40-mariadb.yml
+../../kube-apply-env ./50-nextcloud.yml
+../../kube-apply-env ./60-ingress.yml
