@@ -30,6 +30,14 @@ spec:
       labels:
         app: grafana
     spec:
+      initContainers:
+        - name: chown-grafana-folders
+          image: busybox:latest
+          command: ['sh', '-c', 'chown -R 472:472 /grafana']
+          volumeMounts:
+            - name: config
+              mountPath: /grafana
+
       containers:
         - name: grafana
           image: grafana/grafana:latest
