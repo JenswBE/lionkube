@@ -12,7 +12,6 @@ kubectl apply -f ./20-namespace.yml
 kubectl apply -f ./30-storage.yml
 
 # Create config
-# https://github.com/JenswBE/imap-alerter
 kubectl create secret generic \
   -n guacamole \
   guacamole-db-user \
