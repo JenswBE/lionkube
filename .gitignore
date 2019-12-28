@@ -75,6 +75,7 @@
 !/services/Nextcloud/40-mariadb.yml
 !/services/Nextcloud/50-nextcloud.yml
 !/services/Nextcloud/60-ingress.yml
+!/services/Nextcloud/70-nextcloud-cron.yml
 
 !/services/OpenVPN/
 !/services/OpenVPN/10-setup.sh
