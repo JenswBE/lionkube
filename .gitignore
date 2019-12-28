@@ -58,5 +58,5 @@
 
 !/services/OpenVPN/
 !/services/OpenVPN/10-setup.sh
-!/services/OpenVPN/20-init.yml
+!/services/OpenVPN/20-namespace.yml
 !/services/OpenVPN/30-deploy.yml
