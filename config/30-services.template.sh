@@ -29,6 +29,12 @@ export ISA_NEXTCLOUD_USER=
 export ISA_NEXTCLOUD_PASS=
 export ISA_SYNC_SUBPATH=Tuinfeest/Inbox  # Path on Nextcloud to sync to. No starting or trailing slash.
 
+# Nextcloud
+export NEXTCLOUD_DOMAIN=nextcloud.${DEFAULT_DOMAIN}
+export NEXTCLOUD_STORAGE_BOX_USER=
+export NEXTCLOUD_MARIADB_ROOT_PASS=
+export NEXTCLOUD_MARIADB_USER_PASS=
+
 # OpenVPN
 export OPENVPN_DOMAIN=openvpn-${CLUSTER_DOMAIN}
 export OPENVPN_PORT=1194

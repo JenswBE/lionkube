@@ -1,0 +1,69 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  namespace: nextcloud
+  name: nextcloud
+spec:
+  secretName: tls-nextcloud
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt
+  dnsNames:
+    - ${NEXTCLOUD_DOMAIN}
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  namespace: nextcloud
+  name: nextcloud-redirect-dav
+spec:
+  redirectRegex:
+    regex: "https://(.*)/.well-known/(card|cal)dav"
+    replacement: "https://${DOLLAR}1/remote.php/dav/"
+    permanent: "true"
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  namespace: nextcloud
+  name: nextcloud
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`${NEXTCLOUD_DOMAIN}`)
+      kind: Rule
+      services:
+        - namespace: traefik
+          name: blackhole
+          port: 80
+      middlewares:
+        - namespace: traefik
+          name: https-redirect
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  namespace: nextcloud
+  name: nextcloud-secure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${NEXTCLOUD_DOMAIN}`)
+      kind: Rule
+      services:
+        - name: nextcloud
+          port: 80
+      middlewares:
+        - namespace: traefik
+          name: secure-https
+        - name: nextcloud-redirect-dav
+  tls:
+    secretName: tls-nextcloud

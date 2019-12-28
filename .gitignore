@@ -68,6 +68,14 @@
 !/services/IMAP Save attachments (ISA)/20-namespace.yml
 !/services/IMAP Save attachments (ISA)/30-deploy.yml
 
+!/services/Nextcloud/
+!/services/Nextcloud/10-setup.sh
+!/services/Nextcloud/20-namespace.yml
+!/services/Nextcloud/30-storage.yml
+!/services/Nextcloud/40-mariadb.yml
+!/services/Nextcloud/50-nextcloud.yml
+!/services/Nextcloud/60-ingress.yml
+
 !/services/OpenVPN/
 !/services/OpenVPN/10-setup.sh
 !/services/OpenVPN/20-namespace.yml

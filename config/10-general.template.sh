@@ -17,3 +17,6 @@ export MAIL_HOST=in-v3.mailjet.com
 export MAIL_PORT=587
 export MAIL_USER=
 export MAIL_PASS=
+
+# Hetzner Storage box
+export STORAGE_BOX_HOST=

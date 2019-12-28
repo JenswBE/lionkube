@@ -1,0 +1,89 @@
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: nextcloud
+  name: nextcloud
+  labels:
+    app: nextcloud
+spec:
+  selector:
+    app: nextcloud
+  ports:
+    - port: 80
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  namespace: nextcloud
+  name: allow-nextcloud-to-traefik
+spec:
+  podSelector:
+    matchLabels:
+      app: nextcloud
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: traefik
+      podSelector:
+        matchLabels:
+          app: traefik
+
+    ports:
+    - protocol: TCP
+      port: 80
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: nextcloud
+  name: nextcloud
+  labels:
+    app: nextcloud
+spec:
+  selector:
+    matchLabels:
+      app: nextcloud
+  template:
+    metadata:
+      labels:
+        app: nextcloud
+    spec:
+      containers:
+        - name: nextcloud
+          image: nextcloud:latest
+          env:
+            - name: TZ
+              value: ${TIMEZONE}
+            - name: MYSQL_DATABASE
+              value: "nextcloud"
+            - name: MYSQL_USER
+              value: "nextcloud"
+            - name: MYSQL_HOST
+              value: "mariadb"
+          envFrom:
+            - secretRef:
+                name: mariadb-user-nextcloud
+          volumeMounts:
+            - name: config
+              mountPath: /var/www/html
+            - name: data
+              mountPath: /var/www/html/data
+          ports:
+            - name: http
+              containerPort: 80
+
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: nextcloud-config
+        - name: data
+          hostPath:
+            path: /media/nextcloud/data
+            type: Directory
