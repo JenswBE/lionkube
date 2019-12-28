@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1572093413680,
+  "iteration": 1577523207607,
   "links": [],
   "panels": [
     {
@@ -65,7 +65,7 @@
         "showThresholdLabels": true,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.4.3",
+      "pluginVersion": "6.5.2",
       "targets": [
         {
           "alias": "Temperature past minute",
@@ -170,7 +170,7 @@
         "showThresholdLabels": true,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.4.3",
+      "pluginVersion": "6.5.2",
       "targets": [
         {
           "alias": "Heat-index past minute",
@@ -275,7 +275,7 @@
         "showThresholdLabels": true,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.4.3",
+      "pluginVersion": "6.5.2",
       "targets": [
         {
           "alias": "Temperature past minute",
@@ -349,6 +349,7 @@
         "x": 0,
         "y": 8
       },
+      "hiddenSeries": false,
       "id": 6,
       "interval": "20s",
       "legend": {
@@ -499,6 +500,7 @@
         "x": 12,
         "y": 8
       },
+      "hiddenSeries": false,
       "id": 7,
       "interval": "20s",
       "legend": {
@@ -635,7 +637,7 @@
     }
   ],
   "refresh": "5s",
-  "schemaVersion": 20,
+  "schemaVersion": 21,
   "style": "dark",
   "tags": [],
   "templating": {
