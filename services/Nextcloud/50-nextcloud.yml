@@ -78,8 +78,9 @@ spec:
           ports:
             - name: http
               containerPort: 80
-          nodeSelector:
-            mount.media.nextcloud.data: "true"
+
+      nodeSelector:
+        mount.media.nextcloud.data: "true"
 
       volumes:
         - name: config
