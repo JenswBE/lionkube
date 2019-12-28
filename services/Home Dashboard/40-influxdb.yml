@@ -1,0 +1,53 @@
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: home-dashboard
+  name: influxdb
+  labels:
+    app: influxdb
+spec:
+  selector:
+    app: influxdb
+  ports:
+    - port: 8086
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: home-dashboard
+  name: influxdb
+  labels:
+    app: influxdb
+spec:
+  selector:
+    matchLabels:
+      app: influxdb
+  template:
+    metadata:
+      labels:
+        app: influxdb
+    spec:
+      containers:
+        - name: influxdb
+          image: influxdb:latest
+          env:
+            - name: TZ
+              value: "${TIMEZONE}"
+            - name: INFLUXDB_HTTP_AUTH_ENABLED
+              value: "true"
+          envFrom:
+            - secretRef:
+                name: influxdb-admin
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/influxdb
+          ports:
+            - name: http
+              containerPort: 8086
+
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: influxdb-data

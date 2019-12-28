@@ -10,3 +10,9 @@ export CLUSTER_NAME=lionkube
 export CLUSTER_DOMAIN=${CLUSTER_NAME}.${DEFAULT_DOMAIN}
 export ADMIN_MAIL=REPLACE_ME
 export TIMEZONE=Europe/Brussels
+
+# Mail relay
+export MAIL_HOST=in-v3.mailjet.com
+export MAIL_PORT=587
+export MAIL_USER=
+export MAIL_PASS=

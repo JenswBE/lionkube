@@ -1,0 +1,55 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  namespace: home-dashboard
+  name: grafana
+spec:
+  secretName: tls-grafana
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt
+  dnsNames:
+    - ${HOME_DASHBOARD_GRAFANA_DOMAIN}
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  namespace: home-dashboard
+  name: grafana
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`${HOME_DASHBOARD_GRAFANA_DOMAIN}`)
+      kind: Rule
+      services:
+        - namespace: traefik
+          name: blackhole
+          port: 80
+      middlewares:
+        - namespace: traefik
+          name: https-redirect
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  namespace: home-dashboard
+  name: grafana-secure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${HOME_DASHBOARD_GRAFANA_DOMAIN}`)
+      kind: Rule
+      services:
+        - name: grafana
+          port: 80
+      middlewares:
+        - namespace: traefik
+          name: secure-https
+  tls:
+    secretName: tls-grafana

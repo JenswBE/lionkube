@@ -45,6 +45,18 @@
 !/services/Guacamole/70-ingress.yml
 !/services/Guacamole/80-ssh-tunnel.yml
 
+!/services/Home Dashboard/
+!/services/Home Dashboard/10-setup.sh
+!/services/Home Dashboard/20-namespace.yml
+!/services/Home Dashboard/30-storage.yml
+!/services/Home Dashboard/40-influxdb.yml
+!/services/Home Dashboard/50-grafana.yml
+!/services/Home Dashboard/60-ingress-influxdb.yml
+!/services/Home Dashboard/61-ingress-grafana.yml
+
+!/services/Home Dashboard/dashboards/
+!/services/Home Dashboard/dashboards/Monitor Temp.json
+
 !/services/IMAP Alerter/
 !/services/IMAP Alerter/10-setup.sh
 !/services/IMAP Alerter/20-namespace.yml
