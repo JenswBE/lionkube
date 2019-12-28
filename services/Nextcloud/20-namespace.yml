@@ -4,16 +4,3 @@ metadata:
   name: nextcloud
   labels:
     name: nextcloud
-
----
-
-# Deny ingress for all pods by default
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  namespace: nextcloud
-  name: ingress-default-deny
-spec:
-  podSelector: {}
-  policyTypes:
-  - Ingress
