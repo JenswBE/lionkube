@@ -21,5 +21,6 @@ spec:
               image: "busybox"
               command: [ "wget" ]
               args:
-                - "-o /dev/null"
+                - "-o"
+                - "/dev/null"
                 - "https://${NEXTCLOUD_DOMAIN}/cron.php"
