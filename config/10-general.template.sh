@@ -9,6 +9,7 @@ export DEFAULT_DOMAIN=REPLACE_ME # example.com
 export CLUSTER_NAME=lionkube
 export CLUSTER_DOMAIN=${CLUSTER_NAME}.${DEFAULT_DOMAIN}
 export ADMIN_MAIL=REPLACE_ME
+export CLUSTER_MAIL=${CLUSTER_NAME}@${DEFAULT_DOMAIN}
 export TIMEZONE=Europe/Brussels
 
 # Mail relay
