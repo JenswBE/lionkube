@@ -55,7 +55,8 @@ kubectl create secret generic \
   mariadb-user-nextcloud \
   --from-literal=MYSQL_PASSWORD=${NEXTCLOUD_MARIADB_USER_PASS:?}
 
-# Deploy Guacamole
+# Deploy Nextcloud
 ../../kube-apply-env ./40-mariadb.yml
 ../../kube-apply-env ./50-nextcloud.yml
 ../../kube-apply-env ./60-ingress.yml
+../../kube-apply-env ./70-nextcloud-cron.yml
