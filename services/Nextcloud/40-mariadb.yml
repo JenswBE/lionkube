@@ -75,8 +75,9 @@ spec:
           livenessProbe:
             exec:
               command:
-              - "mysqladmin -u ${DOLLAR}MYSQL_USER --password=${DOLLAR}MYSQL_PASSWORD ping || exit 1"
-            initialDelaySeconds: 30
+                - "/bin/bash"
+                - "-c"
+                - "mysqladmin -u ${DOLLAR}MYSQL_USER --password=${DOLLAR}MYSQL_PASSWORD ping || exit 1"
             periodSeconds: 30
             timeoutSeconds: 10
             failureThreshold: 5
