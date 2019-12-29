@@ -71,12 +71,14 @@
 !/services/Nextcloud/
 !/services/Nextcloud/10-setup-sshfs.sh
 !/services/Nextcloud/11-setup-nextcloud.sh
+!/services/Nextcloud/12-setup-backups.sh
 !/services/Nextcloud/20-namespace.yml
 !/services/Nextcloud/30-storage.yml
 !/services/Nextcloud/40-mariadb.yml
 !/services/Nextcloud/50-nextcloud.yml
 !/services/Nextcloud/60-ingress.yml
-!/services/Nextcloud/70-backup.yml
+!/services/Nextcloud/70-backup-mariadb.yml
+!/services/Nextcloud/80-borgmatic.yml
 
 !/services/OpenVPN/
 !/services/OpenVPN/10-setup.sh

@@ -54,6 +54,9 @@ spec:
             - name: script
               mountPath: /script
 
+      nodeSelector:
+        mount.media.nextcloud: "true"
+
       volumes:
         - name: backup-mariadb
           hostPath:

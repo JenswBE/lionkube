@@ -125,7 +125,7 @@ spec:
               mountPath: /backup
 
       nodeSelector:
-        mount.media.nextcloud.data: "true"
+        mount.media.nextcloud: "true"
 
       volumes:
         - name: config
