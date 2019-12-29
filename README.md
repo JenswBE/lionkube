@@ -26,6 +26,28 @@ Following services are the actual services I want to host on the cluster.
   to Nextcloud (or any other Rsync supported storage)
 - [OpenVPN](https://openvpn.net/): Protects internet traffic on insecure networks
 
+## Scheduled jobs
+
+### Continuous
+- Every 5 mins: Nextcloud cron.php (services/Nextcloud/50-nextcloud.yml)
+- Every 10 mins: Nextcloud generate previews (services/Nextcloud/50-nextcloud.yml)
+
+### 01:00 Daily application jobs
+- None
+
+### 02:00 Prepare backup
+- Dump Nextcloud DB (TODO)
+- Dump Nextcloud calendars and contacts (TODO)
+
+### 03:00 Perform backup
+- Run Borgmatic (TODO)
+
+### 04:00 Perform application updates
+- 04:30 Update all Nextcloud apps (services/Nextcloud/50-nextcloud.yml)
+
+### System tasks
+- None
+
 ## Big thanks to
 - https://community.hetzner.com/tutorials/install-kubernetes-cluster
 - https://github.com/chepurko/k8s-ovpn
