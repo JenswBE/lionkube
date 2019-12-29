@@ -33,10 +33,10 @@ data:
   config.yaml: |
     location:
       source_directories:
-          - /mnt/source
+        - /mnt/source
 
-    repositories:
-      - borg@${NEXTCLOUD_BORG_SSH_HOST}:/backup/${CLUSTER_NAME}-nextcloud
+      repositories:
+        - borg@${NEXTCLOUD_BORG_SSH_HOST}:/backup/${CLUSTER_NAME}-nextcloud
 
     storage:
       compression: lz4
