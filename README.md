@@ -29,15 +29,15 @@ Following services are the actual services I want to host on the cluster.
 ## Scheduled jobs
 
 ### Continuous
-- Every 5 mins: Nextcloud cron.php (services/Nextcloud/50-nextcloud.yml)
-- Every 10 mins: Nextcloud generate previews (services/Nextcloud/50-nextcloud.yml)
+- Every 5 mins: Nextcloud cron.php (services/Nextcloud/50-nextcloud.yml: cron)
+- Every 10 mins: Nextcloud generate previews (services/Nextcloud/50-nextcloud.yml: cron)
 
 ### 01:00 Daily application jobs
 - None
 
 ### 02:00 Prepare backup
-- Dump Nextcloud DB (TODO)
-- Dump Nextcloud calendars and contacts (TODO)
+- 02:00 Dump Nextcloud DB (services/Nextcloud/70-backup.yml)
+- 02:05 Dump Nextcloud calendars and contacts (services/Nextcloud/50-nextcloud.yml: backup-calcard)
 
 ### 03:00 Perform backup
 - Run Borgmatic (TODO)

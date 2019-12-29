@@ -17,7 +17,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   namespace: nextcloud
-  name: allow-traefik-to-nextcloud
+  name: filter-ingress-on-nextcloud
 spec:
   podSelector:
     matchLabels:
