@@ -120,6 +120,7 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /nextcloud
+              readOnly: true
             - name: backup-calcard
               mountPath: /backup
 
@@ -133,7 +134,7 @@ spec:
         - name: data
           hostPath:
             path: /media/nextcloud/data
-            type: Directory
+            type: DirectoryOrCreate
         - name: backup-calcard
           hostPath:
             path: /media/nextcloud/backup/calcard
