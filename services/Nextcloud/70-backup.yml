@@ -1,0 +1,73 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: nextcloud
+  name: backup-mariadb-config
+data:
+  crontab: |
+    # Min Hour DoM Month DoW Command
+    0     2    *   *     *   /script/backup.sh
+
+  script: |
+    #!/bin/sh
+    /usr/bin/mysqldump --opt -h ${MYSQL_HOST} -u ${MYSQL_USER} -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} > "/backup/${MYSQL_DATABASE}.sql"
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: nextcloud
+  name: backup-mariadb
+  labels:
+    app: backup-mariadb
+spec:
+  selector:
+    matchLabels:
+      app: backup-mariadb
+  template:
+    metadata:
+      labels:
+        app: backup-mariadb
+    spec:
+      containers:
+        - name: mysqldump
+          image: schnitzler/mysqldump
+          args: ["-l", "8", "-d", "8"]
+          env:
+            - name: TZ
+              value: ${TIMEZONE}
+            - name: MYSQL_HOST
+              value: "mariadb"
+            - name: MYSQL_DATABASE
+              value: "nextcloud"
+            - name: MYSQL_USER
+              value: "nextcloud"
+          envFrom:
+            - secretRef:
+                name: mariadb-user-nextcloud
+          volumeMounts:
+            - name: backup-mariadb
+              mountPath: /backup
+            - name: crontab
+              mountPath: /var/spool/cron/crontabs
+            - name: script
+              mountPath: /script
+
+      volumes:
+        - name: backup-mariadb
+          hostPath:
+            path: /media/nextcloud/backup/mariadb
+            type: DirectoryOrCreate
+        - name: crontab
+          configMap:
+            name: backup-mariadb-config
+            items:
+              - key: crontab
+                path: root
+        - name: script
+          configMap:
+            name: backup-mariadb-config
+            items:
+              - key: script
+                path: backup.sh

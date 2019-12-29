@@ -9,7 +9,7 @@ source ../../config/00-load-config.sh
 
 # Setup Nextcloud folder on Hetzner Storage box
 sudo apt install sshfs
-sudo mkdir -p /media/nextcloud/data /media/nextcloud/backup # Create mount point
+sudo mkdir -p /media/nextcloud # Create mount point
 sudo mkdir -p /root/ssh_keys # Create SSH key directory
 sudo chmod 700 /root/ssh_keys # Restrict permissions
 sudo ssh-keygen -C "${HOSTNAME}" -N '' -f /root/ssh_keys/nextcloud # Generate SSH key
@@ -19,7 +19,7 @@ sudo ssh-keygen -C "${HOSTNAME}" -N '' -f /root/ssh_keys/nextcloud # Generate SS
 
 ssh-keyscan -p 23 -H ${STORAGE_BOX_HOST:?} | sudo tee /root/.ssh/known_hosts # Add storage box to known_hosts
 
-# Mount data folder
+# Mount Nextcloud folder
 sudo tee /etc/systemd/system/media-nextcloud.mount <<EOF
 [Unit]
 Description=Mount unit for Nextcloud
