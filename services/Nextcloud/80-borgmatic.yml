@@ -154,6 +154,7 @@ spec:
             name: borgmatic-config
         - name: ssh
           projected:
+            defaultMode: 0600
             sources:
             - secret:
                 name: borgmatic-ssh-key
