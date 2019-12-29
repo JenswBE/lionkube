@@ -39,6 +39,21 @@ spec:
 
 ---
 
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: nextcloud
+  name: nextcloud-crontab
+data:
+  crontab: |
+    # Min Hour DoM Month DoW Command
+    */5   *    *   *     *   php -f /var/www/html/cron.php
+    */10  *    *   *     *   php -f /var/www/html/occ preview:pre-generate
+    0     1    *   *     *   php -f /var/www/html/occ trashbin:expire
+    30    4    *   *     *   php -f /var/www/html/occ app:update --all
+
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -79,6 +94,20 @@ spec:
             - name: http
               containerPort: 80
 
+        - name: nextcloud-cron
+          image: nextcloud:latest
+          env:
+            - name: TZ
+              value: ${TIMEZONE}
+          command: ['/cron.sh']
+          volumeMounts:
+            - name: config
+              mountPath: /var/www/html
+            - name: data
+              mountPath: /var/www/html/data
+            - name: crontab
+              mountPath: /var/spool/cron/crontabs
+
       nodeSelector:
         mount.media.nextcloud.data: "true"
 
@@ -90,3 +119,9 @@ spec:
           hostPath:
             path: /media/nextcloud/data
             type: Directory
+        - name: crontab
+          configMap:
+            name: nextcloud-crontab
+            items:
+              - key: crontab
+                path: www-data
