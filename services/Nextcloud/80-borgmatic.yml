@@ -32,38 +32,38 @@ data:
 
   config.yaml: |
     location:
-    source_directories:
-        - /mnt/source
+      source_directories:
+          - /mnt/source
 
     repositories:
-        - borg@${NEXTCLOUD_BORG_SSH_HOST}:/backup/${CLUSTER_NAME}-nextcloud
+      - borg@${NEXTCLOUD_BORG_SSH_HOST}:/backup/${CLUSTER_NAME}-nextcloud
 
     storage:
-        compression: lz4
-        archive_name_format: 'backup-{now}'
-        ssh_command: 'ssh -p ${NEXTCLOUD_BORG_SSH_PORT}'
+      compression: lz4
+      archive_name_format: 'backup-{now}'
+      ssh_command: 'ssh -p ${NEXTCLOUD_BORG_SSH_PORT}'
 
     retention:
-        keep_daily: 7
-        keep_weekly: 4
-        keep_monthly: 12
-        keep_yearly: 10
-        prefix: 'backup-'
+      keep_daily: 7
+      keep_weekly: 4
+      keep_monthly: 12
+      keep_yearly: 10
+      prefix: 'backup-'
 
     consistency:
-        checks:
-            - repository
-            - archives
-        check_last: 3
-        prefix: 'backup-'
+      checks:
+        - repository
+        - archives
+      check_last: 3
+      prefix: 'backup-'
 
     hooks:
-        before_backup:
-            - echo "Starting a backup job."
-        after_backup:
-            - echo "Backup created."
-        on_error:
-            - echo "Error while creating a backup."
+      before_backup:
+        - echo "Starting a backup job."
+      after_backup:
+        - echo "Backup created."
+      on_error:
+        - echo "Error while creating a backup."
 
 ---
 
