@@ -72,6 +72,18 @@ kubectl create secret generic --namespace=longhorn-system traefik-users-longhorn
     --from-literal=users="$(htpasswd -bnBC 10 "${LONGHORN_USER:?}" ${LONGHORN_PASSWORD:?} | tr -d '\n')"
 ../../kube-apply-env ../components/Longhorn.yml
 
+# Set backup credentials
+kubectl create secret generic minio-secret \
+    --namespace=longhorn-system \
+    --from-literal=AWS_ENDPOINTS="${LONGHORN_BACKUP_S3_ENDPOINT:?}" \
+    --from-literal=AWS_ACCESS_KEY_ID="${LONGHORN_BACKUP_S3_ACCESS_KEY:?}" \
+    --from-literal=AWS_SECRET_ACCESS_KEY="${LONGHORN_BACKUP_S3_SECRET_KEY:?}"
+
+# Action Required
+# In Longhorn Settings => General, set following values:
+# Backup Target: s3://<BUCKET_NAME>@minio/
+# Backup Target Credential Secret: minio-secret
+
 # Set Longhorn as default storage class
 kubectl patch storageclass hcloud-volumes -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
 kubectl patch storageclass longhorn -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
