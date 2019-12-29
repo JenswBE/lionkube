@@ -46,8 +46,7 @@ TELEGRAF_PASS=REPLACE_ME
 GRAFANA_PASS=REPLACE_ME
 set +o history # Enable history
 
-INFLUXDB_POD=$(kubectl get pod -n home-dashboard --selector=app=influxdb -o jsonpath="{.items[0].metadata.name}")
-cat <<EOF | kubectl exec -n home-dashboard -i ${INFLUXDB_POD:?} -- \
+cat <<EOF | kubectl exec -n home-dashboard -i deploy/influxdb -- \
   influx -username "${HOME_DASHBOARD_INFLUXDB_ADMIN_USER:?}" -password "${HOME_DASHBOARD_INFLUXDB_ADMIN_PASS:?}"
 -- Create database
 CREATE DATABASE "monitor_temp" WITH DURATION 1w NAME "one_week";
