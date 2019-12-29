@@ -94,7 +94,7 @@ spec:
             - name: http
               containerPort: 80
 
-        - name: nextcloud-cron
+        - name: cron
           image: nextcloud:latest
           env:
             - name: TZ
@@ -108,6 +108,21 @@ spec:
             - name: crontab
               mountPath: /var/spool/cron/crontabs
 
+        - name: backup-calcard
+          image: waja/calcardbackup
+          env:
+            - name: TZ
+              value: ${TIMEZONE}
+            - name: CRON_TIME
+              value: "5 2 * * *"
+            - name: CALCARD_OPTS
+              value: "-i -x -d '_overwrite'"
+          volumeMounts:
+            - name: config
+              mountPath: /nextcloud
+            - name: backup-calcard
+              mountPath: /backup
+
       nodeSelector:
         mount.media.nextcloud.data: "true"
 
@@ -119,6 +134,10 @@ spec:
           hostPath:
             path: /media/nextcloud/data
             type: Directory
+        - name: backup-calcard
+          hostPath:
+            path: /media/nextcloud/backup/calcard
+            type: DirectoryOrCreate
         - name: crontab
           configMap:
             name: nextcloud-crontab

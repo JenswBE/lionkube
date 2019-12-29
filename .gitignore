@@ -69,7 +69,8 @@
 !/services/IMAP Save attachments (ISA)/30-deploy.yml
 
 !/services/Nextcloud/
-!/services/Nextcloud/10-setup.sh
+!/services/Nextcloud/10-setup-sshfs.sh
+!/services/Nextcloud/11-setup-nextcloud.sh
 !/services/Nextcloud/20-namespace.yml
 !/services/Nextcloud/30-storage.yml
 !/services/Nextcloud/40-mariadb.yml
