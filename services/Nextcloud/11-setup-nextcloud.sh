@@ -28,3 +28,4 @@ kubectl create secret generic \
 ../../kube-apply-env ./40-mariadb.yml
 ../../kube-apply-env ./50-nextcloud.yml
 ../../kube-apply-env ./60-ingress.yml
+kubectl apply -f ./70-backup.yml

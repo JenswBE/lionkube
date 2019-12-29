@@ -35,3 +35,7 @@ WantedBy=multi-user.target
 EOF
 sudo systemctl start media-nextcloud.mount
 sudo systemctl enable media-nextcloud.mount
+
+# Create directories and set permissions
+sudo mkdir -p /media/nextcloud/{data,backup}
+sudo chmod 700 /media/nextcloud/{data,backup}
