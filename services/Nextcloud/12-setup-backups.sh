@@ -40,3 +40,11 @@ kubectl create secret generic \
 
 # Deploy Borgmatic
 ../../kube-apply-env ./80-borgmatic.yml
+
+# Check if everything is setup correctly (WARNING: Might run a long time!)
+kubectl exec -n nextcloud deploy/borgmatic -- borgmatic --verbosity 1
+
+# Export repo key
+kubectl exec -n nextcloud deploy/borgmatic -- sh -c "BORG_RSH=\"ssh -p ${NEXTCLOUD_BORG_SSH_PORT:?}\" borg key export --qr-html \"borg@${NEXTCLOUD_BORG_SSH_HOST}:/backup/${CLUSTER_NAME}-nextcloud\" /tmp/repokey.html"
+kubectl exec -n nextcloud deploy/borgmatic -- sh -c 'cat /tmp/repokey.html' -- > "${HOME}/nextcloud-borgmatic-repokey.html"
+kubectl exec -n nextcloud deploy/borgmatic -- sh -c 'shred -u /tmp/repokey.html'
