@@ -14,4 +14,8 @@ echo ${CONFIG_GENERAL_LOADED} \
      > /dev/null
 
 # Replace place holders and apply
-DOLLAR='$' envsubst < "$(pwd)/${1}" | kubectl apply -f -
+if [ "$1" == "--dry-run" ]; then
+    DOLLAR='$' envsubst < "$(pwd)/${2}"
+else
+    DOLLAR='$' envsubst < "$(pwd)/${1}" | kubectl apply -f -
+fi
