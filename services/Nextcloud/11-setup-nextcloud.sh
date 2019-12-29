@@ -8,7 +8,7 @@ source ../../config/00-load-config.sh
 # =============================
 
 # Label nodes (repeat for each node you executed above instructions on)
-kubectl label nodes <NODE_NAME> mount.media.nextcloud.data=true
+kubectl label nodes <NODE_NAME> mount.media.nextcloud=true
 
 # Init Nextcloud
 kubectl apply -f ./20-namespace.yml
@@ -28,4 +28,3 @@ kubectl create secret generic \
 ../../kube-apply-env ./40-mariadb.yml
 ../../kube-apply-env ./50-nextcloud.yml
 ../../kube-apply-env ./60-ingress.yml
-kubectl apply -f ./70-backup.yml
