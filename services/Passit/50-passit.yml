@@ -73,7 +73,7 @@ spec:
               value: passit
             - name: DATABASE_PASSWORD
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   name: postgresql-password
                   key: POSTGRES_PASSWORD
             - name: DEFAULT_FROM_EMAIL
@@ -81,7 +81,7 @@ spec:
             - name: EMAIL_CONFIRMATION_HOST
               value: "${PASSIT_DOMAIN}"
             - name: IS_PRIVATE_ORG_MODE
-              value: True
+              value: "True"
             - name: PRIVATE_ORG_MODE_WHITELIST
               value: "${PASSIT_BASE_DOMAIN}"
           envFrom:
@@ -102,7 +102,7 @@ spec:
               value: passit
             - name: DATABASE_PASSWORD
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   name: postgresql-password
                   key: POSTGRES_PASSWORD
             - name: DEFAULT_FROM_EMAIL
@@ -110,7 +110,7 @@ spec:
             - name: EMAIL_CONFIRMATION_HOST
               value: "${PASSIT_DOMAIN}"
             - name: IS_PRIVATE_ORG_MODE
-              value: True
+              value: "True"
             - name: PRIVATE_ORG_MODE_WHITELIST
               value: "${PASSIT_BASE_DOMAIN}"
           envFrom:
