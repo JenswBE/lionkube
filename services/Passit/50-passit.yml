@@ -56,7 +56,37 @@ spec:
       labels:
         app: passit
     spec:
-
+      initContainers:
+        - name: migrate-db
+          image: passit/passit:stable
+          command: ["./manage.py", "migrate", "--noinput"]
+          env:
+            - name: PYTHONUNBUFFERED
+              value: "1"
+            - name: TZ
+              value: ${TIMEZONE}
+            - name: DATABASE_SERVICE_NAME
+              value: postgresql
+            - name: DATABASE_NAME
+              value: passit
+            - name: DATABASE_USER
+              value: passit
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: postgresql-password
+                  key: POSTGRES_PASSWORD
+            - name: DEFAULT_FROM_EMAIL
+              value: "passit@${PASSIT_BASE_DOMAIN}"
+            - name: EMAIL_CONFIRMATION_HOST
+              value: "${PASSIT_DOMAIN}"
+            - name: IS_PRIVATE_ORG_MODE
+              value: True
+            - name: PRIVATE_ORG_MODE_WHITELIST
+              value: "${PASSIT_BASE_DOMAIN}"
+          envFrom:
+            - secretRef:
+                name: passit-secret-key
 
       containers:
         - name: passit
