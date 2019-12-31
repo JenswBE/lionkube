@@ -1,0 +1,55 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  namespace: passit
+  name: passit
+spec:
+  secretName: tls-passit
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt
+  dnsNames:
+    - ${PASSIT_DOMAIN}
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  namespace: passit
+  name: passit
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`${PASSIT_DOMAIN}`)
+      kind: Rule
+      services:
+        - namespace: traefik
+          name: blackhole
+          port: 80
+      middlewares:
+        - namespace: traefik
+          name: https-redirect
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  namespace: passit
+  name: passit-secure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${PASSIT_DOMAIN}`)
+      kind: Rule
+      services:
+        - name: passit
+          port: 80
+      middlewares:
+        - namespace: traefik
+          name: secure-https
+  tls:
+    secretName: tls-passit

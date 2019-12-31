@@ -1,0 +1,103 @@
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: passit
+  name: passit
+  labels:
+    app: passit
+spec:
+  selector:
+    app: passit
+  ports:
+    - port: 80
+      targetPort: 8080
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  namespace: passit
+  name: allow-passit-to-traefik
+spec:
+  podSelector:
+    matchLabels:
+      app: passit
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: traefik
+      podSelector:
+        matchLabels:
+          app: traefik
+
+    ports:
+    - protocol: TCP
+      port: 8080
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: passit
+  name: passit
+  labels:
+    app: passit
+spec:
+  selector:
+    matchLabels:
+      app: passit
+  template:
+    metadata:
+      labels:
+        app: passit
+    spec:
+
+
+      containers:
+        - name: passit
+          image: passit/passit:stable
+          env:
+            - name: TZ
+              value: ${TIMEZONE}
+            - name: DATABASE_SERVICE_NAME
+              value: postgresql
+            - name: DATABASE_NAME
+              value: passit
+            - name: DATABASE_USER
+              value: passit
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: postgresql-password
+                  key: POSTGRES_PASSWORD
+            - name: DEFAULT_FROM_EMAIL
+              value: "passit@${PASSIT_BASE_DOMAIN}"
+            - name: EMAIL_CONFIRMATION_HOST
+              value: "${PASSIT_DOMAIN}"
+            - name: IS_PRIVATE_ORG_MODE
+              value: True
+            - name: PRIVATE_ORG_MODE_WHITELIST
+              value: "${PASSIT_BASE_DOMAIN}"
+          envFrom:
+            - secretRef:
+                name: passit-secret-key
+          ports:
+            - name: passit
+              containerPort: 8080
+          readinessProbe:
+            timeoutSeconds: 3
+            initialDelaySeconds: 3
+            httpGet:
+              path: "/api/ping/"
+              port: 8080
+          livenessProbe:
+            timeoutSeconds: 3
+            initialDelaySeconds: 30
+            httpGet:
+              path: "/api/ping/"
+              port: 8080

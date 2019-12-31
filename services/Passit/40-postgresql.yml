@@ -1,0 +1,76 @@
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: passit
+  name: postgresql
+  labels:
+    app: postgresql
+spec:
+  selector:
+    app: postgresql
+  ports:
+    - port: 5432
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  namespace: passit
+  name: filter-ingress-on-postgresql
+spec:
+  podSelector:
+    matchLabels:
+      app: postgresql
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: passit
+    ports:
+    - protocol: TCP
+      port: 5432
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: passit
+  name: postgresql
+  labels:
+    app: postgresql
+spec:
+  selector:
+    matchLabels:
+      app: postgresql
+  template:
+    metadata:
+      labels:
+        app: postgresql
+    spec:
+      containers:
+        - name: postgresql
+          image: postgres:12-alpine
+          env:
+            - name: TZ
+              value: ${TIMEZONE}
+            - name: POSTGRES_USER
+              value: passit
+          envFrom:
+            - secretRef:
+                name: postgresql-password
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql
+              subPath: data
+          ports:
+            - name: db
+              containerPort: 5432
+
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: postgresql-data

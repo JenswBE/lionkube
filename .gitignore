@@ -84,3 +84,11 @@
 !/services/OpenVPN/10-setup.sh
 !/services/OpenVPN/20-namespace.yml
 !/services/OpenVPN/30-deploy.yml
+
+!/services/Passit/
+!/services/Passit/10-setup.sh
+!/services/Passit/20-namespace.yml
+!/services/Passit/30-storage.yml
+!/services/Passit/40-postgresql.yml
+!/services/Passit/50-passit.yml
+!/services/Passit/60-ingress.yml
