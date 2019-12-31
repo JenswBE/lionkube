@@ -87,6 +87,8 @@ spec:
           envFrom:
             - secretRef:
                 name: passit-secret-key
+            - secretRef:
+                name: passit-email-url
 
       containers:
         - name: passit
@@ -116,6 +118,8 @@ spec:
           envFrom:
             - secretRef:
                 name: passit-secret-key
+            - secretRef:
+                name: passit-email-url
           ports:
             - name: passit
               containerPort: 8080

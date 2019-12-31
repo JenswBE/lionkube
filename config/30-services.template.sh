@@ -44,8 +44,9 @@ export OPENVPN_DOMAIN=openvpn-${CLUSTER_DOMAIN}
 export OPENVPN_PORT=1194
 
 # Passit
-export PASSIT_BASE_DOMAIN=
-export PASSIT_DOMAIN=passit.${PASSIT_BASE_DOMAIN}
+export PASSIT_BASE_DOMAIN=   # Don't merge with sub domain. Passit needs it separately
+export PASSIT_SUB_DOMAIN=
+export PASSIT_DOMAIN=${PASSIT_SUB_DOMAIN}.${PASSIT_BASE_DOMAIN}
 export PASSIT_DB_PASS=
 export PASSIT_SECRET_KEY=
 export PASSIT_MAIL_HOST=in-v3.mailjet.com
