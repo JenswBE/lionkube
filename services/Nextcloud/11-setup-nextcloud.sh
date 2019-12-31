@@ -40,8 +40,14 @@ kubectl get pod -n nextcloud --selector=app=nextcloud -o wide
 # worker node.
 # See https://github.com/kubernetes/kubernetes/issues/30656 for more info
 
-# Fix reverse proxy handling
+# Get container name
 NC_CONTAINER=$(docker ps | grep nextcloud_nextcloud | cut -f1 -d" ")
+
+# Set trusted domains
+docker exec -u www-data ${NC_CONTAINER} php occ config:system:set trusted_domains 0 --value="${NEXTCLOUD_DOMAIN:?}"
+docker exec -u www-data ${NC_CONTAINER} php occ config:system:set trusted_domains 1 --value="${NEXTCLOUD_DOMAIN_TF:?}"
+
+# Fix reverse proxy handling
 docker exec -u www-data ${NC_CONTAINER} php occ config:system:set overwriteprotocol --value="https"
 docker exec -u www-data ${NC_CONTAINER} php occ config:system:set trusted_proxies 0 --value="172.16.0.0/12"
 

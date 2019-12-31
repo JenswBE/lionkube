@@ -31,6 +31,7 @@ export ISA_SYNC_SUBPATH=Tuinfeest/Inbox  # Path on Nextcloud to sync to. No star
 
 # Nextcloud
 export NEXTCLOUD_DOMAIN=nextcloud.${DEFAULT_DOMAIN}
+export NEXTCLOUD_DOMAIN_TF=   # Alternative Nextcloud domain
 export NEXTCLOUD_STORAGE_BOX_USER=
 export NEXTCLOUD_MARIADB_ROOT_PASS=
 export NEXTCLOUD_MARIADB_USER_PASS=

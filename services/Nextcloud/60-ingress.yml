@@ -10,6 +10,7 @@ spec:
     name: letsencrypt
   dnsNames:
     - ${NEXTCLOUD_DOMAIN}
+    - ${NEXTCLOUD_DOMAIN_TF}
 
 ---
 
@@ -35,7 +36,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: Host(`${NEXTCLOUD_DOMAIN}`)
+    - match: Host(`${NEXTCLOUD_DOMAIN}`) || Host(`${NEXTCLOUD_DOMAIN_TF}`)
       kind: Rule
       services:
         - namespace: traefik
@@ -56,7 +57,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`${NEXTCLOUD_DOMAIN}`)
+    - match: Host(`${NEXTCLOUD_DOMAIN}`) || Host(`${NEXTCLOUD_DOMAIN_TF}`)
       kind: Rule
       services:
         - name: nextcloud
