@@ -23,7 +23,7 @@ kubectl create secret generic \
 kubectl create secret generic \
   -n passit \
   passit-email-url \
-  --from-literal=EMAIL_URL="submission://${PASSIT_MAIL_USER:?}:${PASSIT_MAIL_PASS:?}@${PASSIT_MAIL_HOST:?}"
+  --from-literal=EMAIL_URL="smtp+tls://${PASSIT_MAIL_USER:?}:${PASSIT_MAIL_PASS:?}@${PASSIT_MAIL_HOST:?}:587"
 
 
 # Deploy Passit
