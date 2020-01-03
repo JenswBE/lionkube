@@ -7,38 +7,20 @@
 # Load config
 source ../../config/00-load-config.sh
 
-# Init Home Dashboard
+# Init Monitor Temp
 kubectl apply -f ./20-namespace.yml
 kubectl apply -f ./30-storage.yml
 
 # Create config
 kubectl create secret generic \
-  -n home-dashboard \
+  -n monitor-temp \
   influxdb-admin \
   --from-literal=INFLUXDB_ADMIN_USER=${HOME_DASHBOARD_INFLUXDB_ADMIN_USER:?} \
   --from-literal=INFLUXDB_ADMIN_PASSWORD=${HOME_DASHBOARD_INFLUXDB_ADMIN_PASS:?}
-kubectl create secret generic \
-  -n home-dashboard \
-  grafana-admin \
-  --from-literal=GF_SECURITY_ADMIN_USER=${HOME_DASHBOARD_GRAFANA_ADMIN_USER:?} \
-  --from-literal=GF_SECURITY_ADMIN_PASSWORD=${HOME_DASHBOARD_GRAFANA_ADMIN_PASS:?}
-kubectl create secret generic \
-  -n home-dashboard \
-  grafana-smtp-relay \
-  --from-literal=GF_SMTP_HOST=${MAIL_HOST:?}:${MAIL_PORT:?} \
-  --from-literal=GF_SMTP_USER=${MAIL_USER:?} \
-  --from-literal=GF_SMTP_PASSWORD=${MAIL_PASS:?}
-kubectl create configmap \
-  -n home-dashboard \
-  grafana-smtp-from \
-  --from-literal=GF_SMTP_FROM_ADDRESS=${HOME_DASHBOARD_GRAFANA_SMTP_FROM_ADDRESS:?} \
-  --from-literal=GF_SMTP_FROM_NAME=${HOME_DASHBOARD_GRAFANA_SMTP_FROM_NAME:?}
 
-# Deploy Home Dashboard
+# Deploy Monitor Temp
 ../../kube-apply-env ./40-influxdb.yml
-../../kube-apply-env ./50-grafana.yml
-../../kube-apply-env ./60-ingress-influxdb.yml
-../../kube-apply-env ./61-ingress-grafana.yml
+../../kube-apply-env ./50-ingress-influxdb.yml
 
 # Configure InfluxDB
 set +o history # Disable history
@@ -46,7 +28,7 @@ TELEGRAF_PASS=REPLACE_ME
 GRAFANA_PASS=REPLACE_ME
 set +o history # Enable history
 
-cat <<EOF | kubectl exec -n home-dashboard -i deploy/influxdb -- \
+cat <<EOF | kubectl exec -n monitor-temp -i deploy/influxdb -- \
   influx -username "${HOME_DASHBOARD_INFLUXDB_ADMIN_USER:?}" -password "${HOME_DASHBOARD_INFLUXDB_ADMIN_PASS:?}"
 -- Create database
 CREATE DATABASE "monitor_temp" WITH DURATION 1w NAME "one_week";

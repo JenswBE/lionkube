@@ -19,12 +19,17 @@ Below components are basic building blocks to provide a fully functional cluster
 ## Services
 Following services are the actual services I want to host on the cluster.
 
+- [Grafana](https://grafana.com/): Dashboard for cluster monitoring and home temperature monitoring
 - [Guacamole](https://guacamole.apache.org/): Remote desktop gateway for SSH hosts
 - [IMAP Alerter](https://github.com/JenswBE/imap-alerter): Sends a notification to my main account, in case there is a mail
   on a secondary account
 - [IMAP Save attachments (ISA)](https://github.com/JenswBE/docker-save-attachments): Save all attachments which are sent to a mailbox
   to Nextcloud (or any other Rsync supported storage)
+- [Monitor Temp](https://github.com/JenswBE/flash): InfluxDB to store my temperature at home. Temperature is measured with ESP32's and broadcasted over MQTT. Telegraf consumes the data and inserts it into this InfluxDB. Results are shown on a Grafana dashboard.
+- [Monitoring](https://hub.helm.sh/charts/stable/prometheus): Prometheus deployment to monitor the cluster
+- [Nextcloud](https://nextcloud.com/): Private cloud to store files, contacts, calendars and tasks
 - [OpenVPN](https://openvpn.net/): Protects internet traffic on insecure networks
+- [Passit](https://passit.io/): Shared password manager
 
 ## Scheduled jobs
 

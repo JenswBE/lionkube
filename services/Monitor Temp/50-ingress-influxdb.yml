@@ -1,7 +1,7 @@
 apiVersion: cert-manager.io/v1alpha2
 kind: Certificate
 metadata:
-  namespace: home-dashboard
+  namespace: monitor-temp
   name: influxdb
 spec:
   secretName: tls-influxdb
@@ -16,7 +16,7 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  namespace: home-dashboard
+  namespace: monitor-temp
   name: influxdb-secure
 spec:
   entryPoints:

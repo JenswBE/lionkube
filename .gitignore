@@ -35,6 +35,13 @@
 !/install/scripts/22-install-worker.sh
 
 !/services/
+!/services/Grafana/
+!/services/Grafana/10-setup.sh
+!/services/Grafana/20-namespace.yml
+!/services/Grafana/30-storage.yml
+!/services/Grafana/40-grafana.yml
+!/services/Grafana/50-ingress-grafana.yml
+
 !/services/Guacamole/
 !/services/Guacamole/10-setup.sh
 !/services/Guacamole/20-namespace.yml
@@ -44,18 +51,6 @@
 !/services/Guacamole/60-frontend.yml
 !/services/Guacamole/70-ingress.yml
 !/services/Guacamole/80-ssh-tunnel.yml
-
-!/services/Home Dashboard/
-!/services/Home Dashboard/10-setup.sh
-!/services/Home Dashboard/20-namespace.yml
-!/services/Home Dashboard/30-storage.yml
-!/services/Home Dashboard/40-influxdb.yml
-!/services/Home Dashboard/50-grafana.yml
-!/services/Home Dashboard/60-ingress-influxdb.yml
-!/services/Home Dashboard/61-ingress-grafana.yml
-
-!/services/Home Dashboard/dashboards/
-!/services/Home Dashboard/dashboards/Monitor Temp.json
 
 !/services/IMAP Alerter/
 !/services/IMAP Alerter/10-setup.sh
@@ -67,6 +62,14 @@
 !/services/IMAP Save attachments (ISA)/10-setup.sh
 !/services/IMAP Save attachments (ISA)/20-namespace.yml
 !/services/IMAP Save attachments (ISA)/30-deploy.yml
+
+!/services/Monitor Temp/
+!/services/Monitor Temp/10-setup.sh
+!/services/Monitor Temp/20-namespace.yml
+!/services/Monitor Temp/30-storage.yml
+!/services/Monitor Temp/40-influxdb.yml
+!/services/Monitor Temp/50-ingress-influxdb.yml
+!/services/Monitor Temp/60-dashboard.json
 
 !/services/Monitoring/
 !/services/Monitoring/10-setup.sh

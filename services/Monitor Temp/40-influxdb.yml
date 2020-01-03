@@ -1,7 +1,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  namespace: home-dashboard
+  namespace: monitor-temp
   name: influxdb
   labels:
     app: influxdb
@@ -16,7 +16,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: home-dashboard
+  namespace: monitor-temp
   name: influxdb
   labels:
     app: influxdb
