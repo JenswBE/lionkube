@@ -1,0 +1,16 @@
+alertmanager:
+  persistentVolume:
+    storageClass: longhorn
+
+pushgateway:
+  persistentVolume:
+    storageClass: longhorn
+
+server:
+  persistentVolume:
+    storageClass: longhorn
+
+nodeExporter:
+  tolerations:
+    - key: node-role.kubernetes.io/master
+      effect: NoSchedule

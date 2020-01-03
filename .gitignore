@@ -68,6 +68,12 @@
 !/services/IMAP Save attachments (ISA)/20-namespace.yml
 !/services/IMAP Save attachments (ISA)/30-deploy.yml
 
+!/services/Monitoring/
+!/services/Monitoring/10-setup.sh
+!/services/Monitoring/20-namespace.yml
+!/services/Monitoring/30-values-prometheus.yml
+!/services/Monitoring/40-dashboard.json
+
 !/services/Nextcloud/
 !/services/Nextcloud/10-setup-sshfs.sh
 !/services/Nextcloud/11-setup-nextcloud.sh
