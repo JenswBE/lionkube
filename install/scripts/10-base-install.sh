@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# ==============================
+# =    EXECUTE ON EACH NODE    =
+# ==============================
+
 # Load config
 source ../../config/00-load-config.sh
 

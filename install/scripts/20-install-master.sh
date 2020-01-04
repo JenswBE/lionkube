@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# =============================
+# = EXECUTE ON MASTER NODE(S) =
+# =============================
+
 # Load config
 source ../../config/00-load-config.sh
 
@@ -21,8 +25,12 @@ kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl > /dev/null
 source <(kubectl completion bash)
 
 # =============================
-# =     SETUP WORKER NODES    =
-# = See 22-install-workers.sh =
+# = EXECUTE ON WORKER NODE(S) =
+# =============================
+# See 22-install-workers.sh
+
+# =============================
+# = EXECUTE ON MASTER NODE(S) =
 # =============================
 
 # Setup Hetzner secrets and namespaces
