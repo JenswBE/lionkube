@@ -63,6 +63,10 @@
 !/services/IMAP Save attachments (ISA)/20-namespace.yml
 !/services/IMAP Save attachments (ISA)/30-deploy.yml
 
+!/services/Logging/
+!/services/Logging/10-setup.sh
+!/services/Logging/20-namespace.yml
+
 !/services/Monitor Temp/
 !/services/Monitor Temp/10-setup.sh
 !/services/Monitor Temp/20-namespace.yml
