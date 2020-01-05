@@ -36,6 +36,13 @@ EOF
 sudo systemctl start media-nextcloud.mount
 sudo systemctl enable media-nextcloud.mount
 
-# Create directories and set permissions
+# Create directories and set permissions (Only on first host)
 sudo mkdir -p /media/nextcloud/{data,backup}
 sudo chmod 700 /media/nextcloud/{data,backup}
+
+# =============================
+# = EXECUTE ON MASTER NODE(S) =
+# =============================
+
+# Assign label to worker node
+kubectl label nodes <WORKER_NODE_NAME> mount.media.nextcloud=true
