@@ -27,4 +27,6 @@ iface ${EXT_IF:?}:1 inet static
 sudo systemctl restart networking
 
 # Cluster worker join
-sudo kubeadm join cluster-endpoint:6443 --token REPLACE_ME --discovery-token-ca-cert-hash REPLACE_ME
+# Either use the join command generated with kubeadm init or generate a new join command with
+kubeadm token create --print-join-command # Run on master node
+sudo kubeadm join ... # Run on worker node
