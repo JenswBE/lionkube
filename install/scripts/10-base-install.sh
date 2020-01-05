@@ -12,16 +12,19 @@ adduser ${USER:?}
 adduser ${USER:?} sudo
 
 # Switch to new user
-passwd -ld root
+sudo passwd -ld root
 
 # Update system
 sudo apt update
 sudo apt dist-upgrade -y
 
 # Add required hosts
-echo "10.0.0.2 cluster-endpoint simba
+sudo tee -a /etc/hosts <<EOF
+10.0.0.2 cluster-endpoint simba
 10.0.0.3 pumbaa
-10.0.0.4 timon" | sudo tee -a /etc/hosts
+10.0.0.4 timon
+10.0.0.5 nala
+EOF
 
 # Setup firewall
 sudo ufw allow OpenSSH
