@@ -67,7 +67,7 @@
   "gnetId": 8739,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1578212099349,
+  "iteration": 1578221132362,
   "links": [],
   "panels": [
     {
@@ -353,7 +353,9 @@
       "type": "row"
     },
     {
-      "aliasColors": {},
+      "aliasColors": {
+        "CPU Usage": "blue"
+      },
       "bars": false,
       "dashLength": 10,
       "dashes": false,
@@ -396,6 +398,10 @@
       "seriesOverrides": [
         {
           "alias": "Load / core",
+          "yaxis": 1
+        },
+        {
+          "alias": "CPU Usage",
           "yaxis": 2
         }
       ],
@@ -427,7 +433,7 @@
           "lineColor": "rgba(255, 255, 255, 0.34)",
           "op": "gt",
           "value": 1,
-          "yaxis": "right"
+          "yaxis": "left"
         }
       ],
       "timeFrom": null,
@@ -449,20 +455,20 @@
       },
       "yaxes": [
         {
-          "decimals": 0,
-          "format": "percent",
-          "label": "",
-          "logBase": 1,
-          "max": "100",
-          "min": "0",
-          "show": true
-        },
-        {
           "decimals": 1,
           "format": "short",
           "label": "",
           "logBase": 1,
           "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "decimals": 0,
+          "format": "percent",
+          "label": "",
+          "logBase": 1,
+          "max": "100",
           "min": "0",
           "show": true
         }
@@ -615,7 +621,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {
@@ -646,5 +652,5 @@
   "timezone": "",
   "title": "Nodes",
   "uid": "thOnlDamk",
-  "version": 10
+  "version": 11
 }
