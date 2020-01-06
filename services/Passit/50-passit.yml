@@ -81,8 +81,8 @@ spec:
             - name: EMAIL_CONFIRMATION_HOST
               value: "${PASSIT_DOMAIN}"
             - name: IS_PRIVATE_ORG_MODE
-              value: "True"
-            - name: PRIVATE_ORG_MODE_WHITELIST
+              value: "False"
+            - name: PRIVATE_ORG_MODE_DOMAIN_WHITELIST
               value: "${PASSIT_BASE_DOMAIN}"
           envFrom:
             - secretRef:
