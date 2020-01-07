@@ -45,7 +45,8 @@ Following services are the actual services I want to host on the cluster.
 - 02:05 Dump Nextcloud calendars and contacts (services/Nextcloud/50-nextcloud.yml: backup-calcard)
 
 ### 03:00 Perform backup
-- Run Borgmatic (services/Nextcloud/80-borgmatic.yml)
+- 03:00 Run global Borgmatic (services/Borgmatic/30-borgmatic.yml)
+- 03:30 Run Borgmatic for Nextcloud (services/Nextcloud/80-borgmatic.yml)
 
 ### 04:00 Perform application updates
 - 04:30 Update all Nextcloud apps (services/Nextcloud/50-nextcloud.yml)

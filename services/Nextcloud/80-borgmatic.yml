@@ -7,7 +7,7 @@ data:
   crontab.txt: |
     MAILTO="${ADMIN_MAIL}"
     # Min Hour DoM Month DoW Command
-    0     3    *   *     *   PATH=${DOLLAR}PATH:/usr/bin /usr/bin/borgmatic --stats -v 0 2>&1
+    30    3    *   *     *   PATH=${DOLLAR}PATH:/usr/bin /usr/bin/borgmatic --stats -v 0 2>&1
 
   msmtprc.sh: |
     #!/bin/sh
