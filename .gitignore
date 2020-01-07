@@ -110,5 +110,4 @@
 !/services/Passit/40-postgresql.yml
 !/services/Passit/50-passit.yml
 !/services/Passit/60-ingress.yml
-!/services/Passit/70-setup-backup.sh
-!/services/Passit/71-backup-postgresql.yml
+!/services/Passit/70-backup-postgresql.yml
