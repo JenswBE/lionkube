@@ -1,6 +1,12 @@
 # Load me with "source" command of Bash
 export CONFIG_SERVICES_LOADED=1
 
+# Borgmatic
+export BORGMATIC_SSH_HOST=${STORAGE_BOX_HOST:?}
+export BORGMATIC_SSH_PORT=23
+export BORGMATIC_SSH_USER=
+export BORGMATIC_PASSPHRASE=
+
 # Guacamole: LionKube
 export GUACAMOLE_DOMAIN=guacamole.${DEFAULT_DOMAIN:?}
 export GUACAMOLE_DB_PASS=

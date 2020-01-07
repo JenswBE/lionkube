@@ -1,0 +1,159 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: borgmatic
+  name: borgmatic-config
+data:
+  crontab.txt: |
+    MAILTO="${ADMIN_MAIL}"
+    # Min Hour DoM Month DoW Command
+    0     3    *   *     *   PATH=${DOLLAR}PATH:/usr/bin /usr/bin/borgmatic --stats -v 0 2>&1
+
+  msmtprc.sh: |
+    #!/bin/sh
+
+    cat > /etc/msmtprc << EOF
+    # Set default values for all following accounts.
+    defaults
+    auth           on
+    tls            on
+    tls_starttls     on
+    tls_trust_file /etc/ssl/certs/ca-certificates.crt
+    logfile              /var/log/sendmail.log
+
+    account default
+    host ${DOLLAR}{MAIL_RELAY_HOST}
+    port ${DOLLAR}{MAIL_PORT}
+    from ${DOLLAR}{MAIL_FROM}
+    user ${DOLLAR}{MAIL_USER}
+    password ${DOLLAR}{MAIL_PASSWORD}
+
+    EOF
+
+  config.yaml: |
+    location:
+      source_directories:
+        - /mnt/source
+
+      repositories:
+        - ${BORG_SSH_USER}@${BORG_SSH_HOST}:${CLUSTER_NAME}
+
+    storage:
+      compression: lz4
+      archive_name_format: 'backup-{now}'
+      ssh_command: 'ssh -p ${BORG_SSH_PORT}'
+
+    retention:
+      keep_daily: 7
+      keep_weekly: 4
+      keep_monthly: 12
+      keep_yearly: 10
+      prefix: 'backup-'
+
+    consistency:
+      checks:
+        - repository
+        - archives
+      check_last: 3
+      prefix: 'backup-'
+
+    hooks:
+      before_backup:
+        - echo "Starting a backup job."
+      after_backup:
+        - echo "Backup created."
+      on_error:
+        - echo "Error while creating a backup."
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: borgmatic
+  name: borgmatic-mail-config
+data:
+  MAIL_RELAY_HOST: "${MAIL_HOST}"
+  MAIL_PORT: "${MAIL_PORT}"
+  MAIL_FROM: "${CLUSTER_NAME}.borgmatic"
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: borgmatic
+  name: borgmatic
+  labels:
+    app: borgmatic
+spec:
+  selector:
+    matchLabels:
+      app: borgmatic
+  template:
+    metadata:
+      labels:
+        app: borgmatic
+    spec:
+      initContainers:
+        - name: init-repo
+          image: b3vis/borgmatic
+          args:
+            - "borgmatic"
+            - "--init"
+            - "--encryption"
+            - "repokey-blake2"
+          env:
+            - name: TZ
+              value: ${TIMEZONE}
+          envFrom:
+            - configMapRef:
+                name: borgmatic-mail-config
+            - secretRef:
+                name: borgmatic-mail-creds
+            - secretRef:
+                name: borgmatic-passphrase
+          volumeMounts:
+            - name: conf
+              mountPath: /etc/borgmatic.d
+            - name: ssh
+              mountPath: /root/.ssh
+
+      containers:
+        - name: borgmatic
+          image: b3vis/borgmatic
+          env:
+            - name: TZ
+              value: ${TIMEZONE}
+          envFrom:
+            - configMapRef:
+                name: borgmatic-mail-config
+            - secretRef:
+                name: borgmatic-mail-creds
+            - secretRef:
+                name: borgmatic-passphrase
+          volumeMounts:
+            - name: tmp-backup
+              mountPath: /mnt/source/
+              readOnly: true
+            - name: conf
+              mountPath: /etc/borgmatic.d
+            - name: ssh
+              mountPath: /root/.ssh
+
+      volumes:
+        - name: tmp-backup
+          hostPath:
+            path: /media/tmp
+            type: DirectoryOrCreate
+        - name: conf
+          configMap:
+            name: borgmatic-config
+        - name: ssh
+          projected:
+            defaultMode: 0600
+            sources:
+            - secret:
+                name: borgmatic-ssh-key
+            - configMap:
+                name: borgmatic-known-hosts

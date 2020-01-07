@@ -35,6 +35,11 @@
 !/install/scripts/22-install-worker.sh
 
 !/services/
+!/services/Borgmatic/
+!/services/Borgmatic/10-setup.sh
+!/services/Borgmatic/20-namespace.yml
+!/services/Borgmatic/30-borgmatic.yml
+
 !/services/Grafana/
 !/services/Grafana/10-setup.sh
 !/services/Grafana/20-namespace.yml
