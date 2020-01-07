@@ -54,6 +54,7 @@ spec:
       containers:
         - name: postgresql
           image: postgres:12-alpine
+          imagePullPolicy: Always
           env:
             - name: TZ
               value: ${TIMEZONE}

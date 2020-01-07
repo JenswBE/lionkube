@@ -6,6 +6,7 @@ metadata:
 spec:
   # Min Hr DoM Month DoW
   schedule: '15 2 * * *'
+  concurrencyPolicy: Forbid
   jobTemplate:
     metadata:
       namespace: passit
@@ -17,16 +18,17 @@ spec:
           containers:
           - name: backup-postgresql
             image: postgres:12-alpine
+            imagePullPolicy: Always
             args:
               - pg_dump
+              - --verbose
               - --format=c
               - --blobs
               - --host=postgresql
               - --dbname=passit
               - --username=passit
               - --no-password
-              - ">"
-              - "/backup/passit.pg_dump"
+              - "--file=/backup/passit.pg_dump"
             volumeMounts:
               - name: backup
                 mountPath: /backup
