@@ -8,16 +8,15 @@ source ../../config/00-load-config.sh
 # =============================
 
 # Setup Nextcloud folder on Hetzner Storage box
-sudo apt install sshfs
 sudo mkdir -p /media/nextcloud # Create mount point
-sudo mkdir -p /root/ssh_keys # Create SSH key directory
-sudo chmod 700 /root/ssh_keys # Restrict permissions
-sudo ssh-keygen -C "${HOSTNAME}" -N '' -f /root/ssh_keys/nextcloud # Generate SSH key
+sudo ssh-keygen -C "${HOSTNAME}" -N '' -f /root/ssh_keys/hetzner-sb-nextcloud # Generate SSH key
 
 # --- ACTION REQUIRED ---
-# Append contents of /root/ssh_keys/nextcloud.pub to ~/.ssh/authorized_keys on Storage box
+# Append contents of /root/ssh_keys/hetzner-sb-nextcloud.pub to ~/.ssh/authorized_keys on Storage box
+sudo less /root/ssh_keys/hetzner-sb-nextcloud.pub
 
-ssh-keyscan -p 23 -H ${STORAGE_BOX_HOST:?} | sudo tee /root/.ssh/known_hosts # Add storage box to known_hosts
+# Add storage box to known_hosts
+ssh-keyscan -p 23 -H ${STORAGE_BOX_HOST:?} | sudo tee /root/.ssh/known_hosts
 
 # Mount Nextcloud folder
 sudo tee /etc/systemd/system/media-nextcloud.mount <<EOF
@@ -28,7 +27,7 @@ Description=Mount unit for Nextcloud
 What=${NEXTCLOUD_STORAGE_BOX_USER:?}@${STORAGE_BOX_HOST:?}:./
 Where=/media/nextcloud
 Type=fuse.sshfs
-Options=Port=23,IdentityFile=/root/ssh_keys/nextcloud,allow_other,default_permissions,uid=33,gid=33
+Options=Port=23,IdentityFile=/root/ssh_keys/hetzner-sb-nextcloud,allow_other,default_permissions,uid=33,gid=33
 
 [Install]
 WantedBy=multi-user.target

@@ -20,3 +20,4 @@ export MAIL_PASS=
 
 # Hetzner Storage box
 export STORAGE_BOX_HOST=
+export STORAGE_BOX_TMP_USER=
