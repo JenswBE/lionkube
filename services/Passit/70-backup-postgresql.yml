@@ -13,6 +13,10 @@ spec:
       name: backup-postgresql
     spec:
       template:
+        metadata:
+          labels:
+            app: passit
+            component: backup-postgresql
         spec:
           restartPolicy: OnFailure
           containers:

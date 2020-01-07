@@ -3,11 +3,10 @@ apiVersion: v1
 metadata:
   namespace: passit
   name: passit
-  labels:
-    app: passit
 spec:
   selector:
     app: passit
+    component: passit
   ports:
     - port: 80
       targetPort: 8080
@@ -23,6 +22,7 @@ spec:
   podSelector:
     matchLabels:
       app: passit
+      component: passit
   policyTypes:
   - Ingress
   ingress:
@@ -45,16 +45,16 @@ kind: Deployment
 metadata:
   namespace: passit
   name: passit
-  labels:
-    app: passit
 spec:
   selector:
     matchLabels:
       app: passit
+      component: passit
   template:
     metadata:
       labels:
         app: passit
+        component: passit
     spec:
       initContainers:
         - name: migrate-db

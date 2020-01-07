@@ -3,11 +3,10 @@ apiVersion: v1
 metadata:
   namespace: passit
   name: postgresql
-  labels:
-    app: postgresql
 spec:
   selector:
-    app: postgresql
+    app: passit
+    component: postgresql
   ports:
     - port: 5432
 
@@ -21,7 +20,8 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: postgresql
+      app: passit
+      component: postgresql
   policyTypes:
   - Ingress
   ingress:
@@ -29,9 +29,11 @@ spec:
     - podSelector:
         matchLabels:
           app: passit
+          component: passit
     - podSelector:
         matchLabels:
-          app: backup-postgresql
+          app: passit
+          component: backup-postgresql
     ports:
     - protocol: TCP
       port: 5432
@@ -43,16 +45,16 @@ kind: Deployment
 metadata:
   namespace: passit
   name: postgresql
-  labels:
-    app: postgresql
 spec:
   selector:
     matchLabels:
-      app: postgresql
+      app: passit
+      component: postgresql
   template:
     metadata:
       labels:
-        app: postgresql
+        app: passit
+        component: postgresql
     spec:
       containers:
         - name: postgresql
