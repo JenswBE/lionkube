@@ -1,0 +1,45 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  namespace: passit
+  name: backup-postgresql
+spec:
+  # Min Hr DoM Month DoW
+  schedule: '15 2 * * *'
+  jobTemplate:
+    metadata:
+      namespace: passit
+      name: backup-postgresql
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: backup-postgresql
+            image: postgres:12-alpine
+            args:
+              - pg_dump
+              - --format=c
+              - --blobs
+              - --host=postgresql
+              - --dbname=passit
+              - --username=passit
+              - --no-password
+              - ">"
+              - "/backup/passit.pg_dump"
+            volumeMounts:
+              - name: backup
+                mountPath: /backup
+              - name: pgpass
+                mountPath: /root/.pgpass
+                subPath: pgpass
+
+          volumes:
+            - name: backup
+              hostPath:
+                path: /media/tmp/backup/passit
+                type: DirectoryOrCreate
+            - name: pgpass
+              secret:
+                secretName: backup-postgresql-pgpass
+                defaultMode: 0600

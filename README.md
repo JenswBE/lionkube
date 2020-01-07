@@ -43,6 +43,7 @@ Following services are the actual services I want to host on the cluster.
 ### 02:00 Prepare backup
 - 02:00 Dump Nextcloud DB (services/Nextcloud/70-backup-mariadb.yml)
 - 02:05 Dump Nextcloud calendars and contacts (services/Nextcloud/50-nextcloud.yml: backup-calcard)
+- 02:15 Dump Passit DB (services/Passit/71-backup-postgresql.yml)
 
 ### 03:00 Perform backup
 - 03:00 Run global Borgmatic (services/Borgmatic/30-borgmatic.yml)

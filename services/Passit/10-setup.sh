@@ -25,7 +25,6 @@ kubectl create secret generic \
   passit-email-url \
   --from-literal=EMAIL_URL="smtp+tls://${PASSIT_MAIL_USER:?}:${PASSIT_MAIL_PASS:?}@${PASSIT_MAIL_HOST:?}:587"
 
-
 # Deploy Passit
 ../../kube-apply-env ./40-postgresql.yml
 ../../kube-apply-env ./50-passit.yml
