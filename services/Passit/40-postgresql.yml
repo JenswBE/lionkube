@@ -29,6 +29,9 @@ spec:
     - podSelector:
         matchLabels:
           app: passit
+    - podSelector:
+        matchLabels:
+          app: backup-postgresql
     ports:
     - protocol: TCP
       port: 5432
