@@ -23,6 +23,11 @@ kubectl create secret generic \
   -n borgmatic \
   borgmatic-ssh-key \
   --from-file=id_rsa="${HOME}/borg-${CLUSTER_NAME:?}"
+shred -u "${HOME}/borg-${CLUSTER_NAME:?}"
+
+# --- ACTION REQUIRED ---
+# Append contents of ~/borg-${CLUSTER_NAME}.pub to ~/.ssh/authorized_keys on Borg server
+sudo less "${HOME}/borg-${CLUSTER_NAME:?}"
 
 # Fill known_hosts file
 kubectl create configmap \
@@ -52,6 +57,6 @@ kubectl create secret generic \
 kubectl exec -n borgmatic deploy/borgmatic -- borgmatic --verbosity 1
 
 # Export repo key
-kubectl exec -n borgmatic deploy/borgmatic -- sh -c "BORG_RSH=\"ssh -p ${NEXTCLOUD_BORG_SSH_PORT:?}\" borg key export --qr-html \"borg@${NEXTCLOUD_BORG_SSH_HOST}:/backup/${CLUSTER_NAME}-nextcloud\" /tmp/repokey.html"
-kubectl exec -n borgmatic deploy/borgmatic -- sh -c 'cat /tmp/repokey.html' -- > "${HOME}/nextcloud-borgmatic-repokey.html"
+kubectl exec -n borgmatic deploy/borgmatic -- sh -c "BORG_RSH=\"ssh -p ${BORGMATIC_SSH_PORT:?}\" borg key export --qr-html \"${BORGMATIC_SSH_USER:?}@${BORGMATIC_SSH_HOST:?}:${CLUSTER_NAME:?}\" /tmp/repokey.html"
+kubectl exec -n borgmatic deploy/borgmatic -- sh -c 'cat /tmp/repokey.html' -- > "${HOME}/borgmatic-repokey.html"
 kubectl exec -n borgmatic deploy/borgmatic -- sh -c 'shred -u /tmp/repokey.html'

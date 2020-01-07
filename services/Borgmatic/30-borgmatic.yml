@@ -36,12 +36,12 @@ data:
         - /mnt/source
 
       repositories:
-        - ${BORG_SSH_USER}@${BORG_SSH_HOST}:${CLUSTER_NAME}
+        - ${BORGMATIC_SSH_USER}@${BORGMATIC_SSH_HOST}:${CLUSTER_NAME}
 
     storage:
       compression: lz4
       archive_name_format: 'backup-{now}'
-      ssh_command: 'ssh -p ${BORG_SSH_PORT}'
+      ssh_command: 'ssh -p ${BORGMATIC_SSH_PORT}'
 
     retention:
       keep_daily: 7

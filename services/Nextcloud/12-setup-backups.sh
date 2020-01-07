@@ -16,6 +16,11 @@ kubectl create secret generic \
   -n nextcloud \
   borgmatic-ssh-key \
   --from-file=id_rsa="${HOME}/borg-${CLUSTER_NAME:?}-nextcloud"
+shred -u "${HOME}/borg-${CLUSTER_NAME:?}-nextcloud"
+
+# --- ACTION REQUIRED ---
+# Append contents of ~/borg-${CLUSTER_NAME}-nextcloud.pub to ~/.ssh/authorized_keys on Borg server
+sudo less "${HOME}/borg-${CLUSTER_NAME:?}-nextcloud"
 
 # Fill known_hosts file
 kubectl create configmap \
