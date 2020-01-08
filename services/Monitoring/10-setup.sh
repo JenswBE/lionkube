@@ -15,4 +15,4 @@ sudo ufw allow in on ${INT_IF:?} to any port 9100 proto tcp # Node exporter
 # =============================
 
 # Install Prometheus
-helm install prometheus stable/prometheus --version 9.7.2 -n monitoring -f ./11-values-prometheus.yml
+helm install prometheus stable/prometheus --version 9.7.4 -n monitoring -f ./30-values-prometheus.yml
