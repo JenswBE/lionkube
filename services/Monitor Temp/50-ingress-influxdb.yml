@@ -9,7 +9,7 @@ spec:
     kind: ClusterIssuer
     name: letsencrypt
   dnsNames:
-    - ${HOME_DASHBOARD_INFLUXDB_DOMAIN}
+    - ${MONITOR_TEMP_INFLUXDB_DOMAIN}
 
 ---
 
@@ -22,7 +22,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`${HOME_DASHBOARD_INFLUXDB_DOMAIN}`)
+    - match: Host(`${MONITOR_TEMP_INFLUXDB_DOMAIN}`)
       kind: Rule
       services:
         - name: influxdb

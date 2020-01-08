@@ -15,8 +15,8 @@ kubectl apply -f ./30-storage.yml
 kubectl create secret generic \
   -n grafana \
   grafana-admin \
-  --from-literal=GF_SECURITY_ADMIN_USER=${HOME_DASHBOARD_GRAFANA_ADMIN_USER:?} \
-  --from-literal=GF_SECURITY_ADMIN_PASSWORD=${HOME_DASHBOARD_GRAFANA_ADMIN_PASS:?}
+  --from-literal=GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USER:?} \
+  --from-literal=GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASS:?}
 kubectl create secret generic \
   -n grafana \
   grafana-smtp-relay \
@@ -26,8 +26,8 @@ kubectl create secret generic \
 kubectl create configmap \
   -n grafana \
   grafana-smtp-from \
-  --from-literal=GF_SMTP_FROM_ADDRESS=${HOME_DASHBOARD_GRAFANA_SMTP_FROM_ADDRESS:?} \
-  --from-literal=GF_SMTP_FROM_NAME=${HOME_DASHBOARD_GRAFANA_SMTP_FROM_NAME:?}
+  --from-literal=GF_SMTP_FROM_ADDRESS=${GRAFANA_SMTP_FROM_ADDRESS:?} \
+  --from-literal=GF_SMTP_FROM_NAME=${GRAFANA_SMTP_FROM_NAME:?}
 
 # Deploy Grafana
 ../../kube-apply-env ./40-grafana.yml

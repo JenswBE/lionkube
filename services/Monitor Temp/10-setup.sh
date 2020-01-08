@@ -15,8 +15,8 @@ kubectl apply -f ./30-storage.yml
 kubectl create secret generic \
   -n monitor-temp \
   influxdb-admin \
-  --from-literal=INFLUXDB_ADMIN_USER=${HOME_DASHBOARD_INFLUXDB_ADMIN_USER:?} \
-  --from-literal=INFLUXDB_ADMIN_PASSWORD=${HOME_DASHBOARD_INFLUXDB_ADMIN_PASS:?}
+  --from-literal=INFLUXDB_ADMIN_USER=${MONITOR_TEMP_INFLUXDB_ADMIN_USER:?} \
+  --from-literal=INFLUXDB_ADMIN_PASSWORD=${MONITOR_TEMP_INFLUXDB_ADMIN_PASS:?}
 
 # Deploy Monitor Temp
 ../../kube-apply-env ./40-influxdb.yml
@@ -29,7 +29,7 @@ GRAFANA_PASS=REPLACE_ME
 set +o history # Enable history
 
 cat <<EOF | kubectl exec -n monitor-temp -i deploy/influxdb -- \
-  influx -username "${HOME_DASHBOARD_INFLUXDB_ADMIN_USER:?}" -password "${HOME_DASHBOARD_INFLUXDB_ADMIN_PASS:?}"
+  influx -username "${MONITOR_TEMP_INFLUXDB_ADMIN_USER:?}" -password "${MONITOR_TEMP_INFLUXDB_ADMIN_PASS:?}"
 -- Create database
 CREATE DATABASE "monitor_temp" WITH DURATION 1w NAME "one_week";
 

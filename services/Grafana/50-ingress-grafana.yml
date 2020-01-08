@@ -9,7 +9,7 @@ spec:
     kind: ClusterIssuer
     name: letsencrypt
   dnsNames:
-    - ${HOME_DASHBOARD_GRAFANA_DOMAIN}
+    - ${GRAFANA_DOMAIN}
 
 ---
 
@@ -22,7 +22,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: Host(`${HOME_DASHBOARD_GRAFANA_DOMAIN}`)
+    - match: Host(`${GRAFANA_DOMAIN}`)
       kind: Rule
       services:
         - namespace: traefik
@@ -43,7 +43,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`${HOME_DASHBOARD_GRAFANA_DOMAIN}`)
+    - match: Host(`${GRAFANA_DOMAIN}`)
       kind: Rule
       services:
         - name: grafana

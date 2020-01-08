@@ -44,7 +44,7 @@ spec:
             - name: TZ
               value: ${TIMEZONE}
             - name: GF_SERVER_ROOT_URL
-              value: "https://${HOME_DASHBOARD_GRAFANA_DOMAIN}"
+              value: "https://${GRAFANA_DOMAIN}"
             - name: GF_SERVER_ENABLE_GZIP
               value: "true"
             - name: GF_SECURITY_DISABLE_GRAVATAR
