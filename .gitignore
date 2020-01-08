@@ -72,6 +72,7 @@
 !/services/Logging/
 !/services/Logging/10-setup.sh
 !/services/Logging/20-namespace.yml
+!/services/Logging/30-dashboard.json
 
 !/services/Monitor Temp/
 !/services/Monitor Temp/10-setup.sh
