@@ -3,11 +3,10 @@ apiVersion: v1
 metadata:
   namespace: guacamole
   name: guacamole-db
-  labels:
-    app: guacamole-db
 spec:
   selector:
-    app: guacamole-db
+    app: guacamole
+    component: postgresql
   ports:
     - port: 5432
 
@@ -21,7 +20,8 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: guacamole-db
+      app: guacamole
+      component: postgresql
   policyTypes:
   - Ingress
   ingress:
@@ -29,6 +29,7 @@ spec:
     - podSelector:
         matchLabels:
           app: guacamole
+          component: guacamole
     ports:
     - protocol: TCP
       port: 5432
@@ -40,16 +41,16 @@ kind: Deployment
 metadata:
   namespace: guacamole
   name: guacamole-db
-  labels:
-    app: guacamole-db
 spec:
   selector:
     matchLabels:
-      app: guacamole-db
+      app: guacamole
+      component: postgresql
   template:
     metadata:
       labels:
-        app: guacamole-db
+        app: guacamole
+        component: postgresql
     spec:
       initContainers:
         - name: db-init

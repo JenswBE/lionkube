@@ -84,16 +84,16 @@ kind: Deployment
 metadata:
   namespace: borgmatic
   name: borgmatic
-  labels:
-    app: borgmatic
 spec:
   selector:
     matchLabels:
       app: borgmatic
+      component: borgmatic
   template:
     metadata:
       labels:
         app: borgmatic
+        component: borgmatic
     spec:
       initContainers:
         - name: init-repo

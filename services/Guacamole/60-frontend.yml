@@ -3,11 +3,10 @@ apiVersion: v1
 metadata:
   namespace: guacamole
   name: guacamole
-  labels:
-    app: guacamole
 spec:
   selector:
     app: guacamole
+    component: guacamole
   ports:
     - port: 80
       targetPort: 8080
@@ -23,20 +22,21 @@ spec:
   podSelector:
     matchLabels:
       app: guacamole
+      component: guacamole
   policyTypes:
-  - Ingress
+    - Ingress
   ingress:
-  - from:
-    - namespaceSelector:
-        matchLabels:
-          name: traefik
-      podSelector:
-        matchLabels:
-          app: traefik
+    - from:
+      - namespaceSelector:
+          matchLabels:
+            name: traefik
+        podSelector:
+          matchLabels:
+            app: traefik
 
     ports:
-    - protocol: TCP
-      port: 8080
+      - protocol: TCP
+        port: 8080
 
 ---
 
@@ -45,16 +45,16 @@ kind: Deployment
 metadata:
   namespace: guacamole
   name: guacamole
-  labels:
-    app: guacamole
 spec:
   selector:
     matchLabels:
       app: guacamole
+      component: guacamole
   template:
     metadata:
       labels:
         app: guacamole
+        component: guacamole
     spec:
       containers:
         - name: guacamole

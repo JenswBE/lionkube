@@ -3,11 +3,10 @@ apiVersion: v1
 metadata:
   namespace: guacamole
   name: guacd-flash
-  labels:
-    app: guacd-flash
 spec:
   selector:
-    app: guacd-flash
+    app: guacamole
+    component: guacd-flash
   ports:
     - port: 4822
 
@@ -21,7 +20,8 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: guacd-flash
+      app: guacamole
+      component: guacd-flash
   policyTypes:
   - Ingress
   ingress:
@@ -29,6 +29,7 @@ spec:
     - podSelector:
         matchLabels:
           app: guacamole
+          component: guacamole
     ports:
     - protocol: TCP
       port: 4822
@@ -40,16 +41,16 @@ kind: Deployment
 metadata:
   namespace: guacamole
   name: guacd-flash
-  labels:
-    app: guacd-flash
 spec:
   selector:
     matchLabels:
-      app: guacd-flash
+      app: guacamole
+      component: guacd-flash
   template:
     metadata:
       labels:
-        app: guacd-flash
+        app: guacamole
+        component: guacd-flash
     spec:
       containers:
         - name: ssh-tunnel
