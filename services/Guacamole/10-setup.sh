@@ -42,3 +42,6 @@ kubectl create secret generic \
   backup-postgresql-pgpass \
   --from-literal=pgpass=postgresql:5432:passit:passit:${PASSIT_DB_PASS:?}
   # hostname:port:database:username:password
+
+# Deploy backup
+kubectl apply -f ./90-backup-postgresql.yml
