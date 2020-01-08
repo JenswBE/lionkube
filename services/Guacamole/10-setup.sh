@@ -14,12 +14,12 @@ kubectl apply -f ./30-storage.yml
 # Create config
 kubectl create secret generic \
   -n guacamole \
-  guacamole-db-user \
+  postgresql-user \
   --from-literal=POSTGRES_USER=guacdb \
   --from-literal=POSTGRES_PASSWORD=${GUACAMOLE_DB_PASS:?}
 
 # Deploy Guacamole
-../../kube-apply-env ./40-database.yml
+../../kube-apply-env ./40-postgresql.yml
 ../../kube-apply-env ./50-backend.yml
 ../../kube-apply-env ./60-frontend.yml
 ../../kube-apply-env ./70-ingress.yml
@@ -35,3 +35,10 @@ kubectl create secret generic -n guacaomle guacd-flash-ssh-key --from-file=id_rs
 #    E.g. `scp guacd-lionkube-flash.pub flash.jensw.be:~/`
 # 5. Follow instructions on Flash Gateway
 #    https://github.com/JenswBE/flash#ssh-tunnel-for-guacd
+
+# Create backup config
+kubectl create secret generic \
+  -n guacamole \
+  backup-postgresql-pgpass \
+  --from-literal=pgpass=postgresql:5432:passit:passit:${PASSIT_DB_PASS:?}
+  # hostname:port:database:username:password

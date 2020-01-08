@@ -67,12 +67,12 @@ spec:
             - name: GUACD_PORT
               value: "4822"
             - name: POSTGRES_HOSTNAME
-              value: guacamole-db
+              value: postgresql
             - name: POSTGRES_DATABASE
               value: guacdb
           envFrom:
             - secretRef:
-                name: guacamole-db-user
+                name: postgresql-user
           ports:
             - name: guacamole
               containerPort: 8080

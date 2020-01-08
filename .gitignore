@@ -51,11 +51,12 @@
 !/services/Guacamole/10-setup.sh
 !/services/Guacamole/20-namespace.yml
 !/services/Guacamole/30-storage.yml
-!/services/Guacamole/40-database.yml
+!/services/Guacamole/40-postgresql.yml
 !/services/Guacamole/50-backend.yml
 !/services/Guacamole/60-frontend.yml
 !/services/Guacamole/70-ingress.yml
 !/services/Guacamole/80-ssh-tunnel.yml
+!/services/Guacamole/90-backup-postgresql.yml
 
 !/services/IMAP Alerter/
 !/services/IMAP Alerter/10-setup.sh

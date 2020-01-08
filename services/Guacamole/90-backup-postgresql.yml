@@ -1,0 +1,51 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  namespace: guacamole
+  name: backup-postgresql
+spec:
+  # Min Hr DoM Month DoW
+  schedule: '20 2 * * *'
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    metadata:
+      namespace: guacamole
+      name: backup-postgresql
+    spec:
+      template:
+        metadata:
+          labels:
+            app: guacamole
+            component: backup-postgresql
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: backup-postgresql
+            image: postgres:12-alpine
+            imagePullPolicy: Always
+            args:
+              - pg_dump
+              - --verbose
+              - --format=c
+              - --blobs
+              - --host=postgresql
+              - --dbname=guacdb
+              - --username=guacdb
+              - --no-password
+              - "--file=/backup/guacamole.pg_dump"
+            volumeMounts:
+              - name: backup
+                mountPath: /backup
+              - name: pgpass
+                mountPath: /root/.pgpass
+                subPath: pgpass
+
+          volumes:
+            - name: backup
+              hostPath:
+                path: /media/tmp/backup/guacamole
+                type: DirectoryOrCreate
+            - name: pgpass
+              secret:
+                secretName: backup-postgresql-pgpass
+                defaultMode: 0600
