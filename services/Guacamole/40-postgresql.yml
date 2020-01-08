@@ -30,6 +30,10 @@ spec:
         matchLabels:
           app: guacamole
           component: guacamole
+    - podSelector:
+        matchLabels:
+          app: guacamole
+          component: backup-postgresql
     ports:
     - protocol: TCP
       port: 5432

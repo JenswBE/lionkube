@@ -16,7 +16,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   namespace: guacamole
-  name: allow-guacamole-to-guacd
+  name: filter-ingress-on-guacd
 spec:
   podSelector:
     matchLabels:

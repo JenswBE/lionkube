@@ -40,7 +40,7 @@ kubectl create secret generic -n guacaomle guacd-flash-ssh-key --from-file=id_rs
 kubectl create secret generic \
   -n guacamole \
   backup-postgresql-pgpass \
-  --from-literal=pgpass=postgresql:5432:passit:passit:${PASSIT_DB_PASS:?}
+  --from-literal=pgpass=postgresql:5432:guacdb:guacdb:${GUACAMOLE_DB_PASS:?}
   # hostname:port:database:username:password
 
 # Deploy backup
