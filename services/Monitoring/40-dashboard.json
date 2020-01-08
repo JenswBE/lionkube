@@ -67,7 +67,7 @@
   "gnetId": 8739,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1578221132362,
+  "iteration": 1578521570184,
   "links": [],
   "panels": [
     {
@@ -590,7 +590,7 @@
       }
     }
   ],
-  "refresh": "30s",
+  "refresh": "10s",
   "schemaVersion": 21,
   "style": "dark",
   "tags": [],
@@ -652,5 +652,5 @@
   "timezone": "",
   "title": "Nodes",
   "uid": "thOnlDamk",
-  "version": 11
+  "version": 13
 }
