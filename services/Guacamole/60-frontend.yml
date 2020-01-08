@@ -34,9 +34,9 @@ spec:
           matchLabels:
             app: traefik
 
-    ports:
-      - protocol: TCP
-        port: 8080
+      ports:
+        - protocol: TCP
+          port: 8080
 
 ---
 
