@@ -1,16 +1,16 @@
 alertmanager:
   persistentVolume:
-    enabled: "false"
+    enabled: false
     storageClass: longhorn
 
 pushgateway:
   persistentVolume:
-    enabled: "false"
+    enabled: false
     storageClass: longhorn
 
 server:
   persistentVolume:
-    enabled: "false"
+    enabled: false
     storageClass: longhorn
   retention: "1d"
 
