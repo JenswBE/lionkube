@@ -2,7 +2,7 @@
 export CONFIG_GENERAL_LOADED=1
 
 # General
-export USER=REPLACE_ME
+export MY_USER=REPLACE_ME
 export INT_IF=ens10
 export EXT_IF=eth0
 export DEFAULT_DOMAIN=REPLACE_ME # example.com

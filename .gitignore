@@ -13,6 +13,8 @@
 !/config/30-services.template.sh
 
 !/install/
+!/install/cloud-init.template.yml
+
 !/install/components
 !/install/components/Cert-manager.yml
 !/install/components/Hetzner.yml

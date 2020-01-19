@@ -11,6 +11,7 @@ source ../../config/00-load-config.sh
 # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#check-required-ports
 sudo ufw allow in on ${INT_IF:?} to any port 6443 proto tcp # Kube-api
 sudo ufw allow in on ${INT_IF:?} to any port 8472 proto udp # Canal
+sudo ufw allow in on ${INT_IF:?} to any port 7472 proto tcp # MetalLB
 
 # Create Kubernete cluster
 sudo kubeadm init --config ./21-kubeadm-conf.yml
@@ -40,7 +41,7 @@ source <(kubectl completion bash)
 kubectl apply -f https://raw.githubusercontent.com/hetznercloud/hcloud-cloud-controller-manager/master/deploy/v1.5.0-networks.yaml
 
 # Canal (Pod Networking)
-kubectl apply -f https://docs.projectcalico.org/v3.8/manifests/canal.yaml
+kubectl apply -f https://docs.projectcalico.org/v3.11/manifests/canal.yaml
 kubectl edit configmaps --namespace=kube-system canal-config
 # ==> Set under "data" canal_iface: ens10
 

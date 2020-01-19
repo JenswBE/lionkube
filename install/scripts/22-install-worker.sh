@@ -10,6 +10,7 @@ source ../../config/00-load-config.sh
 # Firewall
 sudo ufw allow in on ${INT_IF:?} to any port 10250 proto tcp # Kubelet
 sudo ufw allow in on ${INT_IF:?} to any port 8472  proto udp # Canal
+sudo ufw allow in on ${INT_IF:?} to any port 7472 proto tcp # MetalLB
 
 # Set cloud provider to external
 cat <<EOF | sudo tee /etc/default/kubelet
