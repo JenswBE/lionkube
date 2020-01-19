@@ -19,6 +19,8 @@ spec:
             component: backup-postgresql
         spec:
           restartPolicy: OnFailure
+          nodeSelector:
+            mount.media.tmp: "true"
           containers:
           - name: backup-postgresql
             image: postgres:12-alpine

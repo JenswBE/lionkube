@@ -32,7 +32,7 @@ kubeadm token create --print-join-command # Run on master node
 sudo kubeadm join ... # Run on worker node
 
 # Setup Hetzner Storage box: tmp folder
-sudo apt install sshfs
+sudo apt install -y sshfs
 sudo mkdir -p /media/tmp # Create mount point
 sudo mkdir -p /root/ssh_keys # Create SSH key directory
 sudo chmod 700 /root/ssh_keys # Restrict permissions
@@ -62,3 +62,10 @@ WantedBy=multi-user.target
 EOF
 sudo systemctl start media-tmp.mount
 sudo systemctl enable media-tmp.mount
+
+# =============================
+# = EXECUTE ON MASTER NODE(S) =
+# =============================
+
+# Assign label to worker node, to prevent use of mount point if SSH is not mounted
+kubectl label nodes <WORKER_NODE_NAME> mount.media.tmp=true
