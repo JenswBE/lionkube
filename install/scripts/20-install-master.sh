@@ -7,11 +7,10 @@
 # Load config
 source ../../config/00-load-config.sh
 
-# Kubernetes ports
+# Firewall
 # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#check-required-ports
 sudo ufw allow in on ${INT_IF:?} to any port 6443 proto tcp # Kube-api
-sudo ufw allow in on ${INT_IF:?} to any port 8472 proto udp # Canal
-sudo ufw allow in on ${INT_IF:?} to any port 7472 proto tcp # MetalLB
+# See ../cloud-init.template.yml for common UFW rules
 
 # Create Kubernete cluster
 sudo kubeadm init --config ./21-kubeadm-conf.yml
