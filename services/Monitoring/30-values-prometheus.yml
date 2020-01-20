@@ -13,6 +13,14 @@ server:
     enabled: false
     storageClass: longhorn
   retention: "1d"
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+           app: nextcloud
+           component: nextcloud
+        topologyKey: "kubernetes.io/hostname"
 
 nodeExporter:
   tolerations:
