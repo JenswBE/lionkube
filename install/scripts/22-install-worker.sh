@@ -33,7 +33,7 @@ sudo kubeadm join ... # Run on worker node
 
 # Setup Hetzner Storage box: tmp folder
 sudo apt install -y sshfs
-sudo mkdir -p /media/tmp # Create mount point
+sudo mkdir -p /data/tmp # Create mount point
 sudo mkdir -p /root/ssh_keys # Create SSH key directory
 sudo chmod 700 /root/ssh_keys # Restrict permissions
 sudo ssh-keygen -C "${HOSTNAME}" -N '' -f /root/ssh_keys/hetzner-sb-tmp # Generate SSH key
@@ -47,25 +47,25 @@ ssh-keyscan -p 23 -H ${STORAGE_BOX_HOST:?} | sudo tee /root/.ssh/known_hosts
 
 # Mount tmp folder
 GID=$(id -g)
-sudo tee /etc/systemd/system/media-tmp.mount <<EOF
+sudo tee /etc/systemd/system/data-tmp.mount <<EOF
 [Unit]
 Description=Mount unit for Tmp folder
 
 [Mount]
 What=${STORAGE_BOX_TMP_USER:?}@${STORAGE_BOX_HOST:?}:./
-Where=/media/tmp
+Where=/data/tmp
 Type=fuse.sshfs
 Options=Port=23,IdentityFile=/root/ssh_keys/hetzner-sb-tmp,allow_other,default_permissions,uid=${UID},gid=${GID}
 
 [Install]
 WantedBy=multi-user.target
 EOF
-sudo systemctl start media-tmp.mount
-sudo systemctl enable media-tmp.mount
+sudo systemctl start data-tmp.mount
+sudo systemctl enable data-tmp.mount
 
 # =============================
 # = EXECUTE ON MASTER NODE(S) =
 # =============================
 
 # Assign label to worker node, to prevent use of mount point if SSH is not mounted
-kubectl label nodes <WORKER_NODE_NAME> mount.media.tmp=true
+kubectl label nodes <WORKER_NODE_NAME> mount.data.tmp=true

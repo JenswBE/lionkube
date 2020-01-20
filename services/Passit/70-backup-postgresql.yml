@@ -20,7 +20,7 @@ spec:
         spec:
           restartPolicy: OnFailure
           nodeSelector:
-            mount.media.tmp: "true"
+            mount.data.tmp: "true"
           containers:
           - name: backup-postgresql
             image: postgres:12-alpine
@@ -45,7 +45,7 @@ spec:
           volumes:
             - name: backup
               hostPath:
-                path: /media/tmp/backup/passit
+                path: /data/tmp/backup/passit
                 type: DirectoryOrCreate
             - name: pgpass
               secret:
