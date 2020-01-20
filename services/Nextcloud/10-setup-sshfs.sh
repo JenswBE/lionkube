@@ -1,4 +1,4 @@
-data#!/usr/bin/env bash
+#!/usr/bin/env bash
 
 # Load config
 source ../../config/00-load-config.sh
