@@ -137,3 +137,12 @@ spec:
             httpGet:
               path: "/api/ping/"
               port: 8080
+
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+               app: passit
+               component: postgresql
+            topologyKey: "kubernetes.io/hostname"

@@ -51,3 +51,12 @@ spec:
               secret:
                 secretName: backup-postgresql-pgpass
                 defaultMode: 0600
+
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchLabels:
+                   app: guacamole
+                   component: postgresql
+                topologyKey: "kubernetes.io/hostname"

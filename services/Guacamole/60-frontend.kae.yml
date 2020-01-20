@@ -77,3 +77,12 @@ spec:
           ports:
             - name: guacamole
               containerPort: 8080
+
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+               app: guacamole
+               component: postgresql
+            topologyKey: "kubernetes.io/hostname"
