@@ -16,4 +16,4 @@ sudo ufw allow in on ${INT_IF:?} to any port 9100 proto tcp # Node exporter
 
 # Install Prometheus
 kubectl apply -f ./20-namespace.yml
-helm install prometheus stable/prometheus --version 9.7.4 -n monitoring -f ./30-values-prometheus.yml
+helm install prometheus stable/prometheus --version 10.3.1 -n monitoring -f ./30-values-prometheus.yml
