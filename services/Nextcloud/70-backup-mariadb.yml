@@ -56,12 +56,12 @@ spec:
               mountPath: /script
 
       nodeSelector:
-        mount.media.nextcloud: "true"
+        mount.data.nextcloud: "true"
 
       volumes:
         - name: backup-mariadb
           hostPath:
-            path: /media/nextcloud/backup/mariadb
+            path: /data/nextcloud/backup/mariadb
             type: DirectoryOrCreate
         - name: crontab
           configMap:

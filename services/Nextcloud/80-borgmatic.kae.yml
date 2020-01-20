@@ -96,7 +96,7 @@ spec:
         app: borgmatic
     spec:
       nodeSelector:
-        mount.media.nextcloud: "true"
+        mount.data.nextcloud: "true"
 
       initContainers:
         - name: init-repo
@@ -149,7 +149,7 @@ spec:
       volumes:
         - name: nextcloud
           hostPath:
-            path: /media/nextcloud
+            path: /data/nextcloud
             type: DirectoryOrCreate
         - name: conf
           configMap:

@@ -7,9 +7,6 @@ source ../../config/00-load-config.sh
 # =     EXECUTE ON MASTER NODE(S)     =
 # =====================================
 
-# Label nodes (repeat for each node you executed above instructions on)
-kubectl label nodes <NODE_NAME> mount.media.nextcloud=true
-
 # Init Nextcloud
 kubectl apply -f ./20-namespace.yml
 kubectl apply -f ./30-storage.yml

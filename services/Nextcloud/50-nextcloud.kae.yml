@@ -128,7 +128,7 @@ spec:
               mountPath: /backup
 
       nodeSelector:
-        mount.media.nextcloud: "true"
+        mount.data.nextcloud: "true"
 
       volumes:
         - name: config
@@ -136,11 +136,11 @@ spec:
             claimName: nextcloud-config
         - name: data
           hostPath:
-            path: /media/nextcloud/data
+            path: /data/nextcloud/data
             type: DirectoryOrCreate
         - name: backup-calcard
           hostPath:
-            path: /media/nextcloud/backup/calcard
+            path: /data/nextcloud/backup/calcard
             type: DirectoryOrCreate
         - name: crontab
           configMap:
