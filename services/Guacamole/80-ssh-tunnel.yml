@@ -55,6 +55,7 @@ spec:
       containers:
         - name: ssh-tunnel
           image: jujhars13/docker-ssh-tunnel
+          imagePullPolicy: Always
           env:
             - name: TZ
               value: ${TIMEZONE}

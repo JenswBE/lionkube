@@ -58,7 +58,8 @@ spec:
     spec:
       initContainers:
         - name: db-init
-          image: guacamole/guacamole:latest
+          image: guacamole/guacamole
+          imagePullPolicy: Always
           command:
             - "/bin/sh"
             - "-c"

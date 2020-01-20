@@ -58,7 +58,8 @@ spec:
     spec:
       containers:
         - name: guacamole
-          image: guacamole/guacamole:latest
+          image: guacamole/guacamole
+          imagePullPolicy: Always
           env:
             - name: TZ
               value: ${TIMEZONE}

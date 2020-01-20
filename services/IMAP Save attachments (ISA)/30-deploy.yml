@@ -16,7 +16,8 @@ spec:
     spec:
       initContainers:
         - name: copy-rsync-conf-to-rw
-          image: busybox:latest
+          image: busybox
+          imagePullPolicy: Always
           command: ['sh', '-c', 'cp -a /ro/. /rw/']
           volumeMounts:
             - name: rclone-ro
@@ -27,6 +28,7 @@ spec:
       containers:
         - name: save-attachments
           image: jenswbe/imap-save-attachments
+          imagePullPolicy: Always
           env:
             - name: TZ
               value: ${TIMEZONE}
@@ -40,6 +42,7 @@ spec:
 
         - name: rsync
           image: tynor88/rclone
+          imagePullPolicy: Always
           env:
             - name: TZ
               value: ${TIMEZONE}

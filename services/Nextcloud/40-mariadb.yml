@@ -56,7 +56,8 @@ spec:
     spec:
       containers:
         - name: mariadb
-          image: mariadb:latest
+          image: mariadb:10
+          imagePullPolicy: Always
           env:
             - name: TZ
               value: ${TIMEZONE}

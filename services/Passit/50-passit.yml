@@ -59,6 +59,7 @@ spec:
       initContainers:
         - name: migrate-db
           image: passit/passit:stable
+          imagePullPolicy: Always
           command: ["./manage.py", "migrate", "--noinput"]
           env:
             - name: PYTHONUNBUFFERED
@@ -93,6 +94,7 @@ spec:
       containers:
         - name: passit
           image: passit/passit:stable
+          imagePullPolicy: Always
           env:
             - name: TZ
               value: ${TIMEZONE}

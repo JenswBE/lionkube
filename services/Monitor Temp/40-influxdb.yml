@@ -31,7 +31,8 @@ spec:
     spec:
       containers:
         - name: influxdb
-          image: influxdb:latest
+          image: influxdb
+          imagePullPolicy: Always
           env:
             - name: TZ
               value: "${TIMEZONE}"

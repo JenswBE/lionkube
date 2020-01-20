@@ -33,6 +33,7 @@ spec:
       containers:
         - name: mysqldump
           image: schnitzler/mysqldump
+          imagePullPolicy: Always
           args: ["-l", "8", "-d", "8"]
           env:
             - name: TZ

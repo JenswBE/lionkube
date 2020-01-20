@@ -15,8 +15,9 @@ spec:
         app: imap-alerter
     spec:
       containers:
-        - image: jenswbe/imap-alerter
-          name: imap-alerter
+        - name: imap-alerter
+          image: jenswbe/imap-alerter
+          imagePullPolicy: Always
           env:
             - name: TZ
               value: ${TIMEZONE}

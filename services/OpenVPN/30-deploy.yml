@@ -16,8 +16,9 @@ spec:
     spec:
       hostNetwork: true
       containers:
-        - image: kylemanna/openvpn
-          name: openvpn
+        - name: openvpn
+          image: kylemanna/openvpn
+          imagePullPolicy: Always
           ports:
             - containerPort: ${OPENVPN_PORT}
               name: openvpn
@@ -37,6 +38,7 @@ spec:
               mountPath: /etc/openvpn
             - name: openvpn-ccd
               mountPath: /etc/openvpn/ccd
+
       volumes:
         - name: openvpn-key
           secret:

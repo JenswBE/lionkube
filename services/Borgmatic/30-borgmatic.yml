@@ -98,6 +98,7 @@ spec:
       initContainers:
         - name: init-repo
           image: b3vis/borgmatic
+          imagePullPolicy: Always
           args:
             - "borgmatic"
             - "--init"
@@ -122,6 +123,7 @@ spec:
       containers:
         - name: borgmatic
           image: b3vis/borgmatic
+          imagePullPolicy: Always
           env:
             - name: TZ
               value: ${TIMEZONE}
