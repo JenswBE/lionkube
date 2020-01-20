@@ -51,7 +51,7 @@ kubectl create secret generic \
   --from-literal=BORG_PASSPHRASE=${BORGMATIC_PASSPHRASE:?}
 
 # Deploy Borgmatic
-../../kube-apply-env ./30-borgmatic.yml
+../../kube-apply-env ./30-borgmatic.kae.yml
 
 # Check if everything is setup correctly (WARNING: Might run a long time!)
 kubectl exec -n borgmatic deploy/borgmatic -- borgmatic --verbosity 1

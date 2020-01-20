@@ -61,4 +61,4 @@ kubectl create configmap -n openvpn openvpn-ccd --from-file=${DIR_OVPN}/ccd
 
 # Deploy OpenVPN
 echo "Please, make sure domain \"${OPENVPN_DOMAIN:?}\" is configured in DNS"
-../../kube-apply-env ./30-deploy.yml
+../../kube-apply-env ./30-deploy.kae.yml

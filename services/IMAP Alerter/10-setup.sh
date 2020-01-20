@@ -19,4 +19,4 @@ kubectl create secret generic \
   --from-file=config.yaml=${HOME:?}/imap-alerter.yml
 
 # Deploy IMAP Alerter
-../../kube-apply-env ./40-deploy.yml
+../../kube-apply-env ./40-deploy.kae.yml

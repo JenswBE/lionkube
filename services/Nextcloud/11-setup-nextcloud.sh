@@ -25,9 +25,9 @@ kubectl create secret generic \
   --from-literal=MYSQL_PASSWORD=${NEXTCLOUD_MARIADB_USER_PASS:?}
 
 # Deploy Nextcloud
-../../kube-apply-env ./40-mariadb.yml
-../../kube-apply-env ./50-nextcloud.yml
-../../kube-apply-env ./60-ingress.yml
+../../kube-apply-env ./40-mariadb.kae.yml
+../../kube-apply-env ./50-nextcloud.kae.yml
+../../kube-apply-env ./60-ingress.kae.yml
 
 # Check which host is running the Nextcloud pod
 kubectl get pod -n nextcloud --selector=app=nextcloud -o wide

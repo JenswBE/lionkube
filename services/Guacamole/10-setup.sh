@@ -19,10 +19,10 @@ kubectl create secret generic \
   --from-literal=POSTGRES_PASSWORD=${GUACAMOLE_DB_PASS:?}
 
 # Deploy Guacamole
-../../kube-apply-env ./40-postgresql.yml
-../../kube-apply-env ./50-backend.yml
-../../kube-apply-env ./60-frontend.yml
-../../kube-apply-env ./70-ingress.yml
+../../kube-apply-env ./40-postgresql.kae.yml
+../../kube-apply-env ./50-backend.kae.yml
+../../kube-apply-env ./60-frontend.kae.yml
+../../kube-apply-env ./70-ingress.kae.yml
 
 # Setup remote guacd through a SSH tunnel
 # 1. Generate SSH key
@@ -30,7 +30,7 @@ ssh-keygen -N "" -f ${HOME}/guacd-lionkube-flash
 # 2. Save private key in secret
 kubectl create secret generic -n guacaomle guacd-flash-ssh-key --from-file=id_rsa=${HOME}/guacd-lionkube-flash
 # 3. Start SSH tunnel
-../../kube-apply-env ./80-ssh-tunnel.yml
+../../kube-apply-env ./80-ssh-tunnel.kae.yml
 # 4. Copy the public key to the target host with `scp <SSH_KEY>.pub <TARGET>:~/`.
 #    E.g. `scp guacd-lionkube-flash.pub flash.jensw.be:~/`
 # 5. Follow instructions on Flash Gateway

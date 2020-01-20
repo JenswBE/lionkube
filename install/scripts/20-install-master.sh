@@ -34,7 +34,7 @@ source <(kubectl completion bash)
 # =============================
 
 # Setup Hetzner secrets and namespaces
-../../kube-apply-env ../components/Hetzner.yml
+../../kube-apply-env ../components/Hetzner.kae.yml
 
 # Deploy Hetzner Cloud Controller Manager
 kubectl apply -f https://raw.githubusercontent.com/hetznercloud/hcloud-cloud-controller-manager/master/deploy/v1.5.0-networks.yaml
@@ -53,12 +53,12 @@ kubectl apply -f https://raw.githubusercontent.com/cbeneke/hcloud-fip-controller
 
 # Deploy Metal LB
 kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.8.3/manifests/metallb.yaml
-../../kube-apply-env ../components/MetalLB.yml
+../../kube-apply-env ../components/MetalLB.kae.yml
 
 # Deploy Cert-manager
 kubectl create namespace cert-manager
 kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.12.0/cert-manager.yaml
-../../kube-apply-env ../components/Cert-manager.yml
+../../kube-apply-env ../components/Cert-manager.kae.yml
 
 # Deploy Traefik
 echo "Please, make sure domain \"${TRAEFIK_API_DOMAIN:?}\" is configured in DNS"
@@ -69,8 +69,8 @@ kubectl create secret generic --namespace=traefik traefik-users-api \
     --from-literal=users="$(htpasswd -bnBC 10 "${TRAEFIK_API_USER:?}" ${TRAEFIK_API_PASSWORD:?} | tr -d '\n')"
 kubectl apply -f ../components/Traefik/02-services.yml
 kubectl apply -f ../components/Traefik/03-deployment.yml
-../../kube-apply-env ../components/Traefik/04-api.yml
-../../kube-apply-env ../components/Traefik/05-ping.yml
+../../kube-apply-env ../components/Traefik/04-api.kae.yml
+../../kube-apply-env ../components/Traefik/05-ping.kae.yml
 
 # Deploy Longhorn (Storage provider)
 echo "Please, make sure domain \"${LONGHORN_DOMAIN:?}\" is configured in DNS"
@@ -78,7 +78,7 @@ kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/master/depl
 kubectl delete --namespace=longhorn-system svc longhorn-frontend
 kubectl create secret generic --namespace=longhorn-system traefik-users-longhorn \
     --from-literal=users="$(htpasswd -bnBC 10 "${LONGHORN_USER:?}" ${LONGHORN_PASSWORD:?} | tr -d '\n')"
-../../kube-apply-env ../components/Longhorn.yml
+../../kube-apply-env ../components/Longhorn.kae.yml
 
 # Set backup credentials
 kubectl create secret generic minio-secret \

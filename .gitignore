@@ -16,18 +16,18 @@
 !/install/cloud-init.template.yml
 
 !/install/components
-!/install/components/Cert-manager.yml
-!/install/components/Hetzner.yml
-!/install/components/Longhorn.yml
-!/install/components/MetalLB.yml
+!/install/components/Cert-manager.kae.yml
+!/install/components/Hetzner.kae.yml
+!/install/components/Longhorn.kae.yml
+!/install/components/MetalLB.kae.yml
 
 !/install/components/Traefik/
 !/install/components/Traefik/00-crd.yml
 !/install/components/Traefik/01-config.yml
 !/install/components/Traefik/02-services.yml
 !/install/components/Traefik/03-deployment.yml
-!/install/components/Traefik/04-api.yml
-!/install/components/Traefik/05-ping.yml
+!/install/components/Traefik/04-api.kae.yml
+!/install/components/Traefik/05-ping.kae.yml
 !/install/components/Traefik/06-whoami_example.yml
 
 !/install/scripts/
@@ -40,36 +40,36 @@
 !/services/Borgmatic/
 !/services/Borgmatic/10-setup.sh
 !/services/Borgmatic/20-namespace.yml
-!/services/Borgmatic/30-borgmatic.yml
+!/services/Borgmatic/30-borgmatic.kae.yml
 
 !/services/Grafana/
 !/services/Grafana/10-setup.sh
 !/services/Grafana/20-namespace.yml
 !/services/Grafana/30-storage.yml
-!/services/Grafana/40-grafana.yml
-!/services/Grafana/50-ingress-grafana.yml
+!/services/Grafana/40-grafana.kae.yml
+!/services/Grafana/50-ingress-grafana.kae.yml
 
 !/services/Guacamole/
 !/services/Guacamole/10-setup.sh
 !/services/Guacamole/20-namespace.yml
 !/services/Guacamole/30-storage.yml
-!/services/Guacamole/40-postgresql.yml
-!/services/Guacamole/50-backend.yml
-!/services/Guacamole/60-frontend.yml
-!/services/Guacamole/70-ingress.yml
-!/services/Guacamole/80-ssh-tunnel.yml
+!/services/Guacamole/40-postgresql.kae.yml
+!/services/Guacamole/50-backend.kae.yml
+!/services/Guacamole/60-frontend.kae.yml
+!/services/Guacamole/70-ingress.kae.yml
+!/services/Guacamole/80-ssh-tunnel.kae.yml
 !/services/Guacamole/90-backup-postgresql.yml
 
 !/services/IMAP Alerter/
 !/services/IMAP Alerter/10-setup.sh
 !/services/IMAP Alerter/20-namespace.yml
 !/services/IMAP Alerter/30-storage.yml
-!/services/IMAP Alerter/40-deploy.yml
+!/services/IMAP Alerter/40-deploy.kae.yml
 
 !/services/IMAP Save attachments (ISA)/
 !/services/IMAP Save attachments (ISA)/10-setup.sh
 !/services/IMAP Save attachments (ISA)/20-namespace.yml
-!/services/IMAP Save attachments (ISA)/30-deploy.yml
+!/services/IMAP Save attachments (ISA)/30-deploy.kae.yml
 
 !/services/Logging/
 !/services/Logging/10-setup.sh
@@ -80,8 +80,8 @@
 !/services/Monitor Temp/10-setup.sh
 !/services/Monitor Temp/20-namespace.yml
 !/services/Monitor Temp/30-storage.yml
-!/services/Monitor Temp/40-influxdb.yml
-!/services/Monitor Temp/50-ingress-influxdb.yml
+!/services/Monitor Temp/40-influxdb.kae.yml
+!/services/Monitor Temp/50-ingress-influxdb.kae.yml
 !/services/Monitor Temp/60-dashboard.json
 
 !/services/Monitoring/
@@ -96,22 +96,22 @@
 !/services/Nextcloud/12-setup-backups.sh
 !/services/Nextcloud/20-namespace.yml
 !/services/Nextcloud/30-storage.yml
-!/services/Nextcloud/40-mariadb.yml
-!/services/Nextcloud/50-nextcloud.yml
-!/services/Nextcloud/60-ingress.yml
+!/services/Nextcloud/40-mariadb.kae.yml
+!/services/Nextcloud/50-nextcloud.kae.yml
+!/services/Nextcloud/60-ingress.kae.yml
 !/services/Nextcloud/70-backup-mariadb.yml
-!/services/Nextcloud/80-borgmatic.yml
+!/services/Nextcloud/80-borgmatic.kae.yml
 
 !/services/OpenVPN/
 !/services/OpenVPN/10-setup.sh
 !/services/OpenVPN/20-namespace.yml
-!/services/OpenVPN/30-deploy.yml
+!/services/OpenVPN/30-deploy.kae.yml
 
 !/services/Passit/
 !/services/Passit/10-setup.sh
 !/services/Passit/20-namespace.yml
 !/services/Passit/30-storage.yml
-!/services/Passit/40-postgresql.yml
-!/services/Passit/50-passit.yml
-!/services/Passit/60-ingress.yml
+!/services/Passit/40-postgresql.kae.yml
+!/services/Passit/50-passit.kae.yml
+!/services/Passit/60-ingress.kae.yml
 !/services/Passit/70-backup-postgresql.yml

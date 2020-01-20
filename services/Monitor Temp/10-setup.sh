@@ -19,8 +19,8 @@ kubectl create secret generic \
   --from-literal=INFLUXDB_ADMIN_PASSWORD=${MONITOR_TEMP_INFLUXDB_ADMIN_PASS:?}
 
 # Deploy Monitor Temp
-../../kube-apply-env ./40-influxdb.yml
-../../kube-apply-env ./50-ingress-influxdb.yml
+../../kube-apply-env ./40-influxdb.kae.yml
+../../kube-apply-env ./50-ingress-influxdb.kae.yml
 
 # Configure InfluxDB
 set +o history # Disable history

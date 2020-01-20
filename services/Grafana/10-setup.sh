@@ -30,5 +30,5 @@ kubectl create configmap \
   --from-literal=GF_SMTP_FROM_NAME=${GRAFANA_SMTP_FROM_NAME:?}
 
 # Deploy Grafana
-../../kube-apply-env ./40-grafana.yml
-../../kube-apply-env ./50-ingress-grafana.yml
+../../kube-apply-env ./40-grafana.kae.yml
+../../kube-apply-env ./50-ingress-grafana.kae.yml

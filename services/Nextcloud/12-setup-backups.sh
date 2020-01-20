@@ -44,7 +44,7 @@ kubectl create secret generic \
   --from-literal=BORG_PASSPHRASE=${NEXTCLOUD_BORG_PASSPHRASE:?}
 
 # Deploy Borgmatic
-../../kube-apply-env ./80-borgmatic.yml
+../../kube-apply-env ./80-borgmatic.kae.yml
 
 # Check if everything is setup correctly (WARNING: Might run a long time!)
 kubectl exec -n nextcloud deploy/borgmatic -- borgmatic --verbosity 1

@@ -31,7 +31,7 @@ kubectl create secret generic \
   # hostname:port:database:username:password
 
 # Deploy Passit
-../../kube-apply-env ./40-postgresql.yml
-../../kube-apply-env ./50-passit.yml
-../../kube-apply-env ./60-ingress.yml
+../../kube-apply-env ./40-postgresql.kae.yml
+../../kube-apply-env ./50-passit.kae.yml
+../../kube-apply-env ./60-ingress.kae.yml
 kubectl apply -f ./70-backup-postgresql.yml
