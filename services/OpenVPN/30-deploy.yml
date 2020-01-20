@@ -20,7 +20,7 @@ spec:
           image: kylemanna/openvpn
           imagePullPolicy: Always
           ports:
-            - containerPort: "${OPENVPN_PORT}"
+            - containerPort: ${OPENVPN_PORT}
               name: openvpn
               protocol: UDP
           securityContext:
