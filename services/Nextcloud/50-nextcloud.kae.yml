@@ -3,11 +3,10 @@ apiVersion: v1
 metadata:
   namespace: nextcloud
   name: nextcloud
-  labels:
-    app: nextcloud
 spec:
   selector:
     app: nextcloud
+    component: nextcloud
   ports:
     - port: 80
 
@@ -22,6 +21,7 @@ spec:
   podSelector:
     matchLabels:
       app: nextcloud
+      component: nextcloud
   policyTypes:
   - Ingress
   ingress:
@@ -59,16 +59,16 @@ kind: Deployment
 metadata:
   namespace: nextcloud
   name: nextcloud
-  labels:
-    app: nextcloud
 spec:
   selector:
     matchLabels:
       app: nextcloud
+      component: nextcloud
   template:
     metadata:
       labels:
         app: nextcloud
+        component: nextcloud
     spec:
       containers:
         - name: nextcloud
@@ -130,10 +130,20 @@ spec:
       nodeSelector:
         mount.data.nextcloud: "true"
 
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+               app: nextcloud
+               component: mariadb
+            topologyKey: "kubernetes.io/hostname"
+
       volumes:
         - name: config
-          persistentVolumeClaim:
-            claimName: nextcloud-config
+          hostPath:
+            path: /data/nextcloud/config
+            type: DirectoryOrCreate
         - name: data
           hostPath:
             path: /data/nextcloud/data

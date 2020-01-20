@@ -10,18 +10,3 @@ spec:
   resources:
     requests:
       storage: 2Gi
-
----
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  namespace: nextcloud
-  name: nextcloud-config
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: longhorn
-  resources:
-    requests:
-      storage: 5Gi

@@ -3,11 +3,10 @@ apiVersion: v1
 metadata:
   namespace: nextcloud
   name: mariadb
-  labels:
-    app: mariadb
 spec:
   selector:
-    app: mariadb
+    app: nextcloud
+    component: mariadb
   ports:
     - port: 3306
 
@@ -21,7 +20,8 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: mariadb
+      app: nextcloud
+      component: mariadb
   policyTypes:
   - Ingress
   ingress:
@@ -29,9 +29,11 @@ spec:
     - podSelector:
         matchLabels:
           app: nextcloud
+          component: nextcloud
     - podSelector:
         matchLabels:
-          app: backup-mariadb
+          app: nextcloud
+          component: backup-mariadb
     ports:
     - protocol: TCP
       port: 3306
@@ -43,16 +45,16 @@ kind: Deployment
 metadata:
   namespace: nextcloud
   name: mariadb
-  labels:
-    app: mariadb
 spec:
   selector:
     matchLabels:
-      app: mariadb
+      app: nextcloud
+      component: mariadb
   template:
     metadata:
       labels:
-        app: mariadb
+        app: nextcloud
+        component: mariadb
     spec:
       containers:
         - name: mariadb

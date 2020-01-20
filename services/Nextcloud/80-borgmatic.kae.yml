@@ -84,16 +84,16 @@ kind: Deployment
 metadata:
   namespace: nextcloud
   name: borgmatic
-  labels:
-    app: borgmatic
 spec:
   selector:
     matchLabels:
-      app: borgmatic
+      app: nextcloud
+      component: borgmatic
   template:
     metadata:
       labels:
-        app: borgmatic
+        app: nextcloud
+        component: borgmatic
     spec:
       nodeSelector:
         mount.data.nextcloud: "true"

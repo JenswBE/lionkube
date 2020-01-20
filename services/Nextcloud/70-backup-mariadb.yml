@@ -19,16 +19,16 @@ kind: Deployment
 metadata:
   namespace: nextcloud
   name: backup-mariadb
-  labels:
-    app: backup-mariadb
 spec:
   selector:
     matchLabels:
-      app: backup-mariadb
+      app: nextcloud
+      component: backup-mariadb
   template:
     metadata:
       labels:
-        app: backup-mariadb
+        app: nextcloud
+        component: backup-mariadb
     spec:
       containers:
         - name: mysqldump
